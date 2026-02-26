@@ -1,0 +1,143 @@
+.checkout-page {
+    min-height: 100vh;
+    padding: 40px 0;
+    background: var(--gray-50);
+}
+
+.checkout-container {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    margin-top: 32px;
+}
+
+.checkout-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-section {
+    padding: 24px;
+}
+
+.form-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    margin-bottom: 24px;
+    color: var(--gray-800);
+}
+
+.form-section h3 i {
+    color: var(--primary-green);
+}
+
+.error-text {
+    color: var(--error);
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.payment-option {
+    cursor: pointer;
+}
+
+.payment-option input {
+    display: none;
+}
+
+.payment-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border: 2px solid var(--gray-100);
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+}
+
+.payment-option input:checked+.payment-card {
+    border-color: var(--primary-green);
+    background: rgba(45, 140, 62, 0.05);
+}
+
+.payment-card i {
+    font-size: 32px;
+    color: var(--primary-green);
+}
+
+.payment-card strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.payment-card p {
+    font-size: 14px;
+    color: var(--gray-600);
+    margin: 0;
+}
+
+.order-summary {
+    padding: 24px;
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.order-summary h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: var(--gray-800);
+}
+
+.summary-items {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.item-name {
+    color: var(--gray-800);
+    font-weight: 500;
+}
+
+.item-qty {
+    color: var(--gray-600);
+    font-size: 14px;
+}
+
+.item-price {
+    font-weight: 600;
+    color: var(--gray-800);
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        grid-template-columns: 1fr;
+    }
+
+    .order-summary {
+        position: static;
+    }
+}

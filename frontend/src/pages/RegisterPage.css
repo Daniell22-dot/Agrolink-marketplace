@@ -1,0 +1,141 @@
+.register-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.register-container {
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.register-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.register-form h2 {
+    font-size: 2rem;
+    color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+}
+
+.register-form .subtitle {
+    color: var(--medium-gray);
+    margin-bottom: 2rem;
+}
+
+.location-group {
+    background: var(--light-bg);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.location-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.location-status.loading {
+    background: var(--info-light);
+    color: var(--info);
+}
+
+.location-status.detected {
+    background: var(--success-light);
+    color: var(--success);
+}
+
+.location-status .btn-link {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--primary-green);
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.85rem;
+}
+
+.register-info {
+    color: white;
+}
+
+.register-info h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.register-info .lead {
+    font-size: 1.25rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.feature {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.feature i {
+    font-size: 2.5rem;
+    color: var(--primary-orange);
+}
+
+.feature h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature p {
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.alert-error {
+    background: var(--error-light);
+    color: var(--error);
+    border-left: 4px solid var(--error);
+}
+
+@media (max-width: 968px) {
+    .register-container {
+        grid-template-columns: 1fr;
+    }
+
+    .register-info {
+        display: none;
+    }
+
+    .register-card {
+        padding: 2rem;
+    }
+}

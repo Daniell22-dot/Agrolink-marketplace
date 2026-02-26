@@ -1,0 +1,36 @@
+@+!2'+%$
+# ignore node_modules
+node_modules
+# ignore .env
+.env    
+.env.example
+.env.local
+.env.test 
+package-lock.json
+# build files
+build
+coverage
+npm-debug.log*  
+context.json
+yarn.lock
+yarn-error.log
+context.txt
+yarn-error.txt
+error.log
+yarn-error.log
+# ide files
+.idea
+.vscode 
+# settings
+settings.json   
+# logs
+logs
+# pycache
+__pycache__
+.expo
+docker-compose.yml
+docker-compose.yaml
+dockerfile
+package-lock.json
+yarn.lock
+yarn-error.log

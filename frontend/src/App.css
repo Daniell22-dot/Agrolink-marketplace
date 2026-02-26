@@ -1,0 +1,117 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 80px; /* Height of fixed header */
+}
+
+/* Global button styles */
+.btn {
+  padding: 12px 32px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: var(--accent-yellow);
+  color: var(--primary-green);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-primary:hover {
+  background-color: #fcd573;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+}
+
+.btn-outline:hover {
+  background-color: var(--accent-yellow);
+  color: var(--primary-green);
+}
+
+/* Google Play Badge */
+.google-play-badge {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 40px;
+  padding: 6px 20px 6px 12px;
+  gap: 8px;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.google-play-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.google-play-badge i {
+  font-size: 24px;
+  color: var(--primary-green);
+}
+
+.badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.badge-text-small {
+  font-size: 10px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.badge-text-large {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+  letter-spacing: 0.3px;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Section styles */
+.section-title {
+  font-size: 42px;
+  color: var(--primary-green);
+  font-weight: 800;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-content {
+    margin-top: 60px;
+  }
+  
+  .section-title {
+    font-size: 32px;
+  }
+}
