@@ -45,13 +45,13 @@ const ManageReports = () => {
   };
 
   const handleDismiss = (reportId) => {
-    if (confirm('Are you sure you want to dismiss this report?')) {
+    if (window.confirm('Are you sure you want to dismiss this report?')) {
       dispatch(dismissReport({ reportId, reason: 'Dismissed by admin' }));
     }
   };
 
   const getReportTypeColor = (type) => {
-    switch(type) {
+    switch (type) {
       case 'product': return 'bg-orange-100 text-orange-700';
       case 'user': return 'bg-red-100 text-red-700';
       case 'order': return 'bg-blue-100 text-blue-700';
@@ -64,7 +64,7 @@ const ManageReports = () => {
     <div className="manage-reports">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Manage Reports</h1>
-        
+
         {/* Filters */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-white p-4 rounded-lg shadow-md mb-6">
           <input
@@ -143,11 +143,10 @@ const ManageReports = () => {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">{report.reporter?.name || 'N/A'}</td>
                     <td className="px-6 py-4 text-sm">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        report.status === 'open' ? 'bg-red-100 text-red-700' :
-                        report.status === 'resolved' ? 'bg-green-100 text-green-700' :
-                        'bg-gray-100 text-gray-700'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${report.status === 'open' ? 'bg-red-100 text-red-700' :
+                          report.status === 'resolved' ? 'bg-green-100 text-green-700' :
+                            'bg-gray-100 text-gray-700'
+                        }`}>
                         {report.status?.charAt(0).toUpperCase() + report.status?.slice(1)}
                       </span>
                     </td>

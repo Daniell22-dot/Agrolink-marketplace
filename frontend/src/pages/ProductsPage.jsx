@@ -46,8 +46,7 @@ const ProductsPage = () => {
                     <h1>Fresh Agricultural Produce</h1>
                     <p>Connect with local farmers and get the best quality products</p>
                     <SearchBar
-                        value={filters.search}
-                        onChange={(value) => handleFilterChange('search', value)}
+                        onSearch={(value) => handleFilterChange('search', value)}
                         placeholder="Search for products (e.g., tomatoes, milk...)"
                     />
                 </div>

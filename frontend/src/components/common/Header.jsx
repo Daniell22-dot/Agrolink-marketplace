@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../redux/slices/authSlice';
+import logoIcon from '../../assets/icons/12.png';
 import './Header.css';
 
 const Header = () => {
@@ -22,6 +23,7 @@ const Header = () => {
     <header className="header">
       <nav className="navbar">
         <Link to="/" className="logo">
+          <img src={logoIcon} alt="AgroLink Logo" className="logo-icon" />
           Agro<span>Link</span>
         </Link>
 
@@ -34,7 +36,7 @@ const Header = () => {
           <Link to="/pricing">Pricing</Link>
           <Link to="/blog">Blog</Link>
           <Link to="/contact">Contact</Link>
-          
+
           {user ? (
             <div className="user-menu">
               <Link to="/cart" className="cart-icon">
@@ -67,7 +69,7 @@ const Header = () => {
           )}
         </div>
 
-        <button 
+        <button
           className="menu-toggle"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >

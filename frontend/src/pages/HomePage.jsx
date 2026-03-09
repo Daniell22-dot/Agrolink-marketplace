@@ -1,10 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import RecommendationCarousel from '../components/products/RecommendationCarousel';
+import SearchBar from '../components/common/SearchBar';
+import recommendationService from '../services/recommendationService';
 import './HomePage.css';
 
 const HomePage = () => {
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const fetchTrending = useCallback(() => recommendationService.getTrending(10), []);
+  const fetchForYou = useCallback(() => recommendationService.getForYou(10), []);
+
+  const handleSearch = (query) => {
+    if (query.trim()) {
+      navigate(`/products?search=${encodeURIComponent(query)}`);
+    } else {
+      navigate('/products');
+    }
+  };
 
   return (
     <div className="homepage">
@@ -17,15 +31,15 @@ const HomePage = () => {
             <div className="hero-buttons">
               {!user ? (
                 <>
-                  <Link to="/register?role=farmer" className="btn btn-primary">
+                  <Link to="/register?role=farmer" className="btn btn-white btn-lg">
                     Join as Farmer
                   </Link>
-                  <Link to="/register?role=buyer" className="btn btn-outline">
+                  <Link to="/register?role=buyer" className="btn btn-white-outline btn-lg">
                     Join as Buyer
                   </Link>
                 </>
               ) : (
-                <Link to="/products" className="btn btn-primary">
+                <Link to="/products" className="btn btn-white btn-lg">
                   Browse Products
                 </Link>
               )}
@@ -36,6 +50,13 @@ const HomePage = () => {
                   <span className="badge-text-large">Google Play</span>
                 </div>
               </div>
+            </div>
+
+            <div className="hero-search-container" style={{ marginTop: '2.5rem', width: '100%', maxWidth: '600px' }}>
+              <SearchBar
+                onSearch={handleSearch}
+                placeholder="Search for tomatoes, maize, fertilizers..."
+              />
             </div>
           </div>
           <div className="hero-right">
@@ -52,6 +73,24 @@ const HomePage = () => {
               <span>Agri Services & Support</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ML Recommendation Carousels */}
+      <section className="recommendations-section">
+        <div className="container">
+          <RecommendationCarousel
+            title="Trending Products"
+            icon="fas fa-fire"
+            fetchFn={fetchTrending}
+          />
+          {user && (
+            <RecommendationCarousel
+              title="Recommended For You"
+              icon="fas fa-magic"
+              fetchFn={fetchForYou}
+            />
+          )}
         </div>
       </section>
 

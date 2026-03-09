@@ -23,6 +23,8 @@ import ChatPage from './pages/ChatPage';
 import ProfilePage from './pages/ProfilePage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import HowItWorksPage from './pages/HowItWorksPage';
+import PricingPage from './pages/PricingPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Protected Route Component
@@ -46,7 +48,9 @@ function App() {
               <Route path="/product/:id" element={<ProductDetailPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              
+              <Route path="/how-it-works" element={<HowItWorksPage />} />
+              <Route path="/pricing" element={<PricingPage />} />
+
               {/* Protected Routes */}
               <Route path="/dashboard" element={
                 <ProtectedRoute>
@@ -83,13 +87,13 @@ function App() {
                   <ProfilePage />
                 </ProtectedRoute>
               } />
-              
+
               {/* 404 Route */}
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
           <Footer />
-          <Toaster 
+          <Toaster
             position="top-right"
             toastOptions={{
               duration: 4000,

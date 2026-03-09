@@ -22,7 +22,7 @@ const ManageProducts = () => {
   }, [dispatch, pagination.page, statusFilter, searchTerm]);
 
   const handleApprove = (productId) => {
-    if (confirm('Are you sure you want to approve this product?')) {
+    if (window.confirm('Are you sure you want to delete this product?')) {
       dispatch(approveProduct(productId));
     }
   };
@@ -52,7 +52,7 @@ const ManageProducts = () => {
     <div className="manage-products">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Manage Products</h1>
-        
+
         {/* Filters */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded-lg shadow-md mb-6">
           <input
@@ -113,12 +113,11 @@ const ManageProducts = () => {
                     <td className="px-6 py-4 text-sm text-gray-600">{product.seller?.name || 'N/A'}</td>
                     <td className="px-6 py-4 text-sm font-semibold text-gray-800">${product.price}</td>
                     <td className="px-6 py-4 text-sm">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        product.status === 'approved' ? 'bg-green-100 text-green-700' :
-                        product.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                        product.status === 'rejected' ? 'bg-red-100 text-red-700' :
-                        'bg-gray-100 text-gray-700'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${product.status === 'approved' ? 'bg-green-100 text-green-700' :
+                          product.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+                            product.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                              'bg-gray-100 text-gray-700'
+                        }`}>
                         {product.status?.charAt(0).toUpperCase() + product.status?.slice(1)}
                       </span>
                     </td>

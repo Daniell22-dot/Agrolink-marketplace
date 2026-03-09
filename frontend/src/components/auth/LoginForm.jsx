@@ -16,31 +16,45 @@ const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label className="block text-gray-700">Email</label>
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full border p-2 rounded"
-                    required
-                />
+        <form onSubmit={handleSubmit} className="auth-form">
+            <div className="form-group">
+                <label>Email Address</label>
+                <div className="input-with-icon">
+                    <i className="fas fa-envelope"></i>
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="form-control"
+                        placeholder="john@example.com"
+                        required
+                    />
+                </div>
             </div>
-            <div>
-                <label className="block text-gray-700">Password</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="w-full border p-2 rounded"
-                    required
-                />
+            <div className="form-group">
+                <label>Password</label>
+                <div className="input-with-icon">
+                    <i className="fas fa-lock"></i>
+                    <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="form-control"
+                        placeholder="••••••••"
+                        required
+                    />
+                </div>
             </div>
-            <button type="submit" className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700">
-                Login
+            <div className="form-options">
+                <label className="checkbox-label">
+                    <input type="checkbox" /> Remember me
+                </label>
+                <a href="#" className="forgot-password">Forgot Password?</a>
+            </div>
+            <button type="submit" className="btn btn-primary btn-full login-submit-btn">
+                <i className="fas fa-sign-in-alt"></i> Sign In to AgroLink
             </button>
         </form>
     );

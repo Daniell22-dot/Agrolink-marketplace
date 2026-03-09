@@ -3,6 +3,7 @@ const cloudinary = require('../../config/cloudinary');
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize');
 const searchService = require('../../services/searchService');
+const recommendationService = require('../../services/recommendationService');
 
 // Helper to upload buffer to Cloudinary
 const uploadToCloudinary = (buffer) => {
@@ -46,7 +47,7 @@ exports.getProducts = async (req, res, next) => {
         }
 
         if (category) {
-            whereClause.category = category;
+            whereClause.category_id = category;
         }
 
         if (minPrice || maxPrice) {
@@ -55,7 +56,7 @@ exports.getProducts = async (req, res, next) => {
             if (maxPrice) whereClause.price[Op.lte] = maxPrice;
         }
 
-        let order = [['createdAt', 'DESC']];
+        let order = [['created_at', 'DESC']];
         if (sort === 'price_asc') order = [['price', 'ASC']];
         if (sort === 'price_desc') order = [['price', 'DESC']];
 
@@ -87,6 +88,18 @@ exports.getProduct = async (req, res, next) => {
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Increment view counter
+        await product.increment('views');
+
+        // Track view for ML recommendations (if user is authenticated)
+        if (req.user) {
+            recommendationService.trackInteraction(
+                req.user.id,
+                product.id,
+                'view'
+            ).catch(() => { }); // Fire and forget, don't block response
         }
 
         res.json({

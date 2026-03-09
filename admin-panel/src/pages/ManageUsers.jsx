@@ -19,13 +19,13 @@ const ManageUsers = () => {
   }, [dispatch, pagination.page, roleFilter, searchTerm]);
 
   const handleStatusChange = (userId, newStatus) => {
-    if (confirm(`Are you sure you want to change user status to ${newStatus}?`)) {
+    if (window.confirm(`Are you sure you want to change user status to ${newStatus}?`)) {
       dispatch(updateUserStatus({ userId, status: newStatus }));
     }
   };
 
   const handleDeleteUser = (userId) => {
-    if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+    if (window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
       dispatch(deleteUser(userId));
     }
   };
@@ -34,7 +34,7 @@ const ManageUsers = () => {
     <div className="manage-users">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Manage Users</h1>
-        
+
         {/* Filters */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded-lg shadow-md mb-6">
           <input
@@ -95,11 +95,10 @@ const ManageUsers = () => {
                     <td className="px-6 py-4 text-sm font-medium text-gray-800">{user.name}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{user.email}</td>
                     <td className="px-6 py-4 text-sm">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                        user.role === 'admin' ? 'bg-purple-100 text-purple-700' :
-                        user.role === 'farmer' ? 'bg-green-100 text-green-700' :
-                        'bg-blue-100 text-blue-700'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${user.role === 'admin' ? 'bg-purple-100 text-purple-700' :
+                          user.role === 'farmer' ? 'bg-green-100 text-green-700' :
+                            'bg-blue-100 text-blue-700'
+                        }`}>
                         {user.role?.charAt(0).toUpperCase() + user.role?.slice(1)}
                       </span>
                     </td>
@@ -107,11 +106,10 @@ const ManageUsers = () => {
                       <select
                         value={user.status || 'active'}
                         onChange={(e) => handleStatusChange(user.id, e.target.value)}
-                        className={`px-2 py-1 rounded text-xs font-semibold ${
-                          user.status === 'active' ? 'bg-green-100 text-green-700' :
-                          user.status === 'suspended' ? 'bg-red-100 text-red-700' :
-                          'bg-yellow-100 text-yellow-700'
-                        }`}
+                        className={`px-2 py-1 rounded text-xs font-semibold ${user.status === 'active' ? 'bg-green-100 text-green-700' :
+                            user.status === 'suspended' ? 'bg-red-100 text-red-700' :
+                              'bg-yellow-100 text-yellow-700'
+                          }`}
                       >
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>

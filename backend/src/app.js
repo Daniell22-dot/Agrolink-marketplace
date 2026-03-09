@@ -36,6 +36,7 @@ app.use('/api/cart', require('./api/routes/cartRoutes'));
 app.use('/api/chat', require('./api/routes/chatRoutes'));
 app.use('/api/reviews', require('./api/routes/reviewRoutes'));
 app.use('/api/notifications', require('./api/routes/notificationRoutes'));
+app.use('/api/recommendations', require('./api/routes/recommendationRoutes'));
 app.use('/api/payments', require('./api/routes/paymentRoutes'));
 app.use('/api/webhooks', require('./api/routes/webhookRoutes'));
 

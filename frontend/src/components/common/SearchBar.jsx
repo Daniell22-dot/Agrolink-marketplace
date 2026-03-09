@@ -1,4 +1,5 @@
 import React from 'react';
+import './SearchBar.css';
 
 const SearchBar = ({ onSearch, placeholder = "Search products..." }) => {
     const [query, setQuery] = React.useState('');

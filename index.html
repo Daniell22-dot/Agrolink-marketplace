@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Design with FastAPI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Stone & Teal -->
+    <!-- Application Structure Plan: A single-page application structured as a digital book. It uses a sidebar for persistent navigation across chapters. This functional layout allows users to easily jump between complex topics like Authentication, Database Models, and Caching without losing their place. JavaScript handles dynamic content switching to maintain the SPA feel, minimizing cognitive load while reading technical documentation. -->
+    <!-- Visualization & Content Choices: 
+         1. Architecture Concept -> HTML/Tailwind Grid -> Shows request flow. Avoids SVG/Mermaid. 
+         2. Caching Performance -> Chart.js Bar Chart -> Compares DB vs Redis latency visually. 
+         3. Rate Limiting -> Chart.js Line Chart -> Illustrates requests accepted vs dropped over time. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 380px;
+            }
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .nav-link,
+        .code-font {
+            font-family: 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif';
+        }
+
+        pre {
+            font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace';
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f4;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d6d3d1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e;
+        }
+    </style>
+</head>
+
+<body class="bg-stone-50 text-stone-800 flex h-screen overflow-hidden">
+
+    <aside
+        class="w-72 bg-stone-100 border-r border-stone-200 flex flex-col h-full shrink-0 shadow-sm z-10 hidden md:flex">
+        <div class="p-6 border-b border-stone-200">
+            <h1 class="text-2xl font-bold text-teal-800 leading-tight">FastAPI System Architecture</h1>
+            <p class="text-sm text-stone-500 mt-2">A Comprehensive Guide</p>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-3" id="nav-menu">
+                <li><button id="link-ch1" onclick="showChapter('ch1')"
+                        class="nav-link w-full text-left px-4 py-2 rounded-md text-stone-700 hover:bg-stone-200 transition-colors bg-stone-200 font-semibold">1.
+                        Introduction & Core Concepts</button></li>
+                <li><button id="link-ch2" onclick="showChapter('ch2')"
+                        class="nav-link w-full text-left px-4 py-2 rounded-md text-stone-700 hover:bg-stone-200 transition-colors">2.
+                        Database Models & Migrations</button></li>
+                <li><button id="link-ch3" onclick="showChapter('ch3')"
+                        class="nav-link w-full text-left px-4 py-2 rounded-md text-stone-700 hover:bg-stone-200 transition-colors">3.
+                        Auth, JWT & CORS</button></li>
+                <li><button id="link-ch4" onclick="showChapter('ch4')"
+                        class="nav-link w-full text-left px-4 py-2 rounded-md text-stone-700 hover:bg-stone-200 transition-colors">4.
+                        API Routing & Sharding</button></li>
+                <li><button id="link-ch5" onclick="showChapter('ch5')"
+                        class="nav-link w-full text-left px-4 py-2 rounded-md text-stone-700 hover:bg-stone-200 transition-colors">5.
+                        Caching, Redis & Rate Limiting</button></li>
+                <li><button id="link-ch6" onclick="showChapter('ch6')"
+                        class="nav-link w-full text-left px-4 py-2 rounded-md text-stone-700 hover:bg-stone-200 transition-colors">6.
+                        Monitoring & Frontend</button></li>
+                <li><button id="link-ch7" onclick="showChapter('ch7')"
+                        class="nav-link w-full text-left px-4 py-2 rounded-md text-stone-700 hover:bg-stone-200 transition-colors">References
+                        (APA)</button></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div
+        class="md:hidden bg-stone-100 border-b border-stone-200 p-4 flex justify-between items-center absolute w-full top-0 z-20 shadow-sm">
+        <h1 class="text-xl font-bold text-teal-800">FastAPI Architecture</h1>
+        <select onchange="showChapter(this.value)"
+            class="bg-white border border-stone-300 rounded px-2 py-1 text-sm font-sans">
+            <option value="ch1">1. Introduction</option>
+            <option value="ch2">2. Database & Migrations</option>
+            <option value="ch3">3. Auth & CORS</option>
+            <option value="ch4">4. Routing & Sharding</option>
+            <option value="ch5">5. Redis & Rate Limits</option>
+            <option value="ch6">6. Monitoring</option>
+            <option value="ch7">References</option>
+        </select>
+    </div>
+
+    <main class="flex-1 h-full overflow-y-auto pt-16 md:pt-0 bg-white">
+        <div class="max-w-4xl mx-auto p-6 md:p-12 pb-24 relative">
+
+            <section id="ch1" class="chapter-content block">
+                <header class="mb-10">
+                    <h2 class="text-4xl font-light text-stone-800 mb-4 border-b-2 border-teal-600 pb-2 inline-block">
+                        Chapter 1: Introduction & Core Concepts</h2>
+                    <p class="text-lg text-stone-600 font-sans mt-4">Establishing the foundation of Python function
+                        definitions, FastAPI principles, and navigating strict type-checking environments like Pylance.
+                    </p>
+                </header>
+
+                <article class="prose prose-stone max-w-none text-lg leading-relaxed">
+                    <p>Modern software design demands high performance, rapid iteration, and robust type safety.
+                        FastAPI, built on standard Python type hints, has emerged as a leading framework for building
+                        web APIs. This chapter explores the fundamental mechanics of defining functions within this
+                        ecosystem and addressing common static analysis hurdles.</p>
+
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">1.1 Defining Functions in
+                        FastAPI</h3>
+                    <p>In FastAPI, endpoint functions (path operations) are defined using standard Python
+                        <code>def</code> or <code>async def</code> syntax. The choice depends heavily on the I/O
+                        operations performed within the function. If your function communicates with a database
+                        asynchronously or calls external APIs, <code>async def</code> is mandated to prevent blocking
+                        the event loop.</p>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python">from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Item(BaseModel):
+    name: str
+    price: float
+
+# Synchronous function definition
+@app.post("/items/sync/")
+def create_item_sync(item: Item):
+    # Suitable for CPU-bound tasks or sync DB drivers
+    return {"message": "Item created synchronously", "item": item}
+
+# Asynchronous function definition
+@app.post("/items/async/")
+async def create_item_async(item: Item):
+    # Suitable for async I/O (e.g., asyncpg, httpx)
+    await some_async_db_save(item)
+    return {"message": "Item created asynchronously", "item": item}</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">1.2 Navigating Pylance Issues
+                    </h3>
+                    <p>Pylance is a highly performant language server for Python, providing deep type analysis. However,
+                        when working with highly dynamic libraries like SQLAlchemy or sometimes Pydantic, developers
+                        frequently encounter false positives or "type unknown" errors.</p>
+                    <p>Common Pylance issues include:</p>
+                    <ul class="list-disc pl-6 space-y-2 font-sans mb-6">
+                        <li><strong>SQLAlchemy Declarative Base:</strong> Pylance often struggles to infer types for
+                            dynamically generated column attributes on SQLAlchemy models.</li>
+                        <li><strong>Dependency Injection:</strong> FastAPI's <code>Depends()</code> can sometimes
+                            confuse static analyzers regarding the expected return type.</li>
+                    </ul>
+
+                    <p>To mitigate these issues, developers should utilize explicit type casting or
+                        <code>TYPE_CHECKING</code> blocks. For SQLAlchemy 2.0, utilizing <code>Mapped</code> and
+                        <code>mapped_column</code> greatly improves Pylance compatibility compared to the older
+                        declarative styles.</p>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python">from typing import TYPE_CHECKING
+from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
+
+class Base(DeclarativeBase):
+    pass
+
+class User(Base):
+    __tablename__ = "users"
+    
+    # Using Mapped resolves most Pylance inference issues
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(unique=True, index=True)</code></pre>
+                    </div>
+                </article>
+            </section>
+
+            <section id="ch2" class="chapter-content hidden">
+                <header class="mb-10">
+                    <h2 class="text-4xl font-light text-stone-800 mb-4 border-b-2 border-teal-600 pb-2 inline-block">
+                        Chapter 2: Database Models & Migrations</h2>
+                    <p class="text-lg text-stone-600 font-sans mt-4">Architecting persistent storage using SQLAlchemy
+                        models, separating concerns with Pydantic schemas, and managing schema evolution with Alembic.
+                    </p>
+                </header>
+
+                <article class="prose prose-stone max-w-none text-lg leading-relaxed">
+                    <p>A clean separation between how data is stored (Models) and how it is transmitted over the network
+                        (Schemas) is a cornerstone of robust software architecture. FastAPI relies on Pydantic for the
+                        latter and commonly integrates with SQLAlchemy for the former.</p>
+
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">2.1 Models vs. Schemas</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 font-sans">
+                        <div class="bg-stone-100 p-5 rounded-lg border border-stone-200">
+                            <h4 class="font-bold text-teal-800 mb-2 flex items-center"><span
+                                    class="text-xl mr-2">🗄️</span> SQLAlchemy Models</h4>
+                            <p class="text-sm text-stone-700">Define the structure of the database tables. They utilize
+                                ORM mappings to translate Python classes into SQL execution plans.</p>
+                        </div>
+                        <div class="bg-stone-100 p-5 rounded-lg border border-stone-200">
+                            <h4 class="font-bold text-teal-800 mb-2 flex items-center"><span
+                                    class="text-xl mr-2">📄</span> Pydantic Schemas</h4>
+                            <p class="text-sm text-stone-700">Define the shape of JSON requests and responses. They
+                                handle data validation, serialization, and type coercion.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python"># Schema (Pydantic) - For API input/output
+from pydantic import BaseModel, EmailStr
+
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str
+
+class UserResponse(BaseModel):
+    id: int
+    email: EmailStr
+    
+    class Config:
+        from_attributes = True # Allows reading from ORM model
+
+# Model (SQLAlchemy) - For Database interaction
+# (Assuming Base is defined as shown in Chapter 1)
+class User(Base):
+    __tablename__ = "users"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    email: Mapped[str] = mapped_column(unique=True)
+    hashed_password: Mapped[str] = mapped_column()</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">2.2 Database Migrations with
+                        Alembic</h3>
+                    <p>As applications evolve, so does the database schema. Alembic is the standard migration tool for
+                        SQLAlchemy. It tracks changes to your models and generates SQL scripts to upgrade or downgrade
+                        the database schema safely.</p>
+
+                    <div class="p-6 bg-stone-100 border-l-4 border-teal-600 rounded my-6 font-sans">
+                        <h4 class="font-bold mb-2">Standard Migration Workflow:</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-sm">
+                            <li>Modify your SQLAlchemy models in Python.</li>
+                            <li>Generate a migration script: <br><code
+                                    class="bg-stone-200 px-1 py-0.5 rounded">alembic revision --autogenerate -m "added user table"</code>
+                            </li>
+                            <li>Review the generated script in the <code>alembic/versions/</code> directory to ensure
+                                Pylance/Alembic correctly interpreted the changes.</li>
+                            <li>Apply the migration to the database: <br><code
+                                    class="bg-stone-200 px-1 py-0.5 rounded">alembic upgrade head</code></li>
+                        </ol>
+                    </div>
+                </article>
+            </section>
+
+            <section id="ch3" class="chapter-content hidden">
+                <header class="mb-10">
+                    <h2 class="text-4xl font-light text-stone-800 mb-4 border-b-2 border-teal-600 pb-2 inline-block">
+                        Chapter 3: Security, Auth & CORS</h2>
+                    <p class="text-lg text-stone-600 font-sans mt-4">Securing endpoints using OAuth2 password bearer
+                        flow, issuing JSON Web Tokens (JWT), and configuring Cross-Origin Resource Sharing (CORS)
+                        middleware.</p>
+                </header>
+
+                <article class="prose prose-stone max-w-none text-lg leading-relaxed">
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">3.1 CORS Middleware</h3>
+                    <p>When the frontend application runs on a different domain or port than the FastAPI backend (which
+                        is standard in modern web development), CORS policies dictate how browsers permit cross-origin
+                        requests. FastAPI handles this elegantly via middleware.</p>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python">from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+origins = [
+    "http://localhost:3000",      # React/Vue frontend
+    "https://production-app.com",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Authorization", "Content-Type"],
+)</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">3.2 OAuth2 Client and JWT
+                        Authentication</h3>
+                    <p>Implementing stateless authentication involves users exchanging credentials for a JSON Web Token
+                        (JWT). This token is cryptographically signed using a <code>SECRET_KEY</code> and is passed in
+                        the <code>Authorization</code> header for subsequent requests.</p>
+
+                    <p>FastAPI provides <code>OAuth2PasswordBearer</code> which simplifies extracting the token from the
+                        header. We utilize the <code>PyJWT</code> library to encode and decode the tokens.</p>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python">from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+import jwt
+from datetime import datetime, timedelta
+
+SECRET_KEY = "your-super-secret-jwt-key"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+@app.post("/token")
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    # In a real app, hash the password and verify against the DB
+    if form_data.username != "admin" or form_data.password != "secret":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+        )
+    access_token = create_access_token(data={"sub": form_data.username})
+    return {"access_token": access_token, "token_type": "bearer"}
+
+@app.get("/users/me")
+async def read_users_me(token: str = Depends(oauth2_scheme)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        return {"user": username}
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")</code></pre>
+                    </div>
+                </article>
+            </section>
+
+            <section id="ch4" class="chapter-content hidden">
+                <header class="mb-10">
+                    <h2 class="text-4xl font-light text-stone-800 mb-4 border-b-2 border-teal-600 pb-2 inline-block">
+                        Chapter 4: API Routes Design & Sharding</h2>
+                    <p class="text-lg text-stone-600 font-sans mt-4">Structuring massive applications using APIRouter
+                        and discussing architectural patterns for database sharding at scale.</p>
+                </header>
+
+                <article class="prose prose-stone max-w-none text-lg leading-relaxed">
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">4.1 Modular Routing Design
+                    </h3>
+                    <p>Putting all route definitions in the main application file leads to unmaintainable code. FastAPI
+                        provides the <code>APIRouter</code> class to organize path operations across multiple files
+                        logically.</p>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python"># app/routers/users.py
+from fastapi import APIRouter
+
+router = APIRouter(
+    prefix="/users",
+    tags=["users"],
+    responses={404: {"description": "Not found"}},
+)
+
+@router.get("/")
+async def read_users():
+    return [{"username": "Rick"}, {"username": "Morty"}]
+
+# app/main.py
+from fastapi import FastAPI
+from app.routers import users
+
+app = FastAPI()
+app.include_router(users.router)</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">4.2 Database Shards</h3>
+                    <p>As data volume grows beyond the capacity of a single database node, sharding (horizontal
+                        partitioning) becomes necessary. While FastAPI doesn't shard data itself, its architecture must
+                        support routing database queries to the correct shard.</p>
+
+                    <div class="bg-stone-100 p-6 rounded-lg my-6 font-sans text-center border border-stone-200">
+                        <h4 class="font-bold text-stone-700 mb-4">Application-Level Sharding Logic</h4>
+                        <div class="flex flex-col md:flex-row justify-center items-center gap-4 text-sm">
+                            <div class="bg-white p-3 shadow-sm rounded border border-stone-300 w-32">API
+                                Request<br><span class="text-xs text-stone-500">Tenant ID: 45</span></div>
+                            <div class="hidden md:block text-teal-600 text-2xl font-bold">→</div>
+                            <div class="md:hidden text-teal-600 text-2xl font-bold">↓</div>
+                            <div class="bg-teal-50 p-3 shadow-sm rounded border border-teal-200 w-40">Shard Router
+                                Middleware<br><span class="text-xs text-stone-500">Hash(45) % 2 = 1</span></div>
+                            <div class="hidden md:block text-teal-600 text-2xl font-bold">→</div>
+                            <div class="md:hidden text-teal-600 text-2xl font-bold">↓</div>
+                            <div class="flex flex-col gap-2">
+                                <div class="bg-stone-200 p-2 rounded w-32 opacity-50">DB Node 0</div>
+                                <div class="bg-teal-600 text-white p-2 rounded w-32 font-bold shadow">DB Node 1</div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-stone-500 mt-4 text-left">In practice, libraries like SQLAlchemy routing
+                            sessions are configured to pick the DB engine based on context variables set by FastAPI
+                            dependencies.</p>
+                    </div>
+
+                </article>
+            </section>
+
+            <section id="ch5" class="chapter-content hidden">
+                <header class="mb-10">
+                    <h2 class="text-4xl font-light text-stone-800 mb-4 border-b-2 border-teal-600 pb-2 inline-block">
+                        Chapter 5: Caching, Redis & Rate Limiting</h2>
+                    <p class="text-lg text-stone-600 font-sans mt-4">Optimizing system performance by implementing Redis
+                        for memory caching and protecting endpoints using algorithmic rate limiting.</p>
+                </header>
+
+                <article class="prose prose-stone max-w-none text-lg leading-relaxed">
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">5.1 System Caching with Redis
+                        Server</h3>
+                    <p>Fetching complex data repeatedly from disk-backed databases drastically degrades performance.
+                        Implementing an in-memory datastore like Redis acts as an intermediate cache layer. Libraries
+                        like <code>fastapi-cache2</code> integrate seamlessly.</p>
+
+                    <div class="chart-container my-8">
+                        <canvas id="cacheChart"></canvas>
+                    </div>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python">from fastapi import FastAPI
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from fastapi_cache.decorator import cache
+from redis import asyncio as aioredis
+
+app = FastAPI()
+
+@app.on_event("startup")
+async def startup():
+    redis = aioredis.from_url("redis://localhost:6379", encoding="utf8", decode_responses=True)
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
+
+@app.get("/expensive-data")
+@cache(expire=60) # Caches the result for 60 seconds
+async def get_expensive_data():
+    # Simulate heavy DB operation
+    await asyncio.sleep(2) 
+    return {"data": "This required intense computation"}</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">5.2 Rate Limiting</h3>
+                    <p>To prevent abuse, Denial of Service (DoS) attacks, or simply managing usage quotas, rate limiting
+                        is essential. We use <code>slowapi</code>, a library designed for FastAPI to track request
+                        rates, usually backed by Redis.</p>
+
+                    <div class="chart-container my-8">
+                        <canvas id="rateLimitChart"></canvas>
+                    </div>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python">from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from fastapi import Request
+
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+@app.get("/public-api")
+@limiter.limit("5/minute")
+async def public_endpoint(request: Request):
+    return {"message": "Success!"}</code></pre>
+                    </div>
+                </article>
+            </section>
+
+            <section id="ch6" class="chapter-content hidden">
+                <header class="mb-10">
+                    <h2 class="text-4xl font-light text-stone-800 mb-4 border-b-2 border-teal-600 pb-2 inline-block">
+                        Chapter 6: Monitoring & Frontend Integration</h2>
+                    <p class="text-lg text-stone-600 font-sans mt-4">Establishing system observability to detect faults
+                        early and effectively connecting the backend logic to client-facing frontends.</p>
+                </header>
+
+                <article class="prose prose-stone max-w-none text-lg leading-relaxed">
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">6.1 System Monitoring</h3>
+                    <p>An application in production is a black box without monitoring. Integrating Prometheus allows for
+                        the collection of rich metrics including request duration, error rates, and system memory
+                        utilization.</p>
+
+                    <div class="bg-stone-900 rounded-lg p-4 my-6 shadow-inner overflow-x-auto">
+                        <pre class="text-stone-100 text-sm"><code class="language-python">from starlette_exporter import PrometheusMiddleware, handle_metrics
+
+app.add_middleware(PrometheusMiddleware)
+app.add_route("/metrics", handle_metrics)
+# Prometheus server can now scrape http://app:8000/metrics</code></pre>
+                    </div>
+
+                    <h3 class="text-2xl font-semibold mt-8 mb-4 font-sans text-stone-800">6.2 Frontend Connectivity</h3>
+                    <p>While this book focuses on the backend, the ultimate consumer is the frontend. FastAPIs automatic
+                        generation of OpenAPI specifications (Swagger/Redoc) at <code>/docs</code> allows frontend
+                        developers to seamlessly generate API client code (using tools like Orval or OpenAPI Generator
+                        for TypeScript).</p>
+
+                    <p>Communication relies heavily on the aforementioned CORS settings and secure handling of the JWT
+                        secret. Frontend applications typically store the JWT in secure HttpOnly cookies or memory,
+                        appending it to the <code>Authorization: Bearer</code> header for every fetch request to the
+                        FastAPI server.</p>
+                </article>
+            </section>
+
+            <section id="ch7" class="chapter-content hidden">
+                <header class="mb-10">
+                    <h2 class="text-4xl font-light text-stone-800 mb-4 border-b-2 border-teal-600 pb-2 inline-block">
+                        References</h2>
+                    <p class="text-lg text-stone-600 font-sans mt-4">Citations formatted according to the APA (American
+                        Psychological Association) 7th Edition guidelines.</p>
+                </header>
+
+                <article class="prose prose-stone max-w-none text-lg leading-relaxed pl-8 -indent-8">
+                    <p class="mb-4">Bayer, M. (2023). <em>SQLAlchemy 2.0 Documentation</em>. SQLAlchemy.
+                        https://docs.sqlalchemy.org/en/20/</p>
+                    <p class="mb-4">Carlson, S. (2021). <em>Redis for Dummies</em>. Wiley Publishing. </p>
+                    <p class="mb-4">Colvin, S. (2023). <em>Pydantic User Guide</em>. Pydantic.
+                        https://docs.pydantic.dev/latest/</p>
+                    <p class="mb-4">Jones, M., & Bradley, T. (2015). JSON Web Token (JWT). <em>Internet Engineering Task
+                            Force (IETF)</em>. https://datatracker.ietf.org/doc/html/rfc7519</p>
+                    <p class="mb-4">Microsoft. (2023). <em>Pylance Language Server</em>. Visual Studio Code.
+                        https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance</p>
+                    <p class="mb-4">Ramírez, S. (2023). <em>FastAPI: Modern, fast (high-performance), web framework for
+                            building APIs with Python</em>. tiangolo. https://fastapi.tiangolo.com/</p>
+                    <p class="mb-4">Redis Ltd. (2023). <em>Redis Data Structures and Caching Strategies</em>.
+                        https://redis.io/docs/</p>
+                </article>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        let cacheChartInstance = null;
+        let rateLimitChartInstance = null;
+
+        function showChapter(chapterId) {
+            document.querySelectorAll('.chapter-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('bg-stone-300', 'font-semibold');
+                el.classList.add('hover:bg-stone-200');
+            });
+
+            document.getElementById(chapterId).classList.remove('hidden');
+            document.getElementById(chapterId).classList.add('block');
+
+            const linkId = 'link-' + chapterId;
+            const linkEl = document.getElementById(linkId);
+            if (linkEl) {
+                linkEl.classList.add('bg-stone-300', 'font-semibold');
+                linkEl.classList.remove('hover:bg-stone-200');
+            }
+
+            document.querySelector('select').value = chapterId;
+
+            document.querySelector('main').scrollTop = 0;
+
+            if (chapterId === 'ch5') {
+                renderCharts();
+            }
+        }
+
+        function renderCharts() {
+            if (!cacheChartInstance) {
+                const ctxCache = document.getElementById('cacheChart').getContext('2d');
+                cacheChartInstance = new Chart(ctxCache, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Direct Database Query', 'Redis Cache Hit'],
+                        datasets: [{
+                            label: 'Response Latency (Milliseconds)',
+                            data: [215, 12],
+                            backgroundColor: [
+                                'rgba(120, 113, 108, 0.8)',
+                                'rgba(13, 148, 136, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(87, 83, 78, 1)',
+                                'rgba(15, 118, 110, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Impact of Redis Caching on API Latency',
+                                font: { size: 16, family: 'sans-serif' }
+                            },
+                            legend: { display: false }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Milliseconds (ms)' }
+                            }
+                        }
+                    }
+                });
+            }
+
+            if (!rateLimitChartInstance) {
+                const ctxRate = document.getElementById('rateLimitChart').getContext('2d');
+                rateLimitChartInstance = new Chart(ctxRate, {
+                    type: 'line',
+                    data: {
+                        labels: ['0s', '10s', '20s', '30s', '40s', '50s', '60s'],
+                        datasets: [
+                            {
+                                label: 'Accepted Requests',
+                                data: [5, 15, 25, 40, 50, 50, 50],
+                                borderColor: 'rgba(13, 148, 136, 1)',
+                                backgroundColor: 'rgba(13, 148, 136, 0.2)',
+                                fill: true,
+                                tension: 0.3
+                            },
+                            {
+                                label: 'Dropped (429 Error)',
+                                data: [0, 0, 0, 0, 10, 35, 60],
+                                borderColor: 'rgba(220, 38, 38, 1)',
+                                backgroundColor: 'rgba(220, 38, 38, 0.2)',
+                                fill: true,
+                                borderDash: [5, 5],
+                                tension: 0.3
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Rate Limiter Profile (Limit: 50 req/min)',
+                                font: { size: 16, family: 'sans-serif' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Cumulative Requests' }
+                            },
+                            x: {
+                                title: { display: true, text: 'Time in seconds' }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

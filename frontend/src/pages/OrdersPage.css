@@ -1,0 +1,257 @@
+.orders-page {
+    padding: 32px 0 60px;
+    min-height: 100vh;
+    background: #f5f7f5;
+}
+
+.orders-header {
+    margin-bottom: 28px;
+}
+
+.orders-header h1 {
+    font-size: 1.8rem;
+    color: #1b5e20;
+    margin-bottom: 4px;
+}
+
+.orders-header p {
+    color: #888;
+    font-size: 0.95rem;
+}
+
+/* Status Tabs */
+.status-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 25px;
+    background: #fff;
+    color: #666;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    border-color: #2d8c3e;
+    color: #2d8c3e;
+}
+
+.tab-btn.active {
+    background: #2d8c3e;
+    color: #fff;
+    border-color: #2d8c3e;
+}
+
+/* Loading */
+.loading-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.loading-state p {
+    margin-top: 16px;
+    color: #888;
+}
+
+/* Empty */
+.empty-orders {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.empty-orders i {
+    font-size: 3.5rem;
+    color: #ccc;
+    margin-bottom: 16px;
+}
+
+.empty-orders h3 {
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.empty-orders p {
+    color: #888;
+    margin-bottom: 24px;
+}
+
+/* Orders Grid */
+.orders-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.order-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.order-number {
+    font-weight: 700;
+    color: #1b5e20;
+    font-size: 1rem;
+    display: block;
+}
+
+.order-placed {
+    font-size: 0.82rem;
+    color: #999;
+}
+
+.status-pill {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.status-approved {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-shipped {
+    background: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.status-delivered {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.status-cancelled {
+    background: #fce4ec;
+    color: #c62828;
+}
+
+.order-card-body {
+    flex: 1;
+    margin-bottom: 16px;
+}
+
+.order-detail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.order-detail i {
+    color: #2d8c3e;
+    width: 16px;
+    text-align: center;
+}
+
+.order-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 14px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.payment-status {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.payment-status i {
+    font-size: 0.5rem;
+}
+
+.pay-pending {
+    color: #ef6c00;
+}
+
+.pay-completed {
+    color: #2e7d32;
+}
+
+.pay-failed {
+    color: #c62828;
+}
+
+.view-link {
+    color: #2d8c3e;
+    font-weight: 600;
+    font-size: 0.88rem;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+.page-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background: #fff;
+    color: #666;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.page-btn:hover {
+    border-color: #2d8c3e;
+    color: #2d8c3e;
+}
+
+.page-btn.active {
+    background: #2d8c3e;
+    color: #fff;
+    border-color: #2d8c3e;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .orders-grid {
+        grid-template-columns: 1fr;
+    }
+}
