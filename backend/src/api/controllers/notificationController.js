@@ -35,7 +35,7 @@ exports.markAsRead = async (req, res, next) => {
             return res.status(401).json({ message: 'Not authorized' });
         }
 
-        notification.read = true;
+        notification.isRead = true;
         await notification.save();
 
         res.json({

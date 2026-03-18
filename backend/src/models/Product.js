@@ -7,11 +7,11 @@ const Product = sequelize.define('Product', {
     primaryKey: true,
     autoIncrement: true
   },
-  farmer_id: {
+  farmerId: {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  category_id: {
+  categoryId: {
     type: DataTypes.INTEGER,
     allowNull: true
   },
@@ -51,11 +51,11 @@ const Product = sequelize.define('Product', {
     type: DataTypes.DECIMAL(11, 8),
     allowNull: true
   },
-  harvest_date: {
+  harvestDate: {
     type: DataTypes.DATE,
     allowNull: true
   },
-  is_available: {
+  isAvailable: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
     defaultValue: true
@@ -67,9 +67,8 @@ const Product = sequelize.define('Product', {
   }
 }, {
   tableName: 'products',
-  timestamps: true,
-  createdAt: 'created_at',
-  updatedAt: 'updated_at'
+  underscored: true,
+  timestamps: true
 });
 
 module.exports = Product;

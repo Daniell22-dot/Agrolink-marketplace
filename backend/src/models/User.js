@@ -8,7 +8,7 @@ const User = sequelize.define('User', {
     primaryKey: true,
     autoIncrement: true
   },
-  national_id: {
+  nationalId: {
     type: DataTypes.STRING(20),
     allowNull: false,
     unique: true
@@ -18,7 +18,7 @@ const User = sequelize.define('User', {
     allowNull: false,
     unique: true
   },
-  full_name: {
+  fullName: {
     type: DataTypes.STRING(100),
     allowNull: false
   },
@@ -59,7 +59,7 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING(50),
     allowNull: true
   },
-  sub_county: {
+  subCounty: {
     type: DataTypes.STRING(50),
     allowNull: true
   },
@@ -67,47 +67,48 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING(500),
     allowNull: true
   },
-  is_verified: {
+  isVerified: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
     defaultValue: false
   },
-  is_active: {
+  isActive: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
     defaultValue: true
   },
-  two_fa_secret: {
+  twoFaSecret: {
     type: DataTypes.STRING(100),
     allowNull: true
   },
-  two_fa_enabled: {
+  twoFaEnabled: {
     type: DataTypes.BOOLEAN,
     allowNull: true,
     defaultValue: false
   },
-  failed_login_attempts: {
+  failedLoginAttempts: {
     type: DataTypes.INTEGER,
     allowNull: true,
     defaultValue: 0
   },
-  account_locked_until: {
+  accountLockedUntil: {
     type: DataTypes.DATE,
     allowNull: true
   },
-  last_login: {
+  lastLogin: {
     type: DataTypes.DATE,
     allowNull: true
   },
-  reset_password_token: {
+  resetPasswordToken: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  reset_password_expire: {
+  resetPasswordExpire: {
     type: DataTypes.DATE,
     allowNull: true
   }
 }, {
+  underscored: true,
   timestamps: true,
   hooks: {
     beforeCreate: async (user) => {

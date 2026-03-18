@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateUser } from '../redux/slices/authSlice';
 import toast from 'react-hot-toast';
 import authService from '../services/authService';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
     const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [changingPassword, setChangingPassword] = useState(false);
     const [profile, setProfile] = useState({
         full_name: '', email: '', phone: '', location: '',
-        county: '', sub_county: '', username: ''
+        county: '', sub_county: '', username: '', avatarFile: null, avatarPreview: null
     });
     const [passwords, setPasswords] = useState({
         currentPassword: '', newPassword: '', confirmPassword: ''
@@ -20,7 +22,7 @@ const ProfilePage = () => {
     useEffect(() => {
         if (user) {
             setProfile({
-                full_name: user.full_name || '',
+                full_name: user.fullName || user.full_name || '',
                 email: user.email || '',
                 phone: user.phone || '',
                 location: user.location || '',
@@ -35,12 +37,18 @@ const ProfilePage = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await authService.updateProfile({
-                name: profile.full_name,
-                email: profile.email,
-                phone: profile.phone,
-                location: profile.location
-            });
+            const formData = new FormData();
+            formData.append('fullName', profile.full_name);
+            formData.append('email', profile.email);
+            formData.append('phone', profile.phone);
+            formData.append('location', profile.location);
+            formData.append('county', profile.county);
+            if (profile.avatarFile) {
+                formData.append('avatar', profile.avatarFile);
+            }
+
+            const result = await authService.updateProfile(formData);
+            dispatch(updateUser(result.data));
             toast.success('Profile updated successfully!');
             setEditing(false);
         } catch (error) {
@@ -83,13 +91,38 @@ const ProfilePage = () => {
                     {/* Profile Sidebar */}
                     <div className="profile-sidebar">
                         <div className="profile-avatar-section">
-                            <div className="profile-avatar">
-                                {user?.full_name?.charAt(0)?.toUpperCase() || 'U'}
+                            <div className="profile-avatar" style={{ overflow: 'hidden', position: 'relative' }}>
+                                {profile.avatarPreview || user?.avatar ? (
+                                    <img src={profile.avatarPreview || user.avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                ) : (
+                                    (user?.fullName?.charAt(0)?.toUpperCase() || user?.full_name?.charAt(0)?.toUpperCase() || user?.username?.charAt(0)?.toUpperCase() || 'U')
+                                )}
                             </div>
-                            <h2>{user?.full_name || user?.username}</h2>
+                            
+                            {editing && (
+                                <div style={{ marginTop: '10px' }}>
+                                    <input 
+                                        type="file" 
+                                        accept="image/*" 
+                                        onChange={(e) => {
+                                            const file = e.target.files[0];
+                                            if (file) {
+                                                setProfile({ 
+                                                    ...profile, 
+                                                    avatarFile: file, 
+                                                    avatarPreview: URL.createObjectURL(file) 
+                                                });
+                                            }
+                                        }} 
+                                        style={{ fontSize: '12px', maxWidth: '180px' }} 
+                                    />
+                                </div>
+                            )}
+
+                            <h2 style={{ marginTop: '10px' }}>{user?.fullName || user?.full_name || user?.username}</h2>
                             <span className="profile-role">{user?.role === 'farmer' ? '🌾 Farmer' : '🛒 Buyer'}</span>
                             <p className="profile-location">
-                                <i className="fas fa-map-marker-alt"></i> {user?.county || 'Kenya'}
+                                <i className="fas fa-map-marker-alt"></i> {user?.county || user?.location || 'Location Not Set'}
                             </p>
                         </div>
                         <nav className="profile-nav">

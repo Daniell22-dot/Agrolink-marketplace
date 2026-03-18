@@ -2,11 +2,11 @@ import React from 'react';
 
 const RecentActivity = ({ activities = [] }) => {
   const mockActivities = [
-    { id: 1, type: 'order', message: 'New order #12345 received', timestamp: '2 hours ago', icon: '🛒' },
-    { id: 2, type: 'product', message: 'Product "Organic Tomatoes" approved', timestamp: '4 hours ago', icon: '✅' },
-    { id: 3, type: 'user', message: 'New user registered', timestamp: '6 hours ago', icon: '👤' },
-    { id: 4, type: 'payment', message: 'Payment processed for order #12340', timestamp: '8 hours ago', icon: '💳' },
-    { id: 5, type: 'report', message: 'New report submitted', timestamp: '10 hours ago', icon: '⚠️' }
+    { id: 1, type: 'order', message: 'New order #12345 received', timestamp: '2 hours ago', icon: '' },
+    { id: 2, type: 'product', message: 'Product "Organic Tomatoes" approved', timestamp: '4 hours ago', icon: '' },
+    { id: 3, type: 'user', message: 'New user registered', timestamp: '6 hours ago', icon: '' },
+    { id: 4, type: 'payment', message: 'Payment processed for order #12340', timestamp: '8 hours ago', icon: '' },
+    { id: 5, type: 'report', message: 'New report submitted', timestamp: '10 hours ago', icon: '' }
   ];
 
   const displayActivities = activities.length > 0 ? activities : mockActivities;

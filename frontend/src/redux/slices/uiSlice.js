@@ -4,12 +4,6 @@ const initialState = {
   isLoading: false,
   showModal: false,
   modalType: null,
-  modalData: null,
-  showNotification: false,
-  notification: {
-    type: 'info', // 'success', 'error', 'warning', 'info'
-    message: ''
-  },
   showSidebar: false,
   theme: localStorage.getItem('theme') || 'light',
   notification: {

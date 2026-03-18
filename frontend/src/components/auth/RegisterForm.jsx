@@ -57,8 +57,8 @@ const RegisterForm = ({ onSubmit, loading }) => {
             return;
         }
 
-        // Validate National ID (Kenyan format: 8 digits)
-        if (!/^\d{7,8}$/.test(formData.nationalId)) {
+        // Validate National ID (only for farmers)
+        if (formData.role === 'farmer' && !/^\d{7,8}$/.test(formData.nationalId)) {
             alert('Please enter a valid Kenyan National ID (7-8 digits)');
             return;
         }
@@ -77,23 +77,25 @@ const RegisterForm = ({ onSubmit, loading }) => {
             <h2>Create Your Account</h2>
             <p className="subtitle">Join AgroLink - Connecting Farmers to Markets</p>
 
-            {/* National ID */}
-            <div className="form-group">
-                <label htmlFor="nationalId">
-                    <i className="fas fa-id-card"></i> National ID *
-                </label>
-                <input
-                    type="text"
-                    id="nationalId"
-                    name="nationalId"
-                    value={formData.nationalId}
-                    onChange={handleChange}
-                    placeholder="Enter your National ID"
-                    required
-                    maxLength="8"
-                />
-                <small>Kenyan National ID (7-8 digits)</small>
-            </div>
+            {/* National ID - Only for Farmers */}
+            {formData.role === 'farmer' && (
+                <div className="form-group">
+                    <label htmlFor="nationalId">
+                        <i className="fas fa-id-card"></i> National ID *
+                    </label>
+                    <input
+                        type="text"
+                        id="nationalId"
+                        name="nationalId"
+                        value={formData.nationalId}
+                        onChange={handleChange}
+                        placeholder="Enter your National ID"
+                        required
+                        maxLength="8"
+                    />
+                    <small>Kenyan National ID (7-8 digits)</small>
+                </div>
+            )}
 
             {/* Username */}
             <div className="form-group">

@@ -27,11 +27,12 @@ const Notification = sequelize.define('Notification', {
     referenceId: { // e.g., Order ID, Chat ID
         type: DataTypes.INTEGER
     },
-    read: {
+    isRead: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     }
 }, {
+    underscored: true,
     timestamps: true
 });
 

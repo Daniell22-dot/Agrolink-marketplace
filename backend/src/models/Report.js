@@ -7,15 +7,15 @@ const Report = sequelize.define('Report', {
         primaryKey: true,
         autoIncrement: true
     },
-    reporter_id: {
+    reporterId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    reported_user_id: {
+    reportedUserId: {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    reported_product_id: {
+    reportedProductId: {
         type: DataTypes.INTEGER,
         allowNull: true
     },
@@ -36,23 +36,22 @@ const Report = sequelize.define('Report', {
         allowNull: true,
         defaultValue: 'pending'
     },
-    admin_notes: {
+    adminNotes: {
         type: DataTypes.TEXT,
         allowNull: true
     },
-    resolved_by: {
+    resolvedBy: {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    resolved_at: {
+    resolvedAt: {
         type: DataTypes.DATE,
         allowNull: true
     }
 }, {
     tableName: 'reports',
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    underscored: true,
+    timestamps: true
 });
 
 module.exports = Report;

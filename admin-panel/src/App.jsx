@@ -34,13 +34,24 @@ const AdminProtectedRoute = ({ children }) => {
 // Main App Component
 function AppContent() {
   const dispatch = useDispatch();
-  const { isAuthenticated, token } = useSelector(state => state.adminAuth);
+  const { isAuthenticated, token, isVerifying } = useSelector(state => state.adminAuth);
 
   useEffect(() => {
     if (token && !isAuthenticated) {
       dispatch(verifyAdminToken());
     }
   }, [dispatch, token, isAuthenticated]);
+
+  if (isVerifying) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-agrolink-green">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white mx-auto mb-4"></div>
+          <h2 className="text-2xl font-bold text-white uppercase tracking-widest">Securing Connection...</h2>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Router>

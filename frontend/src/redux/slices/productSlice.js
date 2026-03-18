@@ -117,8 +117,13 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.products = action.payload.products || [];
-        state.pagination = action.payload.pagination || state.pagination;
+        state.products = action.payload.data || [];
+        state.pagination = {
+          page: action.payload.currentPage || 1,
+          limit: state.pagination.limit,
+          total: action.payload.count || 0,
+          totalPages: action.payload.totalPages || 1
+        };
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.isLoading = false;
@@ -130,7 +135,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.selectedProduct = action.payload.product;
+        state.selectedProduct = action.payload.data;
       })
       .addCase(fetchProductById.rejected, (state, action) => {
         state.isLoading = false;
@@ -142,7 +147,7 @@ const productSlice = createSlice({
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.products.push(action.payload.product);
+        state.products.push(action.payload.data);
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.isLoading = false;
@@ -150,9 +155,9 @@ const productSlice = createSlice({
       })
       // Update Product
       .addCase(updateProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex(p => p.id === action.payload.product.id);
+        const index = state.products.findIndex(p => p.id === action.payload.data.id);
         if (index !== -1) {
-          state.products[index] = action.payload.product;
+          state.products[index] = action.payload.data;
         }
       })
       // Delete Product

@@ -116,8 +116,13 @@ const orderSlice = createSlice({
       })
       .addCase(fetchOrders.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.orders = action.payload.orders || [];
-        state.pagination = action.payload.pagination || state.pagination;
+        state.orders = action.payload.data || [];
+        // If the backend doesn't provide pagination object yet, we mock it from data
+        state.pagination = {
+          page: 1, // default for now as controller doesn't return page/limit yet for orders
+          limit: 10,
+          total: action.payload.data?.length || 0
+        };
       })
       .addCase(fetchOrders.rejected, (state, action) => {
         state.isLoading = false;
@@ -129,7 +134,7 @@ const orderSlice = createSlice({
       })
       .addCase(fetchOrderById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.selectedOrder = action.payload.order;
+        state.selectedOrder = action.payload.data;
       })
       .addCase(fetchOrderById.rejected, (state, action) => {
         state.isLoading = false;
@@ -141,7 +146,7 @@ const orderSlice = createSlice({
       })
       .addCase(createOrder.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.orders.unshift(action.payload.order);
+        state.orders.unshift(action.payload.data);
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.isLoading = false;
@@ -149,19 +154,24 @@ const orderSlice = createSlice({
       })
       // Cancel Order
       .addCase(cancelOrder.fulfilled, (state, action) => {
-        const index = state.orders.findIndex(o => o.id === action.payload.order.id);
+        const updatedOrder = action.payload.data;
+        const index = state.orders.findIndex(o => o.id === updatedOrder.id);
         if (index !== -1) {
-          state.orders[index] = action.payload.order;
+          state.orders[index] = updatedOrder;
+        }
+        if (state.selectedOrder?.id === updatedOrder.id) {
+          state.selectedOrder = updatedOrder;
         }
       })
       // Update Status
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
-        const index = state.orders.findIndex(o => o.id === action.payload.order.id);
+        const updatedOrder = action.payload.data;
+        const index = state.orders.findIndex(o => o.id === updatedOrder.id);
         if (index !== -1) {
-          state.orders[index] = action.payload.order;
+          state.orders[index] = updatedOrder;
         }
-        if (state.selectedOrder?.id === action.payload.order.id) {
-          state.selectedOrder = action.payload.order;
+        if (state.selectedOrder?.id === updatedOrder.id) {
+          state.selectedOrder = updatedOrder;
         }
       });
   }

@@ -4,7 +4,7 @@ import { fetchProducts, fetchProductById } from '../redux/slices/productSlice';
 
 export const useProducts = (filters = {}) => {
     const dispatch = useDispatch();
-    const { products, currentProduct, loading, error } = useSelector((state) => state.products);
+    const { products, selectedProduct, isLoading, error } = useSelector((state) => state.products);
 
     useEffect(() => {
         dispatch(fetchProducts(filters));
@@ -16,8 +16,8 @@ export const useProducts = (filters = {}) => {
 
     return {
         products,
-        currentProduct,
-        loading,
+        selectedProduct,
+        isLoading,
         error,
         getProductById
     };

@@ -41,7 +41,7 @@ exports.sendOrderNotification = async (order, user) => {
             email: user.email,
             template: 'orderConfirmation',
             data: {
-                name: user.name,
+                fullName: user.fullName,
                 orderId: order.id,
                 total: order.totalAmount
             }

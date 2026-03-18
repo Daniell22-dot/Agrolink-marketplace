@@ -60,11 +60,15 @@ const DashboardPage = () => {
                 <div className="dashboard-header">
                     <div className="welcome-section">
                         <div className="avatar-circle">
-                            {user?.full_name?.charAt(0)?.toUpperCase() || user?.username?.charAt(0)?.toUpperCase() || 'U'}
+                            {user?.avatar ? (
+                                <img src={user.avatar} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+                            ) : (
+                                user?.fullName?.charAt(0)?.toUpperCase() || user?.full_name?.charAt(0)?.toUpperCase() || user?.username?.charAt(0)?.toUpperCase() || 'U'
+                            )}
                         </div>
                         <div>
-                            <h1>Welcome back, {user?.full_name || user?.username || 'User'}!</h1>
-                            <p className="role-badge">{isFarmer ? '🌾 Farmer' : '🛒 Buyer'} • {user?.county || 'Kenya'}</p>
+                            <h1>Welcome back, {user?.fullName || user?.full_name || user?.username || 'User'}!</h1>
+                            <p className="role-badge">{isFarmer ? '🌾 Farmer' : '🛒 Buyer'} • {user?.county || user?.location || 'Kenya'}</p>
                         </div>
                     </div>
                     <div className="header-actions">

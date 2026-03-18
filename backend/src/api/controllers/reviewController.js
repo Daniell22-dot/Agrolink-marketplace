@@ -14,7 +14,7 @@ exports.getProductReviews = async (req, res, next) => {
         const reviews = await Review.findAll({
             where: { productId },
             include: [
-                { model: User, attributes: ['id', 'name', 'profileImage'] }
+                { model: User, attributes: ['id', 'fullName', 'avatar'] }
             ],
             order: [['createdAt', 'DESC']]
         });
@@ -70,14 +70,36 @@ exports.addReview = async (req, res, next) => {
         const review = await Review.create({
             userId: req.user.id,
             productId,
+            orderId: orderItem.Order.id,
             rating,
-            comment,
-            isVerifiedPurchase
+            comment
         });
 
         res.status(201).json({
             success: true,
             data: review
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+// @desc    Get latest reviews (for homepage)
+// @route   GET /api/reviews/latest
+// @access  Public
+exports.getLatestReviews = async (req, res, next) => {
+    try {
+        const reviews = await Review.findAll({
+            limit: 10,
+            include: [
+                { model: User, attributes: ['fullName', 'county'] },
+                { model: Product, attributes: ['name', 'imageUrl'] }
+            ],
+            order: [['createdAt', 'DESC']]
+        });
+
+        res.json({
+            success: true,
+            data: reviews
         });
     } catch (error) {
         next(error);

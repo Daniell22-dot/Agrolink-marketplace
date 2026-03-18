@@ -2,6 +2,20 @@ const User = require('../../models/User');
 const Product = require('../../models/Product');
 const Order = require('../../models/Order');
 const bcrypt = require('bcryptjs');
+const cloudinary = require('cloudinary').v2;
+
+const uploadToCloudinary = (buffer) => {
+    return new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+            { folder: 'agrolink/avatars' },
+            (error, result) => {
+                if (error) reject(error);
+                else resolve(result.secure_url);
+            }
+        );
+        uploadStream.end(buffer);
+    });
+};
 
 // @desc    Get current user profile
 // @route   GET /api/users/profile
@@ -29,10 +43,15 @@ exports.updateUserProfile = async (req, res, next) => {
         const user = await User.findByPk(req.user.id);
 
         if (user) {
-            user.name = req.body.name || user.name;
-            user.email = req.body.email || user.email;
-            user.phone = req.body.phone || user.phone;
-            user.location = req.body.location || user.location;
+            if (req.body.fullName !== undefined) user.fullName = req.body.fullName;
+            if (req.body.email !== undefined) user.email = req.body.email;
+            if (req.body.phone !== undefined) user.phone = req.body.phone;
+            if (req.body.location !== undefined) user.location = req.body.location;
+            if (req.body.county !== undefined) user.county = req.body.county;
+
+            if (req.file) {
+                user.avatar = await uploadToCloudinary(req.file.buffer);
+            }
 
             const updatedUser = await user.save();
 
@@ -40,10 +59,13 @@ exports.updateUserProfile = async (req, res, next) => {
                 success: true,
                 data: {
                     id: updatedUser.id,
-                    name: updatedUser.name,
+                    fullName: updatedUser.fullName,
                     email: updatedUser.email,
                     phone: updatedUser.phone,
-                    role: updatedUser.role
+                    role: updatedUser.role,
+                    avatar: updatedUser.avatar,
+                    location: updatedUser.location,
+                    county: updatedUser.county
                 }
             });
         } else {

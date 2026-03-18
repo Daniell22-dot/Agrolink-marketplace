@@ -7,11 +7,11 @@ const Transaction = sequelize.define('Transaction', {
         primaryKey: true,
         autoIncrement: true
     },
-    order_id: {
+    orderId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    user_id: {
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -19,20 +19,20 @@ const Transaction = sequelize.define('Transaction', {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false
     },
-    payment_method: {
+    paymentMethod: {
         type: DataTypes.ENUM('mpesa', 'card', 'escrow'),
         allowNull: false
     },
-    transaction_id: {
+    transactionId: {
         type: DataTypes.STRING(100),
         allowNull: true,
         unique: true
     },
-    mpesa_receipt_number: {
+    mpesaReceiptNumber: {
         type: DataTypes.STRING(50),
         allowNull: true
     },
-    phone_number: {
+    phoneNumber: {
         type: DataTypes.STRING(20),
         allowNull: true
     },
@@ -47,8 +47,8 @@ const Transaction = sequelize.define('Transaction', {
     }
 }, {
     tableName: 'transactions',
+    underscored: true,
     timestamps: true,
-    createdAt: 'created_at',
     updatedAt: false
 });
 

@@ -140,16 +140,16 @@ const ContactPage = () => {
                                 <div className="info-icon"><i className="fas fa-phone-alt"></i></div>
                                 <div>
                                     <h4>Phone</h4>
-                                    <p>+254 700 123 456</p>
-                                    <p>+254 733 789 012</p>
+                                    <p>+254 700 133456</p>
+                                    <p>+254 733 133456</p>
                                 </div>
                             </div>
                             <div className="info-card">
                                 <div className="info-icon"><i className="fas fa-map-marker-alt"></i></div>
                                 <div>
                                     <h4>Office</h4>
-                                    <p>Westlands, Nairobi</p>
-                                    <p>Kenya</p>
+                                    <p>Agro House, 4th Floor</p>
+                                    <p>Nairobi, Kenya</p>
                                 </div>
                             </div>
                             <div className="info-card">

@@ -118,32 +118,39 @@ const adminProductsSlice = createSlice({
       })
       .addCase(fetchAdminProducts.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.products = action.payload.products || [];
-        state.pagination = action.payload.pagination || state.pagination;
+        state.products = action.payload.data || [];
+        state.pagination = {
+          page: action.payload.currentPage || 1,
+          limit: state.pagination.limit,
+          total: action.payload.count || 0
+        };
       })
       .addCase(fetchAdminProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
       .addCase(fetchProductDetail.fulfilled, (state, action) => {
-        state.selectedProduct = action.payload.product;
+        state.selectedProduct = action.payload.data;
       })
       .addCase(approveProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex(p => p.id === action.payload.product.id);
+        const product = action.payload.data;
+        const index = state.products.findIndex(p => p.id === product.id);
         if (index !== -1) {
-          state.products[index] = action.payload.product;
+          state.products[index] = product;
         }
       })
       .addCase(rejectProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex(p => p.id === action.payload.product.id);
+        const product = action.payload.data;
+        const index = state.products.findIndex(p => p.id === product.id);
         if (index !== -1) {
-          state.products[index] = action.payload.product;
+          state.products[index] = product;
         }
       })
       .addCase(suspendProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex(p => p.id === action.payload.product.id);
+        const product = action.payload.data;
+        const index = state.products.findIndex(p => p.id === product.id);
         if (index !== -1) {
-          state.products[index] = action.payload.product;
+          state.products[index] = product;
         }
       });
   }

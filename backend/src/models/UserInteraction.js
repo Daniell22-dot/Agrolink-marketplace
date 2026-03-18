@@ -7,17 +7,17 @@ const UserInteraction = sequelize.define('UserInteraction', {
         primaryKey: true,
         autoIncrement: true
     },
-    user_id: {
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: 'users', key: 'id' }
     },
-    product_id: {
+    productId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: 'products', key: 'id' }
     },
-    interaction_type: {
+    interactionType: {
         type: DataTypes.ENUM('view', 'purchase', 'cart_add', 'search', 'wishlist'),
         allowNull: false
     },
@@ -27,14 +27,14 @@ const UserInteraction = sequelize.define('UserInteraction', {
     }
 }, {
     tableName: 'user_interactions',
+    underscored: true,
     timestamps: true,
-    createdAt: 'created_at',
     updatedAt: false,
     indexes: [
-        { fields: ['user_id', 'interaction_type'] },
-        { fields: ['product_id', 'interaction_type'] },
-        { fields: ['created_at'] },
-        { fields: ['user_id', 'product_id'] }
+        { fields: ['userId', 'interactionType'] },
+        { fields: ['productId', 'interactionType'] },
+        { fields: ['createdAt'] },
+        { fields: ['userId', 'productId'] }
     ]
 });
 

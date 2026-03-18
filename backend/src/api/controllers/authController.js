@@ -25,7 +25,6 @@ exports.register = async (req, res, next) => {
       nationalId,
       username,
       fullName,
-      name,
       email,
       phone,
       password,
@@ -37,30 +36,38 @@ exports.register = async (req, res, next) => {
       subCounty
     } = req.body;
 
+    // Validate role-specific requirements
+    if (role === 'farmer' && !nationalId) {
+      return res.status(400).json({ message: 'National ID is required for farmers' });
+    }
+
     // Check if user exists
+    const whereConditions = [
+      { email },
+      { phone },
+      { username }
+    ];
+    if (nationalId) {
+      whereConditions.push({ nationalId });
+    }
+
     const userExists = await User.findOne({
       where: {
-        [require('sequelize').Op.or]: [
-          { email },
-          { phone },
-          { nationalId },
-          { username }
-        ]
+        [require('sequelize').Op.or]: whereConditions
       }
     });
 
     if (userExists) {
       return res.status(400).json({
-        message: 'User already exists with this email, phone, national ID, or username'
+        message: 'User already exists with this email, phone, or username'
       });
     }
 
     // Create user
     const user = await User.create({
-      nationalId,
+      nationalId: nationalId || null,
       username,
       fullName,
-      name: fullName, // Set name to fullName for compatibility
       email,
       phone,
       password,
@@ -70,8 +77,9 @@ exports.register = async (req, res, next) => {
       longitude,
       county,
       subCounty,
-      twoFactorEnabled: false,
-      loginAttempts: 0
+      twoFaEnabled: false,
+      failedLoginAttempts: 0,
+      isVerified: role === 'buyer' // Farmers need manual verification
     });
 
     // Generate tokens
@@ -82,18 +90,17 @@ exports.register = async (req, res, next) => {
       success: true,
       accessToken,
       refreshToken,
-      user: {
+      data: {
         id: user.id,
         nationalId: user.nationalId,
         username: user.username,
         fullName: user.fullName,
-        name: user.name,
         email: user.email,
         phone: user.phone,
         role: user.role,
         location: user.location,
         county: user.county,
-        twoFactorEnabled: user.twoFactorEnabled
+        twoFaEnabled: user.twoFaEnabled
       }
     });
   } catch (error) {
@@ -106,15 +113,22 @@ exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Find user
-    const user = await User.findOne({ where: { email } });
+    // Find user by email or phone (frontend passes the identifier as 'email')
+    const user = await User.findOne({
+      where: {
+        [require('sequelize').Op.or]: [
+          { email: email },
+          { phone: email }
+        ]
+      }
+    });
 
     if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
     // Check for Account Lock
-    if (user.lockUntil && user.lockUntil > Date.now()) {
+    if (user.accountLockedUntil && user.accountLockedUntil > Date.now()) {
       return res.status(403).json({
         message: `Account locked. Try again later.`
       });
@@ -125,10 +139,10 @@ exports.login = async (req, res, next) => {
 
     if (!isMatch) {
       // Increment login attempts
-      user.loginAttempts += 1;
-      if (user.loginAttempts >= 5) {
-        user.lockUntil = Date.now() + 30 * 60 * 1000; // 30 minutes lock
-        user.loginAttempts = 0; // Reset attempts after locking
+      user.failedLoginAttempts += 1;
+      if (user.failedLoginAttempts >= 5) {
+        user.accountLockedUntil = Date.now() + 30 * 60 * 1000; // 30 minutes lock
+        user.failedLoginAttempts = 0; // Reset attempts after locking
         await user.save();
         return res.status(403).json({ message: 'Account locked due to too many failed attempts' });
       }
@@ -137,12 +151,12 @@ exports.login = async (req, res, next) => {
     }
 
     // Reset login attempts on success
-    user.loginAttempts = 0;
-    user.lockUntil = null;
+    user.failedLoginAttempts = 0;
+    user.accountLockedUntil = null;
     await user.save();
 
     // Check 2FA
-    if (user.twoFactorEnabled) {
+    if (user.twoFaEnabled) {
       return res.json({
         success: true,
         twoFactorRequired: true,
@@ -158,14 +172,16 @@ exports.login = async (req, res, next) => {
       success: true,
       accessToken,
       refreshToken,
-      user: {
+      data: {
         id: user.id,
-        name: user.name,
+        fullName: user.fullName,
         email: user.email,
         phone: user.phone,
         role: user.role,
         location: user.location,
-        twoFactorEnabled: user.twoFactorEnabled
+        county: user.county,
+        avatar: user.avatar,
+        twoFaEnabled: user.twoFaEnabled
       }
     });
   } catch (error) {
@@ -213,7 +229,7 @@ exports.enable2FA = async (req, res, next) => {
     const user = await User.findByPk(req.user.id);
     const secret = otplib.authenticator.generateSecret();
 
-    user.twoFactorSecret = secret;
+    user.twoFaSecret = secret;
     await user.save();
 
     const otpauth = otplib.authenticator.keyuri(user.email, 'AgroLink', secret);
@@ -250,15 +266,15 @@ exports.verify2FA = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const isValid = otplib.authenticator.check(token, user.twoFactorSecret);
+    const isValid = otplib.authenticator.check(token, user.twoFaSecret);
 
     if (!isValid) {
       return res.status(400).json({ message: 'Invalid OTP code' });
     }
 
     // IF enabling 2FA
-    if (req.user && !user.twoFactorEnabled) {
-      user.twoFactorEnabled = true;
+    if (req.user && !user.twoFaEnabled) {
+      user.twoFaEnabled = true;
       await user.save();
       return res.json({ success: true, message: '2FA Enabled Successfully' });
     }
@@ -272,12 +288,15 @@ exports.verify2FA = async (req, res, next) => {
         success: true,
         accessToken,
         refreshToken,
-        user: {
+        data: {
           id: user.id,
-          name: user.name,
+          fullName: user.fullName,
           email: user.email,
           role: user.role,
-          twoFactorEnabled: user.twoFactorEnabled
+          location: user.location,
+          county: user.county,
+          avatar: user.avatar,
+          twoFaEnabled: user.twoFaEnabled
         }
       });
     }
@@ -295,13 +314,13 @@ exports.disable2FA = async (req, res, next) => {
     const { token } = req.body;
     const user = await User.findByPk(req.user.id);
 
-    const isValid = otplib.authenticator.check(token, user.twoFactorSecret);
+    const isValid = otplib.authenticator.check(token, user.twoFaSecret);
     if (!isValid) {
       return res.status(400).json({ message: 'Invalid OTP code' });
     }
 
-    user.twoFactorEnabled = false;
-    user.twoFactorSecret = null;
+    user.twoFaEnabled = false;
+    user.twoFaSecret = null;
     await user.save();
 
     res.json({ success: true, message: '2FA Disabled' });
@@ -314,12 +333,12 @@ exports.disable2FA = async (req, res, next) => {
 exports.getMe = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: { exclude: ['password', 'twoFactorSecret'] }
+      attributes: { exclude: ['password', 'twoFaSecret'] }
     });
 
     res.json({
       success: true,
-      user
+      data: user
     });
   } catch (error) {
     next(error);

@@ -8,13 +8,14 @@ const {
     getMyOrders
 } = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');
+const upload = require('../middleware/uploadMiddleware');
 
 // All routes are protected
 router.use(protect);
 
 router.route('/profile')
     .get(getUserProfile)
-    .put(updateUserProfile);
+    .put(upload.single('avatar'), updateUserProfile);
 
 router.put('/password', changePassword);
 router.get('/my-products', getMyProducts);

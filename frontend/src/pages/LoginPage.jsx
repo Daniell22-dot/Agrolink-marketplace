@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../redux/slices/authSlice';
 import LoginForm from '../components/auth/LoginForm';
-import authService from '../services/authService';
 import './LoginPage.css';
 
 const LoginPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleLogin = async (formData) => {
@@ -14,14 +16,16 @@ const LoginPage = () => {
         setError('');
 
         try {
-            const response = await authService.login(formData);
-            console.log('Login successful:', response);
-
-            // Redirect to dashboard
-            navigate('/dashboard');
+            const result = await dispatch(login(formData));
+            if (login.fulfilled.match(result)) {
+                // Redirect to dashboard
+                navigate('/dashboard');
+            } else {
+                setError(result.payload?.message || 'Login failed');
+            }
         } catch (err) {
             console.error('Login error:', err);
-            setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
+            setError('An unexpected error occurred');
         } finally {
             setLoading(false);
         }

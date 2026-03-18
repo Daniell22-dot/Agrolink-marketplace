@@ -18,17 +18,21 @@ const Chat = sequelize.define('Chat', {
         allowNull: false
     },
     productId: {
-        type: DataTypes.INTEGER, // Optional: Chat about specific product
+        type: DataTypes.INTEGER,
         allowNull: true
     },
     lastMessage: {
         type: DataTypes.TEXT
+    },
+    lastMessageAt: {
+        type: DataTypes.DATE
     },
     unreadCount: {
         type: DataTypes.INTEGER,
         defaultValue: 0
     }
 }, {
+    underscored: true,
     timestamps: true
 });
 

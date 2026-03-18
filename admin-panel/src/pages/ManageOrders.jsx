@@ -102,6 +102,7 @@ const ManageOrders = () => {
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Amount</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Date</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Location</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
               </tr>
             </thead>
@@ -123,7 +124,7 @@ const ManageOrders = () => {
                   <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-50">
                     <td className="px-6 py-4 text-sm font-medium text-gray-800">#{order.id?.slice(0, 8)}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{order.customer?.name || 'N/A'}</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-gray-800">${order.totalAmount?.toFixed(2)}</td>
+                    <td className="px-6 py-4 text-sm font-semibold text-gray-800">Ksh {order.totalAmount?.toLocaleString() || '0'}</td>
                     <td className="px-6 py-4 text-sm">
                       <select
                         value={order.status || 'pending'}
@@ -138,6 +139,22 @@ const ManageOrders = () => {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-600">
                       {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-600">
+                      <div className="flex flex-col">
+                        <span className="font-medium text-gray-800">{order.User?.county || 'N/A'}</span>
+                        <span className="text-xs">{order.User?.location || 'No location data'}</span>
+                        {order.User?.latitude && (
+                          <a 
+                            href={`https://www.google.com/maps?q=${order.User.latitude},${order.User.longitude}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-blue-500 hover:underline mt-1"
+                          >
+                            View on Map
+                          </a>
+                        )}
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-sm space-x-2">
                       <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">

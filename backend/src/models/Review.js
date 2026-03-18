@@ -9,15 +9,15 @@ const Review = sequelize.define('Review', {
         primaryKey: true,
         autoIncrement: true
     },
-    product_id: {
+    productId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    user_id: {
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    order_id: {
+    orderId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -31,9 +31,8 @@ const Review = sequelize.define('Review', {
     }
 }, {
     tableName: 'reviews',
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    underscored: true,
+    timestamps: true
 });
 
 // Associations

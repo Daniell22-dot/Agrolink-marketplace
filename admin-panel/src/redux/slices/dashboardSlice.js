@@ -79,7 +79,7 @@ const dashboardSlice = createSlice({
       })
       .addCase(fetchDashboardStats.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.stats = action.payload.stats || state.stats;
+        state.stats = action.payload.data || state.stats;
       })
       .addCase(fetchDashboardStats.rejected, (state, action) => {
         state.isLoading = false;
@@ -91,7 +91,7 @@ const dashboardSlice = createSlice({
       })
       // Fetch Recent Activity
       .addCase(fetchRecentActivity.fulfilled, (state, action) => {
-        state.recentActivity = action.payload.activity || [];
+        state.recentActivity = action.payload.data || [];
       });
   }
 });

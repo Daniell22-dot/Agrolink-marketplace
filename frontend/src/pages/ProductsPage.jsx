@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../redux/slices/productSlice';
 import ProductCard from '../components/products/ProductCard';
 import SearchBar from '../components/common/SearchBar';
 import FilterSidebar from '../components/products/FilterSidebar';
@@ -23,7 +24,7 @@ const ProductsPage = () => {
 
     useEffect(() => {
         // Fetch products with filters
-        // dispatch(fetchProducts(filters));
+        dispatch(fetchProducts(filters));
     }, [filters, dispatch]);
 
     const handleFilterChange = (name, value) => {

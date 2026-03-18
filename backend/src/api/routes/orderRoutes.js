@@ -4,7 +4,8 @@ const {
     createOrder,
     getMyOrders,
     getOrderById,
-    updateOrderStatus
+    updateOrderStatus,
+    cancelOrder
 } = require('../controllers/orderController');
 const { protect } = require('../middleware/authMiddleware');
 const { checkRole } = require('../middleware/rbacMiddleware');
@@ -21,6 +22,9 @@ router.route('/:id')
     .get(getOrderById);
 
 router.route('/:id/status')
-    .put(checkRole('admin', 'farmer'), updateOrderStatus); // Farmer might update their own order parts? For now admin/farmer
+    .put(checkRole('admin', 'farmer'), updateOrderStatus);
+
+router.route('/:id/cancel')
+    .post(cancelOrder);
 
 module.exports = router;

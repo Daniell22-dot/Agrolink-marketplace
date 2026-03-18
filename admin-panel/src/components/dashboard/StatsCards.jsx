@@ -11,12 +11,12 @@ const StatsCards = ({ stats = {} }) => {
   } = stats;
 
   const cards = [
-    { title: 'Total Users', value: totalUsers, icon: '👥', color: 'bg-blue-500' },
-    { title: 'Total Products', value: totalProducts, icon: '📦', color: 'bg-green-500' },
-    { title: 'Total Orders', value: totalOrders, icon: '🛒', color: 'bg-purple-500' },
-    { title: 'Total Revenue', value: `$${totalRevenue?.toLocaleString() || 0}`, icon: '💰', color: 'bg-yellow-500' },
-    { title: 'Orders Today', value: newOrdersToday, icon: '📊', color: 'bg-red-500' },
-    { title: 'Pending Orders', value: pendingOrders, icon: '⏳', color: 'bg-orange-500' }
+    { title: 'Total Users', value: totalUsers, icon: '', color: 'bg-blue-500' },
+    { title: 'Total Products', value: totalProducts, icon: '', color: 'bg-green-500' },
+    { title: 'Total Orders', value: totalOrders, icon: '', color: 'bg-purple-500' },
+    { title: 'Total Revenue', value: `Ksh ${totalRevenue?.toLocaleString() || 0}`, icon: '', color: 'bg-yellow-500' },
+    { title: 'Orders Today', value: newOrdersToday, icon: '', color: 'bg-red-500' },
+    { title: 'Pending Orders', value: pendingOrders, icon: '', color: 'bg-orange-500' }
   ];
 
   return (

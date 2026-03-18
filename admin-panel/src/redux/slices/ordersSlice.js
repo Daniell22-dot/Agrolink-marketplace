@@ -118,35 +118,42 @@ const adminOrdersSlice = createSlice({
       })
       .addCase(fetchAdminOrders.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.orders = action.payload.orders || [];
-        state.pagination = action.payload.pagination || state.pagination;
+        state.orders = action.payload.data || [];
+        state.pagination = {
+          page: action.payload.currentPage || 1,
+          limit: state.pagination.limit,
+          total: action.payload.count || 0
+        };
       })
       .addCase(fetchAdminOrders.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
       .addCase(fetchOrderDetail.fulfilled, (state, action) => {
-        state.selectedOrder = action.payload.order;
+        state.selectedOrder = action.payload.data;
       })
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
-        const index = state.orders.findIndex(o => o.id === action.payload.order.id);
+        const order = action.payload.data;
+        const index = state.orders.findIndex(o => o.id === order.id);
         if (index !== -1) {
-          state.orders[index] = action.payload.order;
+          state.orders[index] = order;
         }
-        if (state.selectedOrder?.id === action.payload.order.id) {
-          state.selectedOrder = action.payload.order;
+        if (state.selectedOrder?.id === order.id) {
+          state.selectedOrder = order;
         }
       })
       .addCase(cancelOrder.fulfilled, (state, action) => {
-        const index = state.orders.findIndex(o => o.id === action.payload.order.id);
+        const order = action.payload.data;
+        const index = state.orders.findIndex(o => o.id === order.id);
         if (index !== -1) {
-          state.orders[index] = action.payload.order;
+          state.orders[index] = order;
         }
       })
       .addCase(refundOrder.fulfilled, (state, action) => {
-        const index = state.orders.findIndex(o => o.id === action.payload.order.id);
+        const order = action.payload.data;
+        const index = state.orders.findIndex(o => o.id === order.id);
         if (index !== -1) {
-          state.orders[index] = action.payload.order;
+          state.orders[index] = order;
         }
       });
   }

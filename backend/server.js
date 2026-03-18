@@ -15,7 +15,10 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = socketio(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: [
+      process.env.FRONTEND_URL || 'http://localhost:3000',
+      process.env.ADMIN_URL || 'http://localhost:3001'
+    ],
     methods: ['GET', 'POST'],
     credentials: true
   }
@@ -41,6 +44,10 @@ const startServer = async () => {
     if (process.env.NODE_ENV === 'development') {
       await sequelize.sync({ alter: false }); // Set to true to update tables
       console.log(' Database synced');
+      
+      // Seed Super Admin
+      const seedSuperAdmin = require('./src/seeds/superAdmin');
+      await seedSuperAdmin();
     }
 
     const PORT = process.env.PORT || 5000;

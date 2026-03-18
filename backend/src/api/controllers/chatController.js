@@ -13,8 +13,8 @@ exports.getConversations = async (req, res, next) => {
                 [Op.or]: [{ buyerId: req.user.id }, { farmerId: req.user.id }]
             },
             include: [
-                { model: User, as: 'Buyer', attributes: ['id', 'name', 'profileImage'] },
-                { model: User, as: 'Farmer', attributes: ['id', 'name', 'profileImage'] }
+                { model: User, as: 'Buyer', attributes: ['id', 'fullName', 'avatar'] },
+                { model: User, as: 'Farmer', attributes: ['id', 'fullName', 'avatar'] }
             ],
             order: [['updatedAt', 'DESC']]
         });
@@ -36,7 +36,7 @@ exports.getMessages = async (req, res, next) => {
         const messages = await Message.findAll({
             where: { chatId: req.params.chatId },
             include: [
-                { model: User, as: 'Sender', attributes: ['id', 'name'] }
+                { model: User, as: 'Sender', attributes: ['id', 'fullName'] }
             ],
             order: [['createdAt', 'ASC']]
         });

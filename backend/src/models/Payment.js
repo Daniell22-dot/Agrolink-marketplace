@@ -43,6 +43,7 @@ const Payment = sequelize.define('Payment', {
         type: DataTypes.JSON
     }
 }, {
+    underscored: true,
     timestamps: true
 });
 

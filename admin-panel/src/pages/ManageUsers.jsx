@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers, updateUserStatus, deleteUser } from '../redux/slices/usersSlice';
+import { fetchUsers, updateUser, deleteUser } from '../redux/slices/usersSlice';
 import toast from 'react-hot-toast';
 
 const ManageUsers = () => {
@@ -18,9 +18,11 @@ const ManageUsers = () => {
     }));
   }, [dispatch, pagination.page, roleFilter, searchTerm]);
 
-  const handleStatusChange = (userId, newStatus) => {
-    if (window.confirm(`Are you sure you want to change user status to ${newStatus}?`)) {
-      dispatch(updateUserStatus({ userId, status: newStatus }));
+  const handleUpdateUser = (userId, updateData) => {
+    const field = Object.keys(updateData)[0];
+    const value = updateData[field];
+    if (window.confirm(`Are you sure you want to change ${field} to ${value}?`)) {
+      dispatch(updateUser({ userId, ...updateData }));
     }
   };
 
@@ -70,6 +72,7 @@ const ManageUsers = () => {
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Name</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Role</th>
+                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Verified</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Joined</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
@@ -91,8 +94,8 @@ const ManageUsers = () => {
               ) : (
                 users.map((user) => (
                   <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm text-gray-700">#{user.id?.slice(0, 8)}</td>
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800">{user.name}</td>
+                    <td className="px-6 py-4 text-sm text-gray-700">#{user.id}</td>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-800">{user.fullName}</td>
                     <td className="px-6 py-4 text-sm text-gray-600">{user.email}</td>
                     <td className="px-6 py-4 text-sm">
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold ${user.role === 'admin' ? 'bg-purple-100 text-purple-700' :
@@ -103,9 +106,24 @@ const ManageUsers = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-sm">
+                      <div className="flex items-center space-x-2">
+                        <span className={`px-2 py-1 rounded text-xs font-semibold ${user.isVerified ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                          {user.isVerified ? 'Yes' : 'No'}
+                        </span>
+                        {user.role === 'farmer' && (
+                          <button
+                            onClick={() => handleUpdateUser(user.id, { isVerified: !user.isVerified })}
+                            className="text-xs text-blue-600 hover:underline"
+                          >
+                            Toggle
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm">
                       <select
                         value={user.status || 'active'}
-                        onChange={(e) => handleStatusChange(user.id, e.target.value)}
+                        onChange={(e) => handleUpdateUser(user.id, { status: e.target.value })}
                         className={`px-2 py-1 rounded text-xs font-semibold ${user.status === 'active' ? 'bg-green-100 text-green-700' :
                             user.status === 'suspended' ? 'bg-red-100 text-red-700' :
                               'bg-yellow-100 text-yellow-700'

@@ -35,19 +35,19 @@ class RecommendationService {
                 const oneHourAgo = new Date(Date.now() - 3600000);
                 const recent = await UserInteraction.findOne({
                     where: {
-                        user_id: userId,
-                        product_id: productId,
-                        interaction_type: 'view',
-                        created_at: { [Op.gte]: oneHourAgo }
+                        userId,
+                        productId,
+                        interactionType: 'view',
+                        createdAt: { [Op.gte]: oneHourAgo }
                     }
                 });
                 if (recent) return recent;
             }
 
             return await UserInteraction.create({
-                user_id: userId,
-                product_id: productId,
-                interaction_type: interactionType,
+                userId,
+                productId,
+                interactionType,
                 metadata
             });
         } catch (error) {
@@ -65,37 +65,37 @@ class RecommendationService {
             // Step 1: Find users who interacted with this product
             const usersWhoInteracted = await UserInteraction.findAll({
                 where: {
-                    product_id: productId,
-                    interaction_type: { [Op.in]: ['purchase', 'cart_add'] }
+                    productId,
+                    interactionType: { [Op.in]: ['purchase', 'cart_add'] }
                 },
-                attributes: ['user_id'],
-                group: ['user_id']
+                attributes: ['userId'],
+                group: ['userId']
             });
 
-            const userIds = usersWhoInteracted.map(u => u.user_id);
+            const userIds = usersWhoInteracted.map(u => u.userId);
             if (userIds.length === 0) return [];
 
             // Step 2: Find other products these same users interacted with
             const coProducts = await UserInteraction.findAll({
                 where: {
-                    user_id: { [Op.in]: userIds },
-                    product_id: { [Op.ne]: productId },
-                    interaction_type: { [Op.in]: ['purchase', 'cart_add'] }
+                    userId: { [Op.in]: userIds },
+                    productId: { [Op.ne]: productId },
+                    interactionType: { [Op.in]: ['purchase', 'cart_add'] }
                 },
                 attributes: [
-                    'product_id',
-                    [Sequelize.fn('COUNT', Sequelize.col('product_id')), 'score']
+                    'productId',
+                    [Sequelize.fn('COUNT', Sequelize.col('productId')), 'score']
                 ],
-                group: ['product_id'],
+                group: ['productId'],
                 order: [[Sequelize.literal('score'), 'DESC']],
                 limit
             });
 
-            const productIds = coProducts.map(p => p.product_id);
+            const productIds = coProducts.map(p => p.productId);
             if (productIds.length === 0) return [];
 
             return await Product.findAll({
-                where: { id: { [Op.in]: productIds }, is_available: true }
+                where: { id: { [Op.in]: productIds }, isAvailable: true }
             });
         } catch (error) {
             console.error('Collaborative filtering error:', error.message);
@@ -117,13 +117,13 @@ class RecommendationService {
 
             const whereClause = {
                 id: { [Op.ne]: productId },
-                is_available: true,
+                isAvailable: true,
                 [Op.or]: []
             };
 
             // Category match (highest priority)
-            if (product.category_id) {
-                whereClause[Op.or].push({ category_id: product.category_id });
+            if (product.categoryId) {
+                whereClause[Op.or].push({ categoryId: product.categoryId });
             }
 
             // Price range match
@@ -145,7 +145,7 @@ class RecommendationService {
             const similar = await Product.findAll({
                 where: whereClause,
                 limit,
-                order: [['views', 'DESC'], ['created_at', 'DESC']]
+                order: [['views', 'DESC'], ['createdAt', 'DESC']]
             });
 
             return similar;
@@ -193,41 +193,41 @@ class RecommendationService {
             const sinceDate = new Date(Date.now() - days * 86400000);
 
             const trending = await UserInteraction.findAll({
-                where: { created_at: { [Op.gte]: sinceDate } },
+                where: { createdAt: { [Op.gte]: sinceDate } },
                 attributes: [
-                    'product_id',
+                    'productId',
                     [Sequelize.literal(
                         `SUM(CASE 
-                            WHEN interaction_type = 'view' THEN ${WEIGHTS.view}
-                            WHEN interaction_type = 'cart_add' THEN ${WEIGHTS.cart_add}
-                            WHEN interaction_type = 'purchase' THEN ${WEIGHTS.purchase}
-                            WHEN interaction_type = 'wishlist' THEN ${WEIGHTS.wishlist}
-                            WHEN interaction_type = 'search' THEN ${WEIGHTS.search}
+                            WHEN interactionType = 'view' THEN ${WEIGHTS.view}
+                            WHEN interactionType = 'cart_add' THEN ${WEIGHTS.cart_add}
+                            WHEN interactionType = 'purchase' THEN ${WEIGHTS.purchase}
+                            WHEN interactionType = 'wishlist' THEN ${WEIGHTS.wishlist}
+                            WHEN interactionType = 'search' THEN ${WEIGHTS.search}
                             ELSE 0 END)`
                     ), 'trend_score']
                 ],
-                group: ['product_id'],
+                group: ['productId'],
                 order: [[Sequelize.literal('trend_score'), 'DESC']],
                 limit
             });
 
-            const productIds = trending.map(t => t.product_id);
+            const productIds = trending.map(t => t.productId);
             if (productIds.length === 0) {
                 // Fallback: return most viewed products
                 return await Product.findAll({
-                    where: { is_available: true },
+                    where: { isAvailable: true },
                     order: [['views', 'DESC']],
                     limit
                 });
             }
 
             const products = await Product.findAll({
-                where: { id: { [Op.in]: productIds }, is_available: true }
+                where: { id: { [Op.in]: productIds }, isAvailable: true }
             });
 
             // Sort by trend_score order
             const scoreMap = {};
-            trending.forEach(t => { scoreMap[t.product_id] = parseFloat(t.dataValues.trend_score); });
+            trending.forEach(t => { scoreMap[t.productId] = parseFloat(t.dataValues.trend_score); });
             products.sort((a, b) => (scoreMap[b.id] || 0) - (scoreMap[a.id] || 0));
 
             return products;
@@ -235,7 +235,7 @@ class RecommendationService {
             console.error('Trending products error:', error.message);
             // Fallback
             return await Product.findAll({
-                where: { is_available: true },
+                where: { isAvailable: true },
                 order: [['views', 'DESC']],
                 limit
             });
@@ -248,18 +248,18 @@ class RecommendationService {
     async getRecentlyViewed(userId, limit = 10) {
         try {
             const views = await UserInteraction.findAll({
-                where: { user_id: userId, interaction_type: 'view' },
-                attributes: ['product_id'],
-                order: [['created_at', 'DESC']],
-                group: ['product_id'],
+                where: { userId, interactionType: 'view' },
+                attributes: ['productId'],
+                order: [['createdAt', 'DESC']],
+                group: ['productId'],
                 limit
             });
 
-            const productIds = views.map(v => v.product_id);
+            const productIds = views.map(v => v.productId);
             if (productIds.length === 0) return [];
 
             const products = await Product.findAll({
-                where: { id: { [Op.in]: productIds }, is_available: true }
+                where: { id: { [Op.in]: productIds }, isAvailable: true }
             });
 
             // Maintain view order
@@ -280,9 +280,9 @@ class RecommendationService {
         try {
             // Get user's category preferences from interaction history
             const userHistory = await UserInteraction.findAll({
-                where: { user_id: userId },
-                attributes: ['product_id', 'interaction_type'],
-                order: [['created_at', 'DESC']],
+                where: { userId },
+                attributes: ['productId', 'interactionType'],
+                order: [['createdAt', 'DESC']],
                 limit: 50
             });
 
@@ -291,12 +291,12 @@ class RecommendationService {
                 return await this.getTrendingProducts(limit);
             }
 
-            const interactedProductIds = [...new Set(userHistory.map(h => h.product_id))];
+            const interactedProductIds = [...new Set(userHistory.map(h => h.productId))];
 
             // Get categories and properties of interacted products
             const interactedProducts = await Product.findAll({
                 where: { id: { [Op.in]: interactedProductIds } },
-                attributes: ['id', 'category_id', 'price', 'location']
+                attributes: ['id', 'categoryId', 'price', 'location']
             });
 
             // Build preference profile
@@ -305,8 +305,8 @@ class RecommendationService {
             const locations = {};
 
             interactedProducts.forEach(p => {
-                if (p.category_id) {
-                    categoryFrequency[p.category_id] = (categoryFrequency[p.category_id] || 0) + 1;
+                if (p.categoryId) {
+                    categoryFrequency[p.categoryId] = (categoryFrequency[p.categoryId] || 0) + 1;
                 }
                 priceSum.total += parseFloat(p.price || 0);
                 priceSum.count++;
@@ -328,12 +328,12 @@ class RecommendationService {
             // Find products matching user preferences
             const whereClause = {
                 id: { [Op.notIn]: interactedProductIds },
-                is_available: true,
+                isAvailable: true,
                 [Op.or]: []
             };
 
             if (preferredCategories.length > 0) {
-                whereClause[Op.or].push({ category_id: { [Op.in]: preferredCategories } });
+                whereClause[Op.or].push({ categoryId: { [Op.in]: preferredCategories } });
             }
             if (avgPrice > 0) {
                 whereClause[Op.or].push({
@@ -347,7 +347,7 @@ class RecommendationService {
 
             const personalizedProducts = await Product.findAll({
                 where: whereClause,
-                order: [['views', 'DESC'], ['created_at', 'DESC']],
+                order: [['views', 'DESC'], ['createdAt', 'DESC']],
                 limit: Math.ceil(limit * 0.6)
             });
 

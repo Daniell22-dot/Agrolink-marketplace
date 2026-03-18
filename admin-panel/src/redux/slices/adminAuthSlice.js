@@ -8,11 +8,11 @@ export const loginAdmin = createAsyncThunk(
   'adminAuth/login',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/admin/login`, {
+      const response = await axios.post(`${API_URL}/auth/login`, {
         email,
         password
       });
-      localStorage.setItem('adminToken', response.data.token);
+      localStorage.setItem('adminToken', response.data.accessToken);
       toast.success('Admin login successful!');
       return response.data;
     } catch (error) {
@@ -38,9 +38,10 @@ export const verifyAdminToken = createAsyncThunk(
 );
 
 const initialState = {
-  admin: null,
+  user: null,
   token: localStorage.getItem('adminToken'),
   isLoading: false,
+  isVerifying: !!localStorage.getItem('adminToken'),
   error: null,
   isAuthenticated: false
 };
@@ -51,9 +52,10 @@ const adminAuthSlice = createSlice({
   reducers: {
     logoutAdmin: (state) => {
       localStorage.removeItem('adminToken');
-      state.admin = null;
+      state.user = null;
       state.token = null;
       state.isAuthenticated = false;
+      state.isVerifying = false;
       toast.success('Admin logged out successfully');
     }
   },
@@ -64,8 +66,13 @@ const adminAuthSlice = createSlice({
       })
       .addCase(loginAdmin.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.admin = action.payload.admin;
-        state.token = action.payload.token;
+        if (action.payload.data?.role !== 'admin') {
+          state.error = 'Access denied. Admin only.';
+          state.isAuthenticated = false;
+          return;
+        }
+        state.user = action.payload.data;
+        state.token = action.payload.accessToken;
         state.isAuthenticated = true;
       })
       .addCase(loginAdmin.rejected, (state, action) => {
@@ -73,14 +80,19 @@ const adminAuthSlice = createSlice({
         state.error = action.payload;
         state.isAuthenticated = false;
       })
+      .addCase(verifyAdminToken.pending, (state) => {
+        state.isVerifying = true;
+      })
       .addCase(verifyAdminToken.fulfilled, (state, action) => {
-        state.admin = action.payload.admin;
+        state.user = action.payload.data;
         state.isAuthenticated = true;
+        state.isVerifying = false;
       })
       .addCase(verifyAdminToken.rejected, (state) => {
-        state.admin = null;
+        state.user = null;
         state.token = null;
         state.isAuthenticated = false;
+        state.isVerifying = false;
       });
   }
 });

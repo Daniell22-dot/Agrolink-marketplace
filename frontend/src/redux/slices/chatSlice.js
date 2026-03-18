@@ -8,7 +8,7 @@ export const fetchChats = createAsyncThunk(
   'chat/fetchChats',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/chat`, {
+      const response = await axios.get(`${API_URL}/chat/conversations`, {
         headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       return response.data;
@@ -22,10 +22,10 @@ export const fetchChatMessages = createAsyncThunk(
   'chat/fetchMessages',
   async (chatId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL}/chat/${chatId}/messages`, {
+      const response = await axios.get(`${API_URL}/chat/messages/${chatId}`, {
         headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
       });
-      return { chatId, messages: response.data.messages };
+      return { chatId, messages: response.data.data };
     } catch (error) {
       return rejectWithValue(error.response?.data);
     }
@@ -36,11 +36,11 @@ export const sendMessage = createAsyncThunk(
   'chat/sendMessage',
   async ({ chatId, content }, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/chat/${chatId}/messages`, 
-        { content },
+      const response = await axios.post(`${API_URL}/chat/message`, 
+        { chatId, content },
         { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
-      return { chatId, message: response.data.message };
+      return { chatId, message: response.data.data };
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to send message');
       return rejectWithValue(error.response?.data);
@@ -112,7 +112,7 @@ const chatSlice = createSlice({
       })
       .addCase(fetchChats.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.chats = action.payload.chats || [];
+        state.chats = action.payload.data || [];
         state.unreadCount = action.payload.unreadCount || 0;
       })
       .addCase(fetchChats.rejected, (state, action) => {
@@ -149,11 +149,12 @@ const chatSlice = createSlice({
       })
       // Start Chat
       .addCase(startChat.fulfilled, (state, action) => {
-        const existingChat = state.chats.find(c => c.id === action.payload.chat.id);
+        const chat = action.payload.data;
+        const existingChat = state.chats.find(c => c.id === chat.id);
         if (!existingChat) {
-          state.chats.push(action.payload.chat);
+          state.chats.push(chat);
         }
-        state.selectedChat = action.payload.chat;
+        state.selectedChat = chat;
       })
       // Delete Chat
       .addCase(deleteChat.fulfilled, (state, action) => {

@@ -35,6 +35,7 @@ const Order = sequelize.define('Order', {
         type: DataTypes.STRING
     }
 }, {
+    underscored: true,
     timestamps: true
 });
 

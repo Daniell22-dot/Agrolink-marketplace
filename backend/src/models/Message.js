@@ -21,11 +21,12 @@ const Message = sequelize.define('Message', {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    read: {
+    isRead: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     }
 }, {
+    underscored: true,
     timestamps: true
 });
 

@@ -5,7 +5,7 @@ import { login, register, logout } from '../redux/slices/authSlice';
 export const useAuth = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { user, loading, error, isAuthenticated } = useSelector((state) => state.auth);
+    const { user, isLoading, error, isAuthenticated } = useSelector((state) => state.auth);
 
     const handleLogin = async (credentials) => {
         try {

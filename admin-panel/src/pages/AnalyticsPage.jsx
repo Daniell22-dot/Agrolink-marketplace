@@ -8,33 +8,18 @@ const AnalyticsPage = () => {
   const { chartData, isLoading } = useSelector(state => state.dashboard);
   const [dateRange, setDateRange] = useState('30days');
   
-  const mockSalesData = [
-    { name: 'Week 1', sales: 12000, revenue: 8000 },
-    { name: 'Week 2', sales: 19000, revenue: 14000 },
-    { name: 'Week 3', sales: 15000, revenue: 11000 },
-    { name: 'Week 4', sales: 22000, revenue: 18000 }
-  ];
-
-  const mockUserData = [
-    { name: 'Buyers', value: 65, color: '#3B82F6' },
-    { name: 'Farmers', value: 25, color: '#10B981' },
-    { name: 'Admins', value: 10, color: '#8B5CF6' }
-  ];
-
-  const mockProductData = [
-    { name: 'Vegetables', count: 245 },
-    { name: 'Fruits', count: 189 },
-    { name: 'Grains', count: 156 },
-    { name: 'Dairy', count: 98 }
-  ];
-
   useEffect(() => {
     const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     const endDate = new Date().toISOString().split('T')[0];
     
     dispatch(fetchChartData({ type: 'sales', startDate, endDate }));
     dispatch(fetchChartData({ type: 'users', startDate, endDate }));
+    dispatch(fetchChartData({ type: 'products', startDate, endDate }));
   }, [dispatch, dateRange]);
+
+  const salesData = chartData?.sales?.length ? chartData.sales : [{ name: 'No Data', sales: 0, revenue: 0 }];
+  const userData = chartData?.users?.length ? chartData.users : [{ name: 'No Data', value: 1, color: '#ccc' }];
+  const productData = chartData?.products?.length ? chartData.products : [{ name: 'No Data', count: 0 }];
 
   return (
     <div className="analytics-page">
@@ -61,7 +46,7 @@ const AnalyticsPage = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Sales & Revenue</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={mockSalesData}>
+            <LineChart data={salesData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
@@ -79,7 +64,7 @@ const AnalyticsPage = () => {
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={mockUserData}
+                data={userData}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
@@ -88,8 +73,8 @@ const AnalyticsPage = () => {
                 fill="#8884d8"
                 dataKey="value"
               >
-                {mockUserData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                {userData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color || '#10b981'} />
                 ))}
               </Pie>
               <Tooltip />
@@ -103,7 +88,7 @@ const AnalyticsPage = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">Products by Category</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={mockProductData}>
+            <BarChart data={productData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis />
@@ -127,7 +112,7 @@ const AnalyticsPage = () => {
             </div>
             <div className="flex justify-between pb-4 border-b border-gray-200">
               <span className="text-gray-600">Avg. Product Rating</span>
-              <span className="font-semibold text-gray-800">4.5⭐</span>
+              <span className="font-semibold text-gray-800">4.5</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Customer Retention</span>

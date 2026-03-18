@@ -9,12 +9,15 @@ const RefreshToken = sequelize.define('RefreshToken', {
     },
     expiryDate: {
         type: DataTypes.DATE,
-        allowNull: false
+        allowNull: false,
+        field: 'expires_at'
     },
     revoked: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
     }
+}, {
+    underscored: true
 });
 
 RefreshToken.belongsTo(User, {

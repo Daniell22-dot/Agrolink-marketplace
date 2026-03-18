@@ -9,11 +9,11 @@ const OrderItem = sequelize.define('OrderItem', {
         primaryKey: true,
         autoIncrement: true
     },
-    order_id: {
+    orderId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    product_id: {
+    productId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -31,8 +31,8 @@ const OrderItem = sequelize.define('OrderItem', {
     }
 }, {
     tableName: 'order_items',
+    underscored: true,
     timestamps: true,
-    createdAt: 'created_at',
     updatedAt: false
 });
 

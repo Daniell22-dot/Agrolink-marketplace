@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { register } from '../redux/slices/authSlice';
 import RegisterForm from '../components/auth/RegisterForm';
-import authService from '../services/authService';
 import './RegisterPage.css';
 
 const RegisterPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleRegister = async (formData) => {
@@ -14,14 +16,16 @@ const RegisterPage = () => {
         setError('');
 
         try {
-            const response = await authService.register(formData);
-            console.log('Registration successful:', response);
-
-            // Redirect to dashboard or home
-            navigate('/dashboard');
+            const result = await dispatch(register(formData));
+            if (register.fulfilled.match(result)) {
+                // Redirect to dashboard or home
+                navigate('/dashboard');
+            } else {
+                setError(result.payload?.message || 'Registration failed');
+            }
         } catch (err) {
             console.error('Registration error:', err);
-            setError(err.response?.data?.message || 'Registration failed. Please try again.');
+            setError('An unexpected error occurred');
         } finally {
             setLoading(false);
         }

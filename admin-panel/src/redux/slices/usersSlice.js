@@ -33,15 +33,15 @@ export const fetchUserDetails = createAsyncThunk(
   }
 );
 
-export const updateUserStatus = createAsyncThunk(
-  'adminUsers/updateStatus',
-  async ({ userId, status }, { rejectWithValue }) => {
+export const updateUser = createAsyncThunk(
+  'adminUsers/updateUser',
+  async ({ userId, ...updateData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${API_URL}/admin/users/${userId}/status`, 
-        { status },
+      const response = await axios.put(`${API_URL}/admin/users/${userId}/update`, 
+        updateData,
         { headers: { authorization: `Bearer ${localStorage.getItem('adminToken')}` } }
       );
-      toast.success('User status updated!');
+      toast.success('User updated successfully!');
       return response.data;
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to update user');
@@ -121,8 +121,12 @@ const adminUsersSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users = action.payload.users || [];
-        state.pagination = action.payload.pagination || state.pagination;
+        state.users = action.payload.data || [];
+        state.pagination = {
+          page: action.payload.currentPage || 1,
+          limit: state.pagination.limit,
+          total: action.payload.count || 0
+        };
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.isLoading = false;
@@ -130,16 +134,17 @@ const adminUsersSlice = createSlice({
       })
       // Fetch User Details
       .addCase(fetchUserDetails.fulfilled, (state, action) => {
-        state.selectedUser = action.payload.user;
+        state.selectedUser = action.payload.data;
       })
-      // Update User Status
-      .addCase(updateUserStatus.fulfilled, (state, action) => {
-        const index = state.users.findIndex(u => u.id === action.payload.user.id);
+      // Update User
+      .addCase(updateUser.fulfilled, (state, action) => {
+        const updatedUser = action.payload.data;
+        const index = state.users.findIndex(u => u.id === updatedUser.id);
         if (index !== -1) {
-          state.users[index] = action.payload.user;
+          state.users[index] = updatedUser;
         }
-        if (state.selectedUser?.id === action.payload.user.id) {
-          state.selectedUser = action.payload.user;
+        if (state.selectedUser?.id === updatedUser.id) {
+          state.selectedUser = updatedUser;
         }
       })
       // Delete User

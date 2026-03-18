@@ -41,13 +41,13 @@ exports.indexProduct = async (product) => {
                 id: product.id,
                 name: product.name,
                 description: product.description,
-                category: product.category,
+                category: product.categoryId,
                 price: parseFloat(product.price),
                 quantity: product.quantity,
                 unit: product.unit,
                 location: product.location, // Assuming string for now
                 images: product.images,
-                status: product.status,
+                status: product.isAvailable ? 'available' : 'unavailable',
                 farmerId: product.farmerId,
                 createdAt: product.createdAt
             }

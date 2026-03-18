@@ -35,7 +35,10 @@ export const authService = {
 
     // Update profile
     updateProfile: async (userData) => {
-        const response = await api.put('/users/profile', userData);
+        const config = userData instanceof FormData 
+            ? { headers: { 'Content-Type': undefined } } 
+            : {};
+        const response = await api.put('/users/profile', userData, config);
         return response.data;
     },
 

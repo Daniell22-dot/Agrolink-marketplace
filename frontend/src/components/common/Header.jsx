@@ -8,7 +8,7 @@ import './Header.css';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useSelector((state) => state.auth);
-  const { items } = useSelector((state) => state.cart);
+  const { totalItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,7 +17,7 @@ const Header = () => {
     navigate('/');
   };
 
-  const cartCount = items?.reduce((total, item) => total + item.quantity, 0) || 0;
+  const cartCount = totalItems || 0;
 
   return (
     <header className="header">
@@ -30,7 +30,17 @@ const Header = () => {
         <div className={`nav-links ${isMenuOpen ? 'active' : ''}`}>
           <Link to="/">Home</Link>
           <Link to="/about">About Us</Link>
-          <Link to="/products">Services</Link>
+          <div className="services-dropdown">
+            <Link to="/products" className="services-link">
+              Services <i className="fas fa-chevron-down"></i>
+            </Link>
+            <div className="services-dropdown-content">
+              <Link to="/products?category=market-linkage"><i className="fas fa-link"></i> Market Linkage</Link>
+              <Link to="/products?category=input-supplies"><i className="fas fa-seedling"></i> Input Supplies</Link>
+              <Link to="/products?category=transport"><i className="fas fa-truck"></i> Transport & Logistics</Link>
+              <Link to="/products?category=advisory"><i className="fas fa-chart-pie"></i> Agri Advisory</Link>
+            </div>
+          </div>
           <Link to="/how-it-works">How It Works</Link>
           <Link to="/app">App</Link>
           <Link to="/pricing">Pricing</Link>
@@ -46,7 +56,7 @@ const Header = () => {
               <div className="user-dropdown">
                 <button className="user-btn">
                   <i className="fas fa-user"></i>
-                  <span>{user.name?.split(' ')[0]}</span>
+                  <span>{user.fullName?.split(' ')[0]}</span>
                   <i className="fas fa-chevron-down"></i>
                 </button>
                 <div className="dropdown-content">

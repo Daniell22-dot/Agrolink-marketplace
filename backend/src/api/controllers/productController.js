@@ -39,15 +39,18 @@ exports.getProducts = async (req, res, next) => {
         const offset = (page - 1) * limit;
 
         const whereClause = {
-            is_available: true
+            isAvailable: true
         };
 
         if (search) {
-            whereClause.name = { [Op.like]: `%${search}%` };
+            whereClause[Op.or] = [
+                { name: { [Op.like]: `%${search}%` } },
+                { description: { [Op.like]: `%${search}%` } }
+            ];
         }
 
         if (category) {
-            whereClause.category_id = category;
+            whereClause.categoryId = category;
         }
 
         if (minPrice || maxPrice) {
@@ -56,7 +59,7 @@ exports.getProducts = async (req, res, next) => {
             if (maxPrice) whereClause.price[Op.lte] = maxPrice;
         }
 
-        let order = [['created_at', 'DESC']];
+        let order = [['createdAt', 'DESC']];
         if (sort === 'price_asc') order = [['price', 'ASC']];
         if (sort === 'price_desc') order = [['price', 'DESC']];
 
@@ -135,14 +138,13 @@ exports.createProduct = async (req, res, next) => {
             farmerId: req.user.id,
             name,
             description,
-            category,
+            categoryId: category,
             price,
             quantity,
             unit,
             location,
             images: imageUrls,
-            status: 'available',
-            isApproved: false // Requires admin approval?
+            isAvailable: true
         });
 
         // Index to Elasticsearch
@@ -195,12 +197,12 @@ exports.updateProduct = async (req, res, next) => {
         await product.update({
             name: name || product.name,
             description: description || product.description,
-            category: category || product.category,
+            categoryId: category || product.categoryId,
             price: price || product.price,
             quantity: quantity || product.quantity,
             unit: unit || product.unit,
             location: location || product.location,
-            status: status || product.status,
+            isAvailable: status === 'available' ? true : product.isAvailable,
             images: updatedImages
         });
 

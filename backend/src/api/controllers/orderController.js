@@ -42,7 +42,7 @@ exports.createOrder = async (req, res, next) => {
             productId: item.productId,
             quantity: item.quantity,
             price: item.price,
-            name: item.name
+            subtotal: item.price * item.quantity
         }));
 
         await OrderItem.bulkCreate(orderItems);
@@ -126,6 +126,38 @@ exports.updateOrderStatus = async (req, res, next) => {
         }
 
         order.status = status;
+        await order.save();
+
+        res.json({
+            success: true,
+            data: order
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Cancel order
+// @route   POST /api/orders/:id/cancel
+// @access  Private
+exports.cancelOrder = async (req, res, next) => {
+    try {
+        const order = await Order.findByPk(req.params.id);
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        // Check ownership
+        if (order.userId !== req.user.id && req.user.role !== 'admin') {
+            return res.status(401).json({ message: 'Not authorized to cancel this order' });
+        }
+
+        if (order.status !== 'pending') {
+            return res.status(400).json({ message: 'Only pending orders can be cancelled' });
+        }
+
+        order.status = 'cancelled';
         await order.save();
 
         res.json({

@@ -1,0 +1,117 @@
+.review-marquee-container {
+    padding: 60px 0;
+    background: #fdfdfd;
+    overflow: hidden;
+    width: 100%;
+}
+
+.review-marquee-container .section-title {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    color: #2d8c3e;
+    font-weight: 800;
+}
+
+.marquee-wrapper {
+    display: flex;
+    width: 100%;
+    position: relative;
+    padding: 20px 0;
+}
+
+.marquee-content {
+    display: flex;
+    animation: marquee-scroll 60s linear infinite;
+    gap: 30px;
+}
+
+.marquee-content:hover {
+    animation-play-state: paused;
+}
+
+.review-card {
+    flex: 0 0 400px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 35px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+    border: 1px solid rgba(45, 140, 62, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.review-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    border-color: #2d8c3e;
+    box-shadow: 0 30px 60px rgba(45, 140, 62, 0.1);
+    background: white;
+}
+
+.review-rating {
+    display: flex;
+    gap: 4px;
+    color: #ff8c00;
+    margin-bottom: 20px;
+}
+
+.review-rating i {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 2px 4px rgba(255, 140, 0, 0.2));
+}
+
+.review-text {
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.review-text::before {
+    content: '"';
+    position: absolute;
+    left: -15px;
+    top: -10px;
+    font-size: 3rem;
+    color: #2d8c3e;
+    opacity: 0.1;
+    font-family: serif;
+}
+
+.review-footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.reviewer-name {
+    font-weight: 700;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.reviewer-location {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.reviewed-product {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 0.8rem;
+    color: #2d8c3e;
+    font-weight: 600;
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}

@@ -22,7 +22,7 @@ const ManageProducts = () => {
   }, [dispatch, pagination.page, statusFilter, searchTerm]);
 
   const handleApprove = (productId) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
+    if (window.confirm('Are you sure you want to approve this product?')) {
       dispatch(approveProduct(productId));
     }
   };
@@ -43,7 +43,7 @@ const ManageProducts = () => {
   };
 
   const handleSuspend = (product) => {
-    if (confirm(`Are you sure you want to suspend "${product.name}"?`)) {
+    if (window.confirm(`Are you sure you want to suspend "${product.name}"?`)) {
       dispatch(suspendProduct({ productId: product.id, reason: 'Admin suspended' }));
     }
   };

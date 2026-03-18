@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const LoginForm = () => {
+const LoginForm = ({ onSubmit, loading }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -12,22 +12,22 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Login attempt', formData);
+        onSubmit(formData);
     };
 
     return (
         <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
-                <label>Email Address</label>
+                <label>Email or Phone Number</label>
                 <div className="input-with-icon">
-                    <i className="fas fa-envelope"></i>
+                    <i className="fas fa-user"></i>
                     <input
-                        type="email"
+                        type="text"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
                         className="form-control"
-                        placeholder="john@example.com"
+                        placeholder="john@example.com or 07..."
                         required
                     />
                 </div>
@@ -53,8 +53,16 @@ const LoginForm = () => {
                 </label>
                 <a href="#" className="forgot-password">Forgot Password?</a>
             </div>
-            <button type="submit" className="btn btn-primary btn-full login-submit-btn">
-                <i className="fas fa-sign-in-alt"></i> Sign In to AgroLink
+            <button 
+                type="submit" 
+                className="btn btn-primary btn-full login-submit-btn"
+                disabled={loading}
+            >
+                {loading ? (
+                    <><i className="fas fa-spinner fa-spin"></i> Signing in...</>
+                ) : (
+                    <><i className="fas fa-sign-in-alt"></i> Sign In to AgroLink</>
+                )}
             </button>
         </form>
     );

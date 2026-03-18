@@ -9,6 +9,9 @@ const { protect } = require('../middleware/authMiddleware');
 router.route('/')
     .post(protect, addReview);
 
+router.route('/latest')
+    .get(require('../controllers/reviewController').getLatestReviews);
+
 // If mounted at /api/reviews, this handles /api/reviews/product/:productId
 router.route('/product/:productId')
     .get(getProductReviews);

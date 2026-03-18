@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import RecommendationCarousel from '../components/products/RecommendationCarousel';
+import ReviewMarquee from '../components/reviews/ReviewMarquee';
 import SearchBar from '../components/common/SearchBar';
 import recommendationService from '../services/recommendationService';
 import './HomePage.css';
@@ -135,6 +136,9 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* Reviews Marquee */}
+      <ReviewMarquee />
+
       {/* How It Works Section */}
       <section className="how-section">
         <div className="container">
@@ -200,19 +204,64 @@ const HomePage = () => {
       <section className="testimonials-section">
         <div className="container">
           <div className="testimonials-grid">
-            <div className="testimonial-card">
-              <i className="fas fa-quote-left"></i>
-              <p className="testimonial-text">"AgriLink helped me sell my produce fast and get better prices."</p>
-              <p className="testimonial-author">Mary, Kisumu</p>
-              <div className="stars">
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star"></i>
-                <i className="fas fa-star-half-alt"></i>
+            <div className="testimonials-slider-wrapper">
+              <div className="testimonials-slider-track">
+                {/* 1 */}
+                <div className="testimonial-card">
+                  <i className="fas fa-quote-left"></i>
+                  <p className="testimonial-text">"AgriLink helped me sell my produce fast and get better prices."</p>
+                  <p className="testimonial-author">Mary, Kisumu</p>
+                  <div className="stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star-half-alt"></i>
+                  </div>
+                </div>
+                {/* 2 */}
+                <div className="testimonial-card">
+                  <i className="fas fa-quote-left"></i>
+                  <p className="testimonial-text">"The best platform for connecting with reliable buyers. Highly recommended"</p>
+                  <p className="testimonial-author">David, Nakuru</p>
+                  <div className="stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                </div>
+                {/* 3 */}
+                <div className="testimonial-card">
+                  <i className="fas fa-quote-left"></i>
+                  <p className="testimonial-text">"Finding high-quality farm inputs has never been easier. Great app!"</p>
+                  <p className="testimonial-author">Sarah, Eldoret</p>
+                  <div className="stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                </div>
+                {/* DUPLICATES FOR SEAMLESS LOOP */}
+                {/* 1 Clone */}
+                <div className="testimonial-card">
+                  <i className="fas fa-quote-left"></i>
+                  <p className="testimonial-text">"AgriLink helped me sell my produce fast and get better prices."</p>
+                  <p className="testimonial-author">Mary, Kisumu</p>
+                  <div className="stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star-half-alt"></i>
+                  </div>
+                </div>
+                {/* 2 Clone */}
+                <div className="testimonial-card">
+                  <i className="fas fa-quote-left"></i>
+                  <p className="testimonial-text">"The best platform for connecting with reliable buyers. Highly recommended"</p>
+                  <p className="testimonial-author">David, Nakuru</p>
+                  <div className="stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                </div>
+                {/* 3 Clone */}
+                <div className="testimonial-card">
+                  <i className="fas fa-quote-left"></i>
+                  <p className="testimonial-text">"Finding high-quality farm inputs has never been easier. Great app!"</p>
+                  <p className="testimonial-author">Sarah, Eldoret</p>
+                  <div className="stars">
+                    <i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i><i className="fas fa-star"></i>
+                  </div>
+                </div>
               </div>
-              <p className="testimonial-text">"The best platform for connecting with reliable buyers. Highly recommended"</p>
-              <p className="testimonial-author">David, Nakuru</p>
             </div>
             <div className="partners-section">
               <h3>Our Partners</h3>
