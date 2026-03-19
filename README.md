@@ -42,7 +42,7 @@ AgriLink is a comprehensive e-commerce marketplace platform tailored for agricul
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Daniell22-dot/Agrolink-marketplace.git
    ```
 
 2. Install dependencies for all services:
