@@ -25,6 +25,13 @@ AgriLink is a comprehensive e-commerce marketplace platform tailored for agricul
 - **React Router**: Navigation.
 - **Socket.io Client**: Real-time updates.
 
+  <img width="1366" height="687" alt="image" src="https://github.com/user-attachments/assets/deb55ca0-61e1-4152-b1d8-e27adca842a5" />
+
+  Ml Reccomendations
+  <img width="1366" height="682" alt="image" src="https://github.com/user-attachments/assets/1f0370af-397b-4eb1-98a5-80b4e07fdc5c" />
+
+
+
 ### Admin Panel
 - **React & Redux**: Core framework and state management.
 - **Tailwind CSS**: Styling and layout.
