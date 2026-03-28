@@ -1,6 +1,6 @@
 # AgriLink Marketplace
 
-AgriLink is a comprehensive e-commerce marketplace platform tailored for agricultural products. It consists of a robust backend API, a user-facing frontend web application, an admin dashboard, and a mobile application.
+AgroLink is an innovative digital marketplace connecting agricultural producers directly with buyers. Whether you're a farmer looking to sell your harvest, a retailer sourcing fresh produce, or a consumer seeking high-quality local products, AgriLink provides a seamless, secure, and efficient platform for all your agricultural commerce needs.
 
 ## Project Structure
 
