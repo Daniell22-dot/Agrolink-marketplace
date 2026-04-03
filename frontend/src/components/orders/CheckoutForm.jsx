@@ -11,7 +11,7 @@ const CheckoutForm = ({ onSubmit, isLoading }) => {
     notes: '',
   });
   const [errors, setErrors] = useState({});
-
+  // validate function
   const validate = () => {
     const errs = {};
     if (!formData.shippingAddress.trim()) errs.shippingAddress = 'Shipping address is required';

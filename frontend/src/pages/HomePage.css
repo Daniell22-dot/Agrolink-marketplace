@@ -15,7 +15,7 @@ section {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, rgba(28, 75, 45, 0.9) 0%, rgba(10, 31, 18, 0.95) 100%), url('../assets/images/farm_hero_bg.png');
+    background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
     background-size: cover;
     background-position: center;
     color: white;
@@ -105,7 +105,7 @@ section {
 
 .about-icon i {
     font-size: 120px;
-    color: #1C4B2D;
+    color: #22C55E;
     opacity: 0.1;
 }
 
@@ -134,7 +134,7 @@ section {
 
 .service-card i {
     font-size: 40px;
-    color: #1C4B2D;
+    color: #22C55E;
     margin-bottom: 20px;
 }
 
@@ -158,7 +158,7 @@ section {
 
 .step i {
     font-size: 32px;
-    color: #1C4B2D;
+    color: #22C55E;
     background: #f0fdf4;
     width: 80px;
     height: 80px;
@@ -171,7 +171,7 @@ section {
 
 /* App Section */
 .app-section {
-    background: #1C4B2D;
+    background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
     color: white;
 }
 
@@ -247,7 +247,7 @@ section {
 
 .testimonial-card .fa-quote-left {
     font-size: 32px;
-    color: #1C4B2D;
+    color: #22C55E;
     opacity: 0.1;
     margin-bottom: 16px;
 }
@@ -291,7 +291,7 @@ section {
 
 /* Bottom Bar */
 .bottom-bar {
-    background: #111827;
+    background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
     color: white;
     padding: 20px 0;
     display: flex;

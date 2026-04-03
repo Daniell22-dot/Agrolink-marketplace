@@ -103,7 +103,7 @@ function App() {
               },
               success: {
                 iconTheme: {
-                  primary: '#1C4B2D',
+                  primary: '#22C55E',
                   secondary: '#fff',
                 },
               },

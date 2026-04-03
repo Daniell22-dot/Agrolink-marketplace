@@ -1,8 +1,8 @@
 :root {
-    --primary-green: #1C4B2D;
+    --primary-green: #22C55E;
     --accent-green: #4ADE80;
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-bg: rgba(240, 253, 244, 0.8);
+    --glass-border: rgba(74, 222, 128, 0.3);
     --text-main: #1f2937;
     --text-muted: #6b7280;
 }

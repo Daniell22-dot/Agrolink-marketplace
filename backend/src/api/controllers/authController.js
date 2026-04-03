@@ -21,7 +21,7 @@ exports.register = async (req, res, next) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
+    let {
       nationalId,
       username,
       fullName,
@@ -36,6 +36,10 @@ exports.register = async (req, res, next) => {
       subCounty
     } = req.body;
 
+    // Ensure email is lowercase
+    email = email.toLowerCase().trim();
+    username = username.toLowerCase().trim();
+
     // Validate role-specific requirements
     if (role === 'farmer' && !nationalId) {
       return res.status(400).json({ message: 'National ID is required for farmers' });
@@ -43,9 +47,9 @@ exports.register = async (req, res, next) => {
 
     // Check if user exists
     const whereConditions = [
-      { email },
+      require('sequelize').where(require('sequelize').fn('LOWER', require('sequelize').col('email')), require('sequelize').Op.eq, email),
       { phone },
-      { username }
+      require('sequelize').where(require('sequelize').fn('LOWER', require('sequelize').col('username')), require('sequelize').Op.eq, username)
     ];
     if (nationalId) {
       whereConditions.push({ nationalId });
@@ -111,13 +115,20 @@ exports.register = async (req, res, next) => {
 // @desc    Login user
 exports.login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+
+    // Normalize email input
+    if (email && email.includes('@')) {
+      email = email.toLowerCase().trim();
+    } else if (email) {
+      email = email.trim();
+    }
 
     // Find user by email or phone (frontend passes the identifier as 'email')
     const user = await User.findOne({
       where: {
         [require('sequelize').Op.or]: [
-          { email: email },
+          { email: require('sequelize').where(require('sequelize').fn('LOWER', require('sequelize').col('email')), require('sequelize').Op.eq, email.toLowerCase()) },
           { phone: email }
         ]
       }

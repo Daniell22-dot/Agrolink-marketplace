@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers, updateUser, deleteUser } from '../redux/slices/usersSlice';
-import toast from 'react-hot-toast';
 
 const ManageUsers = () => {
   const dispatch = useDispatch();
-  const { users, pagination, isLoading, filters } = useSelector(state => state.adminUsers);
+  const { users, pagination, isLoading } = useSelector(state => state.adminUsers);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
 
@@ -16,7 +15,7 @@ const ManageUsers = () => {
       role: roleFilter,
       search: searchTerm
     }));
-  }, [dispatch, pagination.page, roleFilter, searchTerm]);
+  }, [dispatch, pagination.page, pagination.limit, roleFilter, searchTerm]);
 
   const handleUpdateUser = (userId, updateData) => {
     const field = Object.keys(updateData)[0];

@@ -13,6 +13,7 @@ const { Op, Sequelize } = require('sequelize');
 const sequelize = require('../config/database');
 const Product = require('../models/Product');
 const UserInteraction = require('../models/UserInteraction');
+const pythonApiClient = require('./pythonApiClient');
 
 // Interaction weights for scoring
 const WEIGHTS = {
@@ -186,9 +187,22 @@ class RecommendationService {
 
     /**
      * Trending Products: Weighted score from recent interactions
-     * Score = (views × 1) + (cart_adds × 3) + (purchases × 5)
+     * Now uses Python ML service for better recommendations
+     * Falls back to local implementation if Python service unavailable
      */
     async getTrendingProducts(limit = 10, days = 7) {
+        try {
+            // Try Python API first
+            const pythonTrending = await pythonApiClient.getTrendingProducts(limit);
+            if (pythonTrending && pythonTrending.length > 0) {
+                console.log(`Fetched ${pythonTrending.length} trending products from Python service`);
+                return pythonTrending;
+            }
+        } catch (error) {
+            console.log('Python trending service unavailable, falling back to local implementation');
+        }
+
+        // Fallback: Local implementation
         try {
             const sinceDate = new Date(Date.now() - days * 86400000);
 
@@ -232,8 +246,8 @@ class RecommendationService {
 
             return products;
         } catch (error) {
-            console.error('Trending products error:', error.message);
-            // Fallback
+            console.error('Trending products error (both Python and local):', error.message);
+            // Final fallback
             return await Product.findAll({
                 where: { isAvailable: true },
                 order: [['views', 'DESC']],
@@ -274,9 +288,22 @@ class RecommendationService {
 
     /**
      * Personalized "For You" Feed: Blended recommendations
-     * Combines user history preferences with trending and collaborative signals
+     * Now uses Python ML service for smarter personalization
+     * Falls back to local implementation if Python service unavailable
      */
     async getPersonalizedFeed(userId, limit = 20) {
+        try {
+            // Try Python API first - it has better ML-based recommendations
+            const pythonRecommendations = await pythonApiClient.getRecommendationsForUser(userId, limit);
+            if (pythonRecommendations && pythonRecommendations.length > 0) {
+                console.log(`Fetched ${pythonRecommendations.length} personalized recommendations from Python service`);
+                return pythonRecommendations;
+            }
+        } catch (error) {
+            console.log('Python recommendation service unavailable, falling back to local implementation');
+        }
+
+        // Fallback: Local blended implementation
         try {
             // Get user's category preferences from interaction history
             const userHistory = await UserInteraction.findAll({
@@ -370,8 +397,9 @@ class RecommendationService {
 
             return result;
         } catch (error) {
-            console.error('Personalized feed error:', error.message);
-            return await this.getTrendingProducts(limit);
+            console.error('Personalized feed error (both Python and local):', error.message);
+            // Final fallback: trending products
+            return await this.getTrendingProducts(limit, 30);
         }
     }
 }

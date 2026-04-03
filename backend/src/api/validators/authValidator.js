@@ -11,6 +11,7 @@ exports.registerValidation = [
 
     body('email')
         .trim()
+        .toLowerCase()
         .notEmpty()
         .withMessage('Email is required')
         .isEmail()
@@ -49,11 +50,9 @@ exports.registerValidation = [
 exports.loginValidation = [
     body('email')
         .trim()
+        .toLowerCase()
         .notEmpty()
-        .withMessage('Email is required')
-        .isEmail()
-        .withMessage('Please provide a valid email')
-        .normalizeEmail(),
+        .withMessage('Email is required'),
 
     body('password')
         .notEmpty()

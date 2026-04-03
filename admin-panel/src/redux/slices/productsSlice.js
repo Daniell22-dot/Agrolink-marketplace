@@ -19,6 +19,37 @@ export const fetchAdminProducts = createAsyncThunk(
   }
 );
 
+export const fetchCategories = createAsyncThunk(
+  'adminProducts/fetchCategories',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_URL}/categories`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+export const createProduct = createAsyncThunk(
+  'adminProducts/create',
+  async (productData, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_URL}/products`, productData, {
+        headers: { 
+          'Content-Type': 'multipart/form-data',
+          authorization: `Bearer ${localStorage.getItem('adminToken')}` 
+        }
+      });
+      toast.success('Product created successfully!');
+      return response.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to create product');
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const fetchProductDetail = createAsyncThunk(
   'adminProducts/fetchDetail',
   async (productId, { rejectWithValue }) => {
@@ -92,6 +123,8 @@ const initialState = {
     total: 0
   },
   isLoading: false,
+  isCreating: false,
+  categories: [],
   error: null,
   filters: {
     category: '',
@@ -152,6 +185,21 @@ const adminProductsSlice = createSlice({
         if (index !== -1) {
           state.products[index] = product;
         }
+      })
+      // Categories
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.categories = action.payload.data || [];
+      })
+      // Create Product
+      .addCase(createProduct.pending, (state) => {
+        state.isCreating = true;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.isCreating = false;
+        state.products.unshift(action.payload.data);
+      })
+      .addCase(createProduct.rejected, (state) => {
+        state.isCreating = false;
       });
   }
 });

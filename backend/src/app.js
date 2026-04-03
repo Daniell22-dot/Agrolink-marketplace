@@ -44,6 +44,7 @@ app.use('/api', apiLimiter);
 app.use('/api/auth', require('./api/routes/authRoutes'));
 app.use('/api/users', require('./api/routes/userRoutes'));
 app.use('/api/products', require('./api/routes/productRoutes'));
+app.use('/api/categories', require('./api/routes/categoryRoutes'));
 app.use('/api/orders', require('./api/routes/orderRoutes'));
 app.use('/api/admin', require('./api/routes/adminRoutes'));
 app.use('/api/cart', require('./api/routes/cartRoutes'));
@@ -53,6 +54,9 @@ app.use('/api/notifications', require('./api/routes/notificationRoutes'));
 app.use('/api/recommendations', require('./api/routes/recommendationRoutes'));
 app.use('/api/payments', require('./api/routes/paymentRoutes'));
 app.use('/api/webhooks', require('./api/routes/webhookRoutes'));
+app.use('/api/analytics', require('./api/routes/analyticsRoutes'));
+app.use('/api/pricing', require('./api/routes/pricingRoutes'));
+app.use('/api/images', require('./api/routes/imageRoutes'));
 
 // Error Middleware (must be last)
 app.use(require('./api/middleware/errorMiddleware'));

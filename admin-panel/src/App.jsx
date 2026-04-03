@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Provider, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import { store } from './redux/adminStore';
 import { verifyAdminToken } from './redux/slices/adminAuthSlice';
 
 // Layout
@@ -32,7 +31,7 @@ const AdminProtectedRoute = ({ children }) => {
 };
 
 // Main App Component
-function AppContent() {
+function App() {
   const dispatch = useDispatch();
   const { isAuthenticated, token, isVerifying } = useSelector(state => state.adminAuth);
 
@@ -140,14 +139,6 @@ function AppContent() {
         />
       </div>
     </Router>
-  );
-}
-
-function App() {
-  return (
-    <Provider store={store}>
-      <AppContent />
-    </Provider>
   );
 }
 

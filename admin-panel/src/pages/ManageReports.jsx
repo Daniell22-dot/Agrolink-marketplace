@@ -22,7 +22,7 @@ const ManageReports = () => {
       status: statusFilter,
       search: searchTerm
     }));
-  }, [dispatch, pagination.page, typeFilter, statusFilter, searchTerm]);
+  }, [dispatch, pagination.page, pagination.limit, typeFilter, statusFilter, searchTerm]);
 
   const handleResolve = (report) => {
     setSelectedReport(report);

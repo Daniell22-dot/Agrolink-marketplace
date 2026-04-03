@@ -5,11 +5,11 @@
 }
 
 :root {
-  /* AgroLink Brand Colors - matching the design */
-  --primary-green: #2d8c3e;
+  /* AgroLink Brand Colors - bright green theme */
+  --primary-green: #22C55E;
   --primary-orange: #ff8c00;
-  --light-green: #4caf50;
-  --dark-green: #1b5e20;
+  --light-green: #86EFAC;
+  --dark-green: #16A34A;
 
   /* Neutral Colors */
   --white: #ffffff;

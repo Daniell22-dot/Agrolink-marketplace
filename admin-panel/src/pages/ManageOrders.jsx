@@ -20,7 +20,7 @@ const ManageOrders = () => {
       status: statusFilter,
       search: searchTerm
     }));
-  }, [dispatch, pagination.page, statusFilter, searchTerm]);
+  }, [dispatch, pagination.page, pagination.limit, statusFilter, searchTerm]);
 
   const handleStatusChange = (orderId, newStatus) => {
     if (window.confirm(`Are you sure you want to change order status to ${newStatus}?`)) {

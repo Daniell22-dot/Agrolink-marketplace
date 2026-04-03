@@ -54,7 +54,7 @@ export const deleteUser = createAsyncThunk(
   'adminUsers/deleteUser',
   async (userId, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${API_URL}/admin/users/${userId}`, {
+      await axios.delete(`${API_URL}/admin/users/${userId}`, {
         headers: { authorization: `Bearer ${localStorage.getItem('adminToken')}` }
       });
       toast.success('User deleted successfully!');

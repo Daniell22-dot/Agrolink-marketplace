@@ -5,7 +5,7 @@ import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Cart
 
 const AnalyticsPage = () => {
   const dispatch = useDispatch();
-  const { chartData, isLoading } = useSelector(state => state.dashboard);
+  const { chartData } = useSelector(state => state.dashboard);
   const [dateRange, setDateRange] = useState('30days');
   
   useEffect(() => {
