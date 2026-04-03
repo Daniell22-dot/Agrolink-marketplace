@@ -1,18 +1,20 @@
 # AgroLink Marketplace
 
-AgroLink is a comprehensive full-stack e-commerce marketplace platform designed for agricultural products. It features a production-ready backend API, React web application, admin dashboard, mobile app, and Python-based ML microservices for AI-powered recommendations and analytics.
+AgroLink is an innovative digital marketplace connecting agricultural producers directly with buyers. Whether you're a farmer looking to sell your harvest, a retailer sourcing fresh produce, or a consumer seeking high-quality local products, AgroLink provides a seamless, secure, and efficient platform for all your agricultural commerce needs.
 
-##  Key Features
+It features a production-ready backend API, React web application, admin dashboard, mobile app, and Python-based ML microservices for AI-powered recommendations and analytics.
 
-- ** AI-Powered Recommendations**: ML-based product recommendations and trending analysis
-- ** Price Prediction**: Machine learning-based price forecasting and market analysis
-- ** Advanced Analytics**: Real-time dashboards, sales reports, and user analytics
-- ** Image Processing**: Automatic image optimization with multiple size variants
-- ** Farmer Dashboard**: Dedicated tools for agricultural product management
-- ** Full E-commerce**: Shopping cart, orders, payments, and reviews
-- ** Real-time Chat**: Socket.io-powered messaging between buyers and farmers
-- ** Secure Auth**: JWT-based authentication with refresh tokens
-- ** Multi-platform**: Web, admin panel, and mobile app support
+## 🎯 Key Features
+
+- 🤖 **AI-Powered Recommendations**: ML-based product recommendations and trending analysis
+- 💰 **Price Prediction**: Machine learning-based price forecasting and market analysis
+- 📊 **Advanced Analytics**: Real-time dashboards, sales reports, and user analytics
+- 🖼️ **Image Processing**: Automatic image optimization with multiple size variants
+- 👨‍🌾 **Farmer Dashboard**: Dedicated tools for agricultural product management
+- 🛒 **Full E-commerce**: Shopping cart, orders, payments, and reviews
+- 💬 **Real-time Chat**: Socket.io-powered messaging between buyers and farmers
+- 🔐 **Secure Auth**: JWT-based authentication with refresh tokens
+- 🌍 **Multi-platform**: Web, admin panel, and mobile app support
 
 ## Project Structure
 
@@ -323,7 +325,7 @@ cd frontend
 npm test
 ```
 
-##  Documentation
+## 📚 Documentation
 
 - [API Documentation](./docs/api/) - Complete API reference
 - [Deployment Guide](./docs/deployment/) - Production setup
@@ -331,29 +333,39 @@ npm test
 - [Farmer Guide](./docs/user-guides/farmer-guide.md) - Farmer features
 - [Buyer Guide](./docs/user-guides/buyer-guide.md) - Buyer features
 
-##  Security Features
+### Screenshots
 
--  JWT token-based authentication
--  Password hashing with bcrypt
--  Rate limiting on API endpoints
--  XSS protection with xss-clean
--  HTTPS/SSL ready
--  CORS configuration
--  SQL injection prevention via Sequelize ORM
--  Input validation and sanitization
+#### ML Recommendations
+<img width="1366" height="682" alt="ML Recommendations Feature" src="https://github.com/user-attachments/assets/1f0370af-397b-4eb1-98a5-80b4e07fdc5c" />
+
+#### Platform Dashboard
+<img width="1366" height="687" alt="Platform Dashboard" src="https://github.com/user-attachments/assets/deb55ca0-61e1-4152-b1d8-e27adca842a5" />
+
+## 🔐 Security Features
+
+- ✅ JWT token-based authentication
+- ✅ Password hashing with bcrypt
+- ✅ Rate limiting on API endpoints
+- ✅ XSS protection with xss-clean
+- ✅ HTTPS/SSL ready
+- ✅ CORS configuration
+- ✅ SQL injection prevention via Sequelize ORM
+- ✅ Input validation and sanitization
 
 ## 🤝 Contributing
 
 We welcome contributions to AgroLink! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to contribute.
 
-##  License
+## 📄 License
 
 This project is licensed under the MIT License - see [LICENSE.md](./LICENSE.md) for details.
 
-##  Support
+## 📧 Support
 
 For questions, issues, or feature requests:
 - Open an issue on GitHub
+- Contact: support@agrolink.com
+- Documentation: https://docs.agrolink.com
 
 ## 🙏 Acknowledgments
 
