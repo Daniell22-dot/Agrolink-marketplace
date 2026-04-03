@@ -25,19 +25,19 @@ SOFTWARE.
 ## Summary
 
 This is a free and open-source license that allows you to:
-- ✅ Use commercially
-- ✅ Modify the code
-- ✅ Distribute
-- ✅ Use privately
-- ✅ Include in proprietary applications
+-  Use commercially
+-  Modify the code
+-  Distribute
+-  Use privately
+-  Include in proprietary applications
 
 With the conditions:
-- ⚠️ Include license and copyright notice
-- ⚠️ Include a copy of this license with distributed code
+-  Include license and copyright notice
+-  Include a copy of this license with distributed code
 
 With the limitations:
-- ❌ No liability
-- ❌ No warranty
+-  No liability
+-  No warranty
 
 For more information, visit: https://choosealicense.com/licenses/mit/
 
