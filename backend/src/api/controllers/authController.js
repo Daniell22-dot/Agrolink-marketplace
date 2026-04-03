@@ -41,6 +41,10 @@ exports.register = async (req, res, next) => {
     username = username.toLowerCase().trim();
 
     // Validate role-specific requirements
+    if (!role || !['farmer', 'buyer'].includes(role)) {
+      return res.status(400).json({ message: 'Invalid role. Must be farmer or buyer' });
+    }
+
     if (role === 'farmer' && !nationalId) {
       return res.status(400).json({ message: 'National ID is required for farmers' });
     }

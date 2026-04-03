@@ -1,5 +1,5 @@
 const express = require('express');
-const { authenticate, authorize } = require('../middleware/authMiddleware');
+const { protect, authorize } = require('../middleware/authMiddleware');
 const {
     getDashboardStats,
     getSalesReport,
@@ -10,7 +10,7 @@ const {
 const router = express.Router();
 
 // All analytics routes require authentication
-router.use(authenticate);
+router.use(protect);
 
 /**
  * @route   GET /api/analytics/dashboard

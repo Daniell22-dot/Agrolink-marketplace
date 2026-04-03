@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const { authenticate, authorize } = require('../middleware/authMiddleware');
+const { protect, authorize } = require('../middleware/authMiddleware');
 const {
     optimizeImage,
     validateImage,
@@ -35,7 +35,7 @@ const upload = multer({
  */
 router.post(
     '/optimize',
-    authenticate,
+    protect,
     authorize('farmer', 'admin'),
     upload.single('file'),
     optimizeImage
@@ -48,7 +48,7 @@ router.post(
  */
 router.post(
     '/validate',
-    authenticate,
+    protect,
     authorize('farmer', 'admin'),
     upload.single('file'),
     validateImage
@@ -61,7 +61,7 @@ router.post(
  */
 router.post(
     '/features',
-    authenticate,
+    protect,
     authorize('farmer', 'admin'),
     extractImageFeatures
 );
@@ -73,7 +73,7 @@ router.post(
  */
 router.post(
     '/batch-optimize',
-    authenticate,
+    protect,
     authorize('admin'),
     batchOptimizeImages
 );

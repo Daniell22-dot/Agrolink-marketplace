@@ -40,3 +40,6 @@ exports.authorize = (...roles) => {
     next();
   };
 };
+
+// Alias for consistency
+exports.authenticate = exports.protect;

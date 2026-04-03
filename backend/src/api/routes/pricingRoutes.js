@@ -1,5 +1,5 @@
 const express = require('express');
-const { authenticate, authorize } = require('../middleware/authMiddleware');
+const { protect, authorize } = require('../middleware/authMiddleware');
 const {
     predictPrice,
     getPriceTrends,
@@ -14,7 +14,7 @@ const router = express.Router();
  * @desc    Predict product price based on market conditions
  * @access  Private (Farmer)
  */
-router.post('/predict', authenticate, authorize('farmer', 'admin'), predictPrice);
+router.post('/predict', protect, authorize('farmer', 'admin'), predictPrice);
 
 /**
  * @route   GET /api/pricing/trends/:category
@@ -28,13 +28,13 @@ router.get('/trends/:category', getPriceTrends);
  * @desc    Get optimal price recommendation for a product
  * @access  Private (Farmer or Admin)
  */
-router.get('/optimal/:productId', authenticate, authorize('farmer', 'admin'), getOptimalPrice);
+router.get('/optimal/:productId', protect, authorize('farmer', 'admin'), getOptimalPrice);
 
 /**
  * @route   POST /api/pricing/train-model
  * @desc    Retrain price prediction model
  * @access  Private (Admin only)
  */
-router.post('/train-model', authenticate, authorize('admin'), trainPriceModel);
+router.post('/train-model', protect, authorize('admin'), trainPriceModel);
 
 module.exports = router;
