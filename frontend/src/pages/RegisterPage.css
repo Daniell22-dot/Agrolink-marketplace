@@ -1,6 +1,7 @@
 .register-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.9) 0%, rgba(16, 73, 35, 0.95) 100%),
+                url('../assets/images/auth-bg.png') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -98,7 +99,7 @@
 
 .feature i {
     font-size: 2.5rem;
-    color: var(--primary-orange);
+    color: var(--light-green);
 }
 
 .feature h3 {

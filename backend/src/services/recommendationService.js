@@ -291,7 +291,7 @@ class RecommendationService {
      * Now uses Python ML service for smarter personalization
      * Falls back to local implementation if Python service unavailable
      */
-    async getPersonalizedFeed(userId, limit = 20) {
+    async getPersonalizedFeed(userId, limit = 20, userCounty = null) {
         try {
             // Try Python API first - it has better ML-based recommendations
             const pythonRecommendations = await pythonApiClient.getRecommendationsForUser(userId, limit);
@@ -370,6 +370,13 @@ class RecommendationService {
 
             if (whereClause[Op.or].length === 0) {
                 delete whereClause[Op.or];
+            }
+
+            // Boost local products if user county is known
+            if (userCounty) {
+                whereClause[Op.or].push({
+                    location: { [Op.like]: `%${userCounty}%` }
+                });
             }
 
             const personalizedProducts = await Product.findAll({

@@ -4,7 +4,7 @@
 
 /* Hero */
 .contact-hero {
-    background: linear-gradient(135deg, #1b5e20 0%, #2d8c3e 60%, #ff8c00 100%);
+    background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
     padding: 80px 24px 60px;
     text-align: center;
     color: #fff;
@@ -36,7 +36,7 @@
 .contact-form-section h2,
 .contact-info-section h2 {
     font-size: 1.5rem;
-    color: #1b5e20;
+    color: var(--dark-green);
     margin-bottom: 28px;
 }
 
@@ -82,7 +82,7 @@
     width: 48px;
     height: 48px;
     min-width: 48px;
-    background: linear-gradient(135deg, #2d8c3e, #4caf50);
+    background: linear-gradient(135deg, var(--primary-green), var(--light-green));
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -96,7 +96,7 @@
 
 .info-card h4 {
     font-size: 0.95rem;
-    color: #1b5e20;
+    color: var(--dark-green);
     margin-bottom: 4px;
 }
 
@@ -114,7 +114,7 @@
 
 .social-section h4 {
     font-size: 1rem;
-    color: #1b5e20;
+    color: var(--dark-green);
     margin-bottom: 12px;
 }
 
@@ -131,14 +131,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #2d8c3e;
+    color: var(--primary-green);
     font-size: 1.1rem;
     transition: all 0.3s;
     text-decoration: none;
 }
 
 .social-link:hover {
-    background: #2d8c3e;
+    background: var(--primary-green);
     color: #fff;
     transform: translateY(-3px);
 }
@@ -151,7 +151,7 @@
 
 .faq-section h2 {
     font-size: 1.8rem;
-    color: #1b5e20;
+    color: var(--dark-green);
     text-align: center;
     margin-bottom: 32px;
 }
@@ -171,8 +171,8 @@
 }
 
 .faq-item.expanded {
-    border-color: #2d8c3e;
-    box-shadow: 0 4px 20px rgba(45, 140, 62, 0.1);
+    border-color: var(--primary-green);
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.1);
 }
 
 .faq-question {
@@ -191,7 +191,7 @@
 }
 
 .faq-question i {
-    color: #2d8c3e;
+    color: var(--primary-green);
     font-size: 0.85rem;
 }
 

@@ -23,7 +23,7 @@
 .avatar-circle {
     width: 60px;
     height: 60px;
-    background: linear-gradient(135deg, #2d8c3e, #ff8c00);
+    background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -297,8 +297,8 @@
 }
 
 .action-btn.highlight {
-    background: linear-gradient(135deg, #e8f5e9, #fff8e1);
-    border-color: #c8e6c9;
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border-color: #bbf7d0;
 }
 
 /* Responsive */

@@ -10,7 +10,7 @@ const User = sequelize.define('User', {
   },
   nationalId: {
     type: DataTypes.STRING(20),
-    allowNull: false,
+    allowNull: true,
     unique: true
   },
   username: {

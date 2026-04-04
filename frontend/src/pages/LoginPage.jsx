@@ -58,18 +58,18 @@ const LoginPage = () => {
                     <div className="login-overlay">
                         <h2>AgroLink</h2>
                         <p className="tagline">Connecting Farmers to Markets & Services</p>
-                        <div className="stats">
-                            <div className="stat">
-                                <h3>10,000+</h3>
-                                <p>Active Farmers</p>
+                        <div className="login-benefits">
+                            <div className="benefit">
+                                <i className="fas fa-seedling"></i>
+                                <span>Access fresh produce directly from farms</span>
                             </div>
-                            <div className="stat">
-                                <h3>50,000+</h3>
-                                <p>Happy Customers</p>
+                            <div className="benefit">
+                                <i className="fas fa-handshake"></i>
+                                <span>Connect with verified buyers and sellers</span>
                             </div>
-                            <div className="stat">
-                                <h3>47</h3>
-                                <p>Counties Covered</p>
+                            <div className="benefit">
+                                <i className="fas fa-shield-alt"></i>
+                                <span>Trade securely with M-Pesa escrow</span>
                             </div>
                         </div>
                     </div>

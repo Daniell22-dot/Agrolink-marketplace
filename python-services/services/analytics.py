@@ -2,56 +2,50 @@
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from database import execute_query
+from .database import execute_query  # Fix: relative import
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def get_dashboard_stats(start_date=None, end_date=None):
-    """Get comprehensive dashboard statistics"""
+    """Get comprehensive dashboard statistics."""
     if start_date is None:
         start_date = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
     if end_date is None:
         end_date = datetime.now().strftime('%Y-%m-%d')
-    
+
     try:
         stats = {}
-        
-        # Total users
-        users_query = "SELECT COUNT(*) as total FROM users"
-        users_df = execute_query(users_query)
+
+        users_df = execute_query("SELECT COUNT(*) as total FROM users")
         stats['total_users'] = int(users_df['total'].values[0]) if users_df is not None else 0
-        
-        # Farmer/Buyer split
-        roles_query = "SELECT role, COUNT(*) as count FROM users GROUP BY role"
-        roles_df = execute_query(roles_query)
+
+        roles_df = execute_query("SELECT role, COUNT(*) as count FROM users GROUP BY role")
         if roles_df is not None:
             for _, row in roles_df.iterrows():
                 stats[f'total_{row["role"]}s'] = int(row['count'])
-        
-        # Total products
-        products_query = "SELECT COUNT(*) as total FROM products WHERE status = 'active'"
-        products_df = execute_query(products_query)
+
+        products_df = execute_query("SELECT COUNT(*) as total FROM products WHERE status = 'active'")
         stats['total_products'] = int(products_df['total'].values[0]) if products_df is not None else 0
-        
-        # Orders in date range
-        orders_query = f"""
+
+        # Fix: parameterized start_date and end_date (string user inputs)
+        orders_query = """
         SELECT 
             COUNT(*) as total_orders,
             SUM(total_amount) as total_revenue,
             AVG(total_amount) as avg_order_value
         FROM orders
-        WHERE created_at BETWEEN '{start_date}' AND '{end_date}'
+        WHERE created_at BETWEEN :start_date AND :end_date
         AND status NOT IN ('cancelled', 'failed')
         """
-        orders_df = execute_query(orders_query)
+        orders_df = execute_query(orders_query, params={'start_date': start_date, 'end_date': end_date})
         if orders_df is not None:
             stats['total_orders'] = int(orders_df['total_orders'].values[0]) if orders_df['total_orders'].values[0] else 0
             stats['total_revenue'] = float(orders_df['total_revenue'].values[0]) if orders_df['total_revenue'].values[0] else 0
             stats['avg_order_value'] = float(orders_df['avg_order_value'].values[0]) if orders_df['avg_order_value'].values[0] else 0
-        
-        # Order statuses
+
         status_query = """
         SELECT status, COUNT(*) as count
         FROM orders
@@ -62,8 +56,7 @@ def get_dashboard_stats(start_date=None, end_date=None):
         if status_df is not None:
             for _, row in status_df.iterrows():
                 stats[f'{row["status"]}_orders'] = int(row['count'])
-        
-        # Top categories
+
         categories_query = """
         SELECT p.category, COUNT(oi.id) as order_count, SUM(oi.quantity) as units_sold
         FROM products p
@@ -83,24 +76,23 @@ def get_dashboard_stats(start_date=None, end_date=None):
                     'orders': int(row['order_count']),
                     'units': int(row['units_sold'])
                 })
-        
-        # Average rating
-        rating_query = "SELECT AVG(rating) as avg_rating FROM products WHERE rating IS NOT NULL"
-        rating_df = execute_query(rating_query)
+
+        rating_df = execute_query("SELECT AVG(rating) as avg_rating FROM products WHERE rating IS NOT NULL")
         stats['avg_product_rating'] = float(rating_df['avg_rating'].values[0]) if rating_df is not None and rating_df['avg_rating'].values[0] else 0
-        
+
         logger.info(f"Dashboard stats retrieved: {len(stats)} metrics")
         return stats
-        
+
     except Exception as e:
         logger.error(f"Error getting dashboard stats: {e}")
         return {}
 
 
 def generate_sales_report(start_date, end_date):
-    """Generate detailed sales report"""
+    """Generate detailed sales report."""
     try:
-        query = f"""
+        # Fix: parameterized date strings to prevent SQL injection
+        query = """
         SELECT 
             DATE(o.created_at) as date,
             COUNT(o.id) as orders,
@@ -109,20 +101,16 @@ def generate_sales_report(start_date, end_date):
             AVG(o.total_amount) as avg_order_value,
             COUNT(DISTINCT CASE WHEN o.status = 'delivered' THEN o.id END) as completed_orders
         FROM orders o
-        WHERE o.created_at BETWEEN '{start_date}' AND '{end_date}'
+        WHERE o.created_at BETWEEN :start_date AND :end_date
         AND o.status NOT IN ('cancelled', 'failed')
         GROUP BY DATE(o.created_at)
         ORDER BY date DESC
         """
-        
-        df = execute_query(query)
-        
+        df = execute_query(query, params={'start_date': start_date, 'end_date': end_date})
+
         if df is None or df.empty:
-            return {
-                'summary': {},
-                'daily_data': []
-            }
-        
+            return {'summary': {}, 'daily_data': []}
+
         report = {
             'summary': {
                 'total_sales': float(df['revenue'].sum()),
@@ -134,7 +122,7 @@ def generate_sales_report(start_date, end_date):
             },
             'daily_data': []
         }
-        
+
         for _, row in df.iterrows():
             report['daily_data'].append({
                 'date': str(row['date']),
@@ -144,36 +132,35 @@ def generate_sales_report(start_date, end_date):
                 'avg_order_value': float(row['avg_order_value']),
                 'completed_orders': int(row['completed_orders'])
             })
-        
+
         logger.info(f"Sales report generated for {start_date} to {end_date}")
         return report
-        
+
     except Exception as e:
         logger.error(f"Error generating sales report: {e}")
         return {'summary': {}, 'daily_data': []}
 
 
 def get_user_analytics(user_id):
-    """Get analytics for a specific user"""
+    """Get analytics for a specific user."""
     try:
-        user_query = f"""
+        # Fix: parameterized user_id to prevent SQL injection
+        user_query = """
         SELECT 
             id, fullName, email, role, created_at,
-            (SELECT COUNT(*) FROM orders WHERE user_id = {user_id}) as total_orders,
-            (SELECT SUM(total_amount) FROM orders WHERE user_id = {user_id}) as total_spent,
-            (SELECT AVG(rating) FROM reviews WHERE user_id = {user_id}) as avg_rating_given
+            (SELECT COUNT(*) FROM orders WHERE user_id = :user_id) as total_orders,
+            (SELECT SUM(total_amount) FROM orders WHERE user_id = :user_id) as total_spent,
+            (SELECT AVG(rating) FROM reviews WHERE user_id = :user_id) as avg_rating_given
         FROM users
-        WHERE id = {user_id}
+        WHERE id = :user_id
         """
-        
-        user_df = execute_query(user_query)
-        
+        user_df = execute_query(user_query, params={'user_id': user_id})
+
         if user_df is None or user_df.empty:
             return None
-        
+
         row = user_df.iloc[0]
-        
-        analytics = {
+        return {
             'user_id': int(row['id']),
             'name': str(row['fullName']),
             'email': str(row['email']),
@@ -183,23 +170,18 @@ def get_user_analytics(user_id):
             'total_spent': float(row['total_spent']) if row['total_spent'] else 0,
             'avg_rating_given': float(row['avg_rating_given']) if row['avg_rating_given'] else 0
         }
-        
-        return analytics
-        
+
     except Exception as e:
         logger.error(f"Error getting user analytics: {e}")
         return None
 
 
 def get_top_products(limit=10, days=30):
-    """Get top performing products"""
+    """Get top performing products."""
     try:
         query = f"""
         SELECT 
-            p.id,
-            p.name,
-            p.price,
-            p.rating,
+            p.id, p.name, p.price, p.rating,
             COUNT(oi.id) as order_count,
             SUM(oi.quantity) as total_units_sold,
             SUM(oi.quantity * oi.price) as total_revenue,
@@ -208,17 +190,16 @@ def get_top_products(limit=10, days=30):
         LEFT JOIN order_items oi ON p.id = oi.product_id
         LEFT JOIN orders o ON oi.order_id = o.id
         LEFT JOIN reviews r ON p.id = r.product_id
-        WHERE o.created_at >= DATE_SUB(NOW(), INTERVAL {days} DAY)
+        WHERE o.created_at >= DATE_SUB(NOW(), INTERVAL {int(days)} DAY)
         GROUP BY p.id, p.name, p.price, p.rating
         ORDER BY total_revenue DESC
-        LIMIT {limit}
+        LIMIT {int(limit)}
         """
-        
         df = execute_query(query)
-        
+
         if df is None or df.empty:
             return []
-        
+
         products = []
         for _, row in df.iterrows():
             products.append({
@@ -231,9 +212,8 @@ def get_top_products(limit=10, days=30):
                 'revenue': float(row['total_revenue']) if row['total_revenue'] else 0,
                 'avg_review_rating': float(row['avg_review_rating']) if row['avg_review_rating'] else 0
             })
-        
         return products
-        
+
     except Exception as e:
         logger.error(f"Error getting top products: {e}")
         return []

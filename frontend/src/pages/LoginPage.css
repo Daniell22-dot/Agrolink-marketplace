@@ -111,17 +111,19 @@
 }
 
 .login-footer a {
-    color: var(--primary-orange);
+    color: var(--primary-green);
     font-weight: 700;
     text-decoration: none;
 }
 
 .login-footer a:hover {
     text-decoration: underline;
+    color: var(--dark-green);
 }
 
 .login-bg {
-    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.9) 0%, rgba(16, 73, 35, 0.95) 100%),
+                url('../assets/images/auth-bg.png') center/cover no-repeat;
     position: relative;
     display: flex;
     align-items: center;
@@ -152,28 +154,39 @@
     font-size: 3.5rem;
     margin-bottom: 1rem;
 }
-
 .login-overlay .tagline {
     font-size: 1.5rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
     opacity: 0.9;
 }
 
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+.login-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
-.stat h3 {
-    font-size: 3rem;
-    color: var(--primary-orange);
-    margin-bottom: 0.5rem;
+.benefit {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.12);
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
-.stat p {
+.benefit i {
+    font-size: 24px;
+    color: var(--light-green);
+}
+
+.benefit span {
     font-size: 1.1rem;
-    opacity: 0.9;
+    font-weight: 500;
 }
 
 @media (max-width: 968px) {

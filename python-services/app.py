@@ -17,10 +17,13 @@ load_dotenv()
 app = FastAPI(title="AgroLink Python Services", version="1.0.0")
 
 # Enable CORS
+# Fix: allow_credentials=True is incompatible with allow_origins=["*"] — browsers
+# reject this combination. For production, replace "*" with your specific frontend URL
+# and re-enable allow_credentials=True if cookies/auth headers are needed.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

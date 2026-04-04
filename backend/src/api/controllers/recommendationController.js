@@ -9,7 +9,9 @@ const { validationResult } = require('express-validator');
 exports.getForYou = async (req, res, next) => {
     try {
         const limit = parseInt(req.query.limit) || 20;
-        const products = await recommendationService.getPersonalizedFeed(req.user.id, limit);
+        // Pass user county so personalized feed boosts nearby products
+        const county = req.user.county || req.user.location || null;
+        const products = await recommendationService.getPersonalizedFeed(req.user.id, limit, county);
 
         res.json({
             success: true,

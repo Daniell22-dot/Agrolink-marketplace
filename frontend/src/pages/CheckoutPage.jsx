@@ -114,6 +114,23 @@ const CheckoutPage = () => {
                                             </div>
                                         </div>
                                     </label>
+
+                                    <label className="payment-option">
+                                        <input
+                                            type="radio"
+                                            name="paymentMethod"
+                                            value="pod"
+                                            checked={formData.paymentMethod === 'pod'}
+                                            onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
+                                        />
+                                        <div className="payment-card">
+                                            <i className="fas fa-hand-holding-usd"></i>
+                                            <div>
+                                                <strong>Pay on Delivery</strong>
+                                                <p>Pay cash or mobile money when you receive</p>
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
                             </div>
 

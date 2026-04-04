@@ -14,16 +14,21 @@
 }
 
 .marquee-wrapper {
-    display: flex;
     width: 100%;
+    overflow: hidden;
     position: relative;
     padding: 20px 0;
+    /* fade edges */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
 }
 
 .marquee-content {
     display: flex;
-    animation: marquee-scroll 60s linear infinite;
-    gap: 30px;
+    width: max-content;          /* never wrap */
+    gap: 24px;
+    animation: marquee-scroll 40s linear infinite;
+    will-change: transform;
 }
 
 .marquee-content:hover {

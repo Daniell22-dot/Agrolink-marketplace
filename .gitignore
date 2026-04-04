@@ -34,3 +34,9 @@ dockerfile
 package-lock.json
 yarn.lock
 yarn-error.log
+testFind.js
+testLogin.js
+runSeed.js
+venv
+.env
+.env.example

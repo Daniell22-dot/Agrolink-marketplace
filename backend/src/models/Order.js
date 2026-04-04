@@ -20,7 +20,7 @@ const Order = sequelize.define('Order', {
         defaultValue: 'pending'
     },
     paymentMethod: {
-        type: DataTypes.ENUM('mpesa', 'card', 'escrow'),
+        type: DataTypes.ENUM('mpesa', 'card', 'escrow', 'pod'),
         allowNull: false
     },
     paymentStatus: {
