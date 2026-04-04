@@ -56,6 +56,7 @@ We are committed to providing a welcoming and inspiring community for all. Pleas
 - Add comments for complex logic
 
 #### JavaScript/Node.js
+
 - Use ES6+ syntax
 - Follow the existing code style (check `.eslintrc`)
 - Use async/await instead of callbacks
@@ -68,11 +69,12 @@ We are committed to providing a welcoming and inspiring community for all. Pleas
  * @returns {Promise<Array>} Array of product objects
  */
 async function getTrendingProducts(limit = 10) {
-    // Implementation
+  // Implementation
 }
 ```
 
 #### Python
+
 - Follow PEP 8 style guide
 - Use type hints for function parameters
 - Add docstrings to functions and classes
@@ -81,10 +83,10 @@ async function getTrendingProducts(limit = 10) {
 def get_trending_products(limit: int = 10) -> List[dict]:
     """
     Get trending products based on sales and interactions.
-    
+
     Args:
         limit: Number of products to return
-        
+
     Returns:
         List of product dictionaries with trending scores
     """
@@ -92,6 +94,7 @@ def get_trending_products(limit: int = 10) -> List[dict]:
 ```
 
 #### React/Frontend
+
 - Use functional components with hooks
 - Keep components small and focused
 - Use meaningful component names
@@ -143,6 +146,7 @@ Fixes #issue-number (if applicable)
 ```
 
 Types:
+
 - `feat:` A new feature
 - `fix:` A bug fix
 - `docs:` Documentation changes
@@ -153,6 +157,7 @@ Types:
 - `chore:` Dependency updates, build changes, etc.
 
 Examples:
+
 ```
 feat: Add price prediction endpoint for farmers
 
@@ -176,12 +181,14 @@ fix: Correct email case sensitivity in login
 ### Before Creating a Pull Request
 
 1. Update your branch with latest upstream changes:
+
    ```bash
    git fetch upstream
    git rebase upstream/main
    ```
 
 2. Run all tests and linters:
+
    ```bash
    npm test
    npm run lint
@@ -195,6 +202,7 @@ fix: Correct email case sensitivity in login
 ### Creating a Pull Request
 
 1. Push to your fork:
+
    ```bash
    git push origin feature/your-feature-name
    ```
@@ -207,28 +215,35 @@ fix: Correct email case sensitivity in login
    - Testing instructions
 
 3. PR Template:
+
    ```markdown
    ## Description
+
    Brief description of the changes
-   
+
    ## Type of Change
+
    - [ ] Bug fix
    - [ ] New feature
    - [ ] Breaking change
    - [ ] Documentation update
-   
+
    ## Related Issues
+
    Fixes #(issue number)
-   
+
    ## Testing
+
    - [ ] Tested on development environment
    - [ ] Added/updated tests
    - [ ] All tests passing
-   
+
    ## Screenshots (if applicable)
+
    Add images showing UI changes
-   
+
    ## Checklist
+
    - [ ] Code follows style guidelines
    - [ ] Self-review completed
    - [ ] Comments added for complex logic
@@ -249,6 +264,7 @@ fix: Correct email case sensitivity in login
 When adding new features, follow this structure:
 
 ### Backend (Node.js)
+
 ```
 backend/src/
 ├── api/
@@ -264,6 +280,7 @@ backend/src/
 ```
 
 ### Frontend (React)
+
 ```
 frontend/src/
 ├── components/          # Reusable components
@@ -276,6 +293,7 @@ frontend/src/
 ```
 
 ### Python Services
+
 ```
 python-services/
 ├── app.py               # Main FastAPI app
@@ -310,15 +328,18 @@ When reporting bugs, include:
 6. **Code Snippet**: Code that triggers the issue (if applicable)
 
 Example:
+
 ```markdown
 ## Bug Report: Login fails with correct credentials
 
 **Environment:**
+
 - Windows 10
 - Node.js v16.13.0
 - npm 8.1.0
 
 **Steps to Reproduce:**
+
 1. Go to login page
 2. Enter email: test@example.com
 3. Enter password: correct_password
@@ -332,7 +353,9 @@ Shows "Invalid credentials" error
 
 **Error Log:**
 ```
+
 Error: LOWER() is not a function in mysql query
+
 ```
 
 **Screenshots:**
@@ -349,6 +372,7 @@ When suggesting features, include:
 4. **Alternatives**: Other approaches considered
 
 Example:
+
 ```markdown
 ## Feature Request: Export Sales Report to CSV
 
@@ -362,6 +386,7 @@ Admins want to analyze sales data in Excel for detailed reporting
 Add "Export CSV" button to sales report dashboard that downloads data
 
 **Alternatives:**
+
 - JSON export (less common for non-technical users)
 - PDF export (less flexible for analysis)
 ```
@@ -369,6 +394,7 @@ Add "Export CSV" button to sales report dashboard that downloads data
 ## Performance & Accessibility
 
 ### Performance Considerations
+
 - Minimize database queries (use eager loading)
 - Cache frequently accessed data (Redis)
 - Lazy load images and components
@@ -376,6 +402,7 @@ Add "Export CSV" button to sales report dashboard that downloads data
 - Monitor API response times
 
 ### Accessibility
+
 - Follow WCAG 2.1 AA guidelines
 - Use semantic HTML
 - Add alt text to images
@@ -406,4 +433,4 @@ By contributing to AgroLink, you agree that your contributions will be licensed 
 
 Thank you for contributing to AgroLink! We appreciate your effort in making this project better. 🙏
 
-*Last Updated: April 2026*
+_Last Updated: April 2026_
