@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChartData } from '../redux/slices/dashboardSlice';
+import { fetchChartData, fetchDashboardStats } from '../redux/slices/dashboardSlice';
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const AnalyticsPage = () => {
   const dispatch = useDispatch();
-  const { chartData } = useSelector(state => state.dashboard);
+  const { chartData, stats } = useSelector(state => state.dashboard);
   const [dateRange, setDateRange] = useState('30days');
   
   useEffect(() => {
@@ -15,6 +15,7 @@ const AnalyticsPage = () => {
     dispatch(fetchChartData({ type: 'sales', startDate, endDate }));
     dispatch(fetchChartData({ type: 'users', startDate, endDate }));
     dispatch(fetchChartData({ type: 'products', startDate, endDate }));
+    dispatch(fetchDashboardStats({ startDate, endDate }));
   }, [dispatch, dateRange]);
 
   const salesData = chartData?.sales?.length ? chartData.sales : [{ name: 'No Data', sales: 0, revenue: 0 }];
@@ -104,19 +105,19 @@ const AnalyticsPage = () => {
           <div className="space-y-4">
             <div className="flex justify-between pb-4 border-b border-gray-200">
               <span className="text-gray-600">Average Order Value</span>
-              <span className="font-semibold text-gray-800">$156.50</span>
+              <span className="font-semibold text-gray-800">${stats?.averageOrderValue?.toFixed(2) || '0.00'}</span>
             </div>
             <div className="flex justify-between pb-4 border-b border-gray-200">
               <span className="text-gray-600">Conversion Rate</span>
-              <span className="font-semibold text-green-600">4.8%</span>
+              <span className="font-semibold text-green-600">{stats?.conversionRate?.toFixed(1) || '0.0'}%</span>
             </div>
             <div className="flex justify-between pb-4 border-b border-gray-200">
               <span className="text-gray-600">Avg. Product Rating</span>
-              <span className="font-semibold text-gray-800">4.5</span>
+              <span className="font-semibold text-gray-800">{stats?.avgRating?.toFixed(1) || '0.0'}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-600">Customer Retention</span>
-              <span className="font-semibold text-blue-600">72%</span>
+              <span className="font-semibold text-blue-600">{stats?.retentionRate?.toFixed(1) || '0.0'}%</span>
             </div>
           </div>
         </div>

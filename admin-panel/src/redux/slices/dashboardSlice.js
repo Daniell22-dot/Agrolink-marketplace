@@ -55,7 +55,11 @@ const initialState = {
     totalRevenue: 0,
     totalProducts: 0,
     newOrdersToday: 0,
-    pendingOrders: 0
+    pendingOrders: 0,
+    averageOrderValue: 0,
+    conversionRate: 0,
+    avgRating: 0,
+    retentionRate: 0
   },
   chartData: {
     sales: {},

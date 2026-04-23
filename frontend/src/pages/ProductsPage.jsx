@@ -12,15 +12,26 @@ const ProductsPage = () => {
     const dispatch = useDispatch();
     const { products, loading, error } = useSelector((state) => state.products);
 
-    const [filters, setFilters] = useState({
+    const filters = React.useMemo(() => ({
         search: searchParams.get('search') || '',
         category: searchParams.get('category') || '',
         minPrice: searchParams.get('minPrice') || '',
         maxPrice: searchParams.get('maxPrice') || '',
         sort: searchParams.get('sort') || 'newest'
-    });
+    }), [searchParams]);
 
-    const categories = ['vegetables', 'fruits', 'grains', 'livestock', 'dairy', 'other'];
+    const categories = [
+        { id: 'vegetables', label: 'Vegetables' },
+        { id: 'fruits', label: 'Fruits' },
+        { id: 'grains', label: 'Grains' },
+        { id: 'livestock', label: 'Livestock' },
+        { id: 'dairy', label: 'Dairy' },
+        { id: 'market-linkage', label: 'Market Linkage' },
+        { id: 'input-supplies', label: 'Input Supplies' },
+        { id: 'transport', label: 'Transport & Logistics' },
+        { id: 'advisory', label: 'Agri Advisory' },
+        { id: 'other', label: 'Other' }
+    ];
 
     useEffect(() => {
         // Fetch products with filters
@@ -28,28 +39,35 @@ const ProductsPage = () => {
     }, [filters, dispatch]);
 
     const handleFilterChange = (name, value) => {
-        const newFilters = { ...filters, [name]: value };
-        setFilters(newFilters);
-
-        // Update URL params
-        const params = new URLSearchParams();
-        Object.keys(newFilters).forEach(key => {
-            if (newFilters[key]) params.set(key, newFilters[key]);
-        });
-        setSearchParams(params);
+        const newParams = new URLSearchParams(searchParams);
+        if (value) {
+            newParams.set(name, value);
+        } else {
+            newParams.delete(name);
+        }
+        setSearchParams(newParams);
     };
 
     return (
         <div className="products-page">
-            {/* Hero Banner */}
-            <div className="products-hero">
-                <div className="container">
-                    <h1>Fresh Agricultural Produce</h1>
-                    <p>Connect with local farmers and get the best quality products</p>
-                    <SearchBar
-                        onSearch={(value) => handleFilterChange('search', value)}
-                        placeholder="Search for products (e.g., tomatoes, milk...)"
-                    />
+            {/* Premium Hero Banner */}
+            <div className="products-hero-modern">
+                <div className="hero-background-effects">
+                    <div className="glow-orb orb-1"></div>
+                    <div className="glow-orb orb-2"></div>
+                </div>
+                <div className="container hero-content-modern">
+                    <div className="hero-text-content">
+                        <h1>Discover <span className="text-gradient">Premium</span> Products & Services</h1>
+                        <p>Explore the finest agricultural produce and top-tier services tailored for you.</p>
+                    </div>
+                    <div className="hero-search-glass">
+                        <SearchBar
+                            onSearch={(value) => handleFilterChange('search', value)}
+                            placeholder="Search fresh tomatoes, logistics, advisory..."
+                            initialValue={filters.search}
+                        />
+                    </div>
                 </div>
             </div>
 
@@ -60,19 +78,22 @@ const ProductsPage = () => {
                     <h3>Filters</h3>
 
                     <div className="filter-group">
-                        <h4>Category</h4>
-                        {categories.map(cat => (
-                            <label key={cat} className="filter-checkbox">
-                                <input
-                                    type="radio"
-                                    name="category"
-                                    value={cat}
-                                    checked={filters.category === cat}
-                                    onChange={(e) => handleFilterChange('category', e.target.value)}
-                                />
-                                <span>{cat.charAt(0).toUpperCase() + cat.slice(1)}</span>
-                            </label>
-                        ))}
+                        <h4><i className="fas fa-layer-group"></i> Category</h4>
+                        <div className="category-list">
+                            {categories.map(cat => (
+                                <label key={cat.id} className={`filter-chip ${filters.category === cat.id ? 'active' : ''}`}>
+                                    <input
+                                        type="radio"
+                                        name="category"
+                                        value={cat.id}
+                                        checked={filters.category === cat.id}
+                                        onChange={(e) => handleFilterChange('category', e.target.value)}
+                                        className="hidden-radio"
+                                    />
+                                    <span>{cat.label}</span>
+                                </label>
+                            ))}
+                        </div>
                         {filters.category && (
                             <button
                                 className="clear-filter"
@@ -84,7 +105,7 @@ const ProductsPage = () => {
                     </div>
 
                     <div className="filter-group">
-                        <h4>Price Range (KES)</h4>
+                        <h4><i className="fas fa-tags"></i> Price Range (KES)</h4>
                         <div className="price-inputs">
                             <input
                                 type="number"
@@ -105,7 +126,7 @@ const ProductsPage = () => {
                     </div>
 
                     <div className="filter-group">
-                        <h4>Sort By</h4>
+                        <h4><i className="fas fa-sort-amount-down"></i> Sort By</h4>
                         <select
                             value={filters.sort}
                             onChange={(e) => handleFilterChange('sort', e.target.value)}
@@ -121,8 +142,8 @@ const ProductsPage = () => {
                 {/* Products Grid */}
                 <main className="products-main">
                     <div className="products-header">
-                        <h2>All Products</h2>
-                        <span className="products-count">{products?.length || 0} products found</span>
+                        <h2>{filters.category ? categories.find(c => c.id === filters.category)?.label : 'All Products & Services'}</h2>
+                        <span className="products-badge">{products?.length || 0} Results</span>
                     </div>
 
                     {loading ? (

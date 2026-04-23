@@ -11,6 +11,7 @@ import AdminLayout from './components/layout/AdminLayout';
 import AdminDashboard from './pages/AdminDashboard';
 import ManageUsers from './pages/ManageUsers';
 import ManageProducts from './pages/ManageProducts';
+import AddProductPage from './pages/AddProductPage';
 import ManageOrders from './pages/ManageOrders';
 import ManageReports from './pages/ManageReports';
 import AnalyticsPage from './pages/AnalyticsPage';
@@ -75,6 +76,12 @@ function App() {
           <Route path="/admin/products" element={
             <AdminProtectedRoute>
               <ManageProducts />
+            </AdminProtectedRoute>
+          } />
+
+          <Route path="/admin/products/add" element={
+            <AdminProtectedRoute>
+              <AddProductPage />
             </AdminProtectedRoute>
           } />
 

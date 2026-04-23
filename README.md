@@ -4,17 +4,17 @@ AgroLink is an innovative digital marketplace connecting agricultural producers 
 
 It features a production-ready backend API, React web application, admin dashboard, mobile app, and Python-based ML microservices for AI-powered recommendations and analytics.
 
-##  Key Features
+## Key Features
 
--  **AI-Powered Recommendations**: ML-based product recommendations and trending analysis
--  **Price Prediction**: Machine learning-based price forecasting and market analysis
--  **Advanced Analytics**: Real-time dashboards, sales reports, and user analytics
--  **Image Processing**: Automatic image optimization with multiple size variants
--  **Farmer Dashboard**: Dedicated tools for agricultural product management
--  **Full E-commerce**: Shopping cart, orders, payments, and reviews
--  **Real-time Chat**: Socket.io-powered messaging between buyers and farmers
--  **Secure Auth**: JWT-based authentication with refresh tokens
--  **Multi-platform**: Web, admin panel, and mobile app support
+- **AI-Powered Recommendations**: ML-based product recommendations and trending analysis
+- **Price Prediction**: Machine learning-based price forecasting and market analysis
+- **Advanced Analytics**: Real-time dashboards, sales reports, and user analytics
+- **Image Processing**: Automatic image optimization with multiple size variants
+- **Farmer Dashboard**: Dedicated tools for agricultural product management
+- **Full E-commerce**: Shopping cart, orders, payments, and reviews
+- **Real-time Chat**: Socket.io-powered messaging between buyers and farmers
+- **Secure Auth**: JWT-based authentication with refresh tokens
+- **Multi-platform**: Web, admin panel, and mobile app support
 
 ## Project Structure
 
@@ -33,43 +33,48 @@ agrolink/
 ## 🛠 Technology Stack
 
 ### Backend Services
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **API Framework** | Node.js + Express | RESTful API server |
-| **Database** | MySQL + Sequelize | Data persistence & ORM |
-| **Caching** | Redis + Bull | Session & job management |
-| **Search** | Elasticsearch | Advanced product search |
-| **Real-time** | Socket.io | Live chat & notifications |
-| **Auth** | JWT + bcrypt | Secure authentication |
-| **ML Services** | Python + FastAPI | Recommendations, pricing, analytics |
+
+| Component               | Technology        | Purpose                             |
+| ----------------------- | ----------------- | ----------------------------------- |
+| **API Framework** | Node.js + Express | RESTful API server                  |
+| **Database**      | MySQL + Sequelize | Data persistence & ORM              |
+| **Caching**       | Redis + Bull      | Session & job management            |
+| **Search**        | Elasticsearch     | Advanced product search             |
+| **Real-time**     | Socket.io         | Live chat & notifications           |
+| **Auth**          | JWT + bcrypt      | Secure authentication               |
+| **ML Services**   | Python + FastAPI  | Recommendations, pricing, analytics |
 
 ### Frontend
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **UI Framework** | React 18 | User interface |
-| **State Management** | Redux Toolkit | Global state |
-| **Styling** | TailwindCSS | Responsive UI with green theme |
-| **HTTP Client** | Axios | API communication |
-| **Real-time** | Socket.io Client | Live updates |
+
+| Component                  | Technology       | Purpose                        |
+| -------------------------- | ---------------- | ------------------------------ |
+| **UI Framework**     | React 18         | User interface                 |
+| **State Management** | Redux Toolkit    | Global state                   |
+| **Styling**          | TailwindCSS      | Responsive UI with green theme |
+| **HTTP Client**      | Axios            | API communication              |
+| **Real-time**        | Socket.io Client | Live updates                   |
 
 ### Admin Panel
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **Framework** | React + Tailwind | Admin UI |
-| **Visualization** | Chart.js + Recharts | Data visualization |
-| **Complex UI** | Material-UI | Advanced components |
+
+| Component               | Technology          | Purpose             |
+| ----------------------- | ------------------- | ------------------- |
+| **Framework**     | React + Tailwind    | Admin UI            |
+| **Visualization** | Chart.js + Recharts | Data visualization  |
+| **Complex UI**    | Material-UI         | Advanced components |
 
 ### Python ML Services
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **Framework** | FastAPI | Async API server |
-| **ML/Data** | scikit-learn + pandas | Machine learning models |
-| **Image Processing** | Pillow | Image optimization |
-| **Database** | SQLAlchemy | ORM for MySQL access |
 
-##  API Overview
+| Component                  | Technology            | Purpose                 |
+| -------------------------- | --------------------- | ----------------------- |
+| **Framework**        | FastAPI               | Async API server        |
+| **ML/Data**          | scikit-learn + pandas | Machine learning models |
+| **Image Processing** | Pillow                | Image optimization      |
+| **Database**         | SQLAlchemy            | ORM for MySQL access    |
+
+## API Overview
 
 ### Authentication Endpoints
+
 ```
 POST   /api/auth/register          - User registration
 POST   /api/auth/login             - User login
@@ -78,6 +83,7 @@ POST   /api/auth/logout            - User logout
 ```
 
 ### Recommendations (ML-based)
+
 ```
 GET    /api/recommendations/for-you              - Personalized recommendations
 GET    /api/recommendations/similar/:productId   - Similar products
@@ -86,6 +92,7 @@ GET    /api/recommendations/recently-viewed      - User's viewed history
 ```
 
 ### Analytics & Insights
+
 ```
 GET    /api/analytics/dashboard                  - Dashboard stats (admin)
 POST   /api/analytics/sales-report               - Sales report by date (admin)
@@ -94,6 +101,7 @@ GET    /api/analytics/top-products               - Top performing products
 ```
 
 ### Price Prediction
+
 ```
 POST   /api/pricing/predict                      - Predict product price
 GET    /api/pricing/trends/:category             - Price trends by category
@@ -102,6 +110,7 @@ POST   /api/pricing/train-model                  - Retrain ML model (admin)
 ```
 
 ### Image Processing
+
 ```
 POST   /api/images/optimize                      - Optimize image (4 sizes)
 POST   /api/images/validate                      - Validate image format/size
@@ -110,6 +119,7 @@ POST   /api/images/batch-optimize                - Batch image processing (admin
 ```
 
 ### Products, Orders, Cart
+
 ```
 GET    /api/products                             - List all products
 GET    /api/products/:id                         - Product details
@@ -118,9 +128,10 @@ POST   /api/cart/add                             - Add to cart
 GET    /api/reviews/:productId                   - Product reviews
 ```
 
-##  Getting Started
+## Getting Started
 
 ### Prerequisites
+
 - **Node.js** v16+ or above
 - **Python** 3.8+
 - **MySQL** 5.7+
@@ -155,6 +166,7 @@ cd ../
 Create `.env` files in each directory:
 
 **backend/.env**
+
 ```env
 # Database
 DB_HOST=localhost
@@ -182,6 +194,7 @@ NODE_ENV=development
 ```
 
 **python-services/.env**
+
 ```env
 DB_HOST=localhost
 DB_PORT=3306
@@ -191,12 +204,14 @@ DB_NAME=agrolink
 ```
 
 **frontend/.env**
+
 ```env
 REACT_APP_API_URL=http://localhost:8000
 REACT_APP_SOCKET_URL=http://localhost:8000
 ```
 
 **admin-panel/.env**
+
 ```env
 REACT_APP_API_URL=http://localhost:8000
 REACT_APP_SOCKET_URL=http://localhost:8000
@@ -219,6 +234,7 @@ cd ../
 Open separate terminals for each service:
 
 **Terminal 1: Backend API**
+
 ```bash
 cd backend
 npm run dev
@@ -226,6 +242,7 @@ npm run dev
 ```
 
 **Terminal 2: Python ML Services**
+
 ```bash
 cd python-services
 python app.py
@@ -233,6 +250,7 @@ python app.py
 ```
 
 **Terminal 3: Frontend**
+
 ```bash
 cd frontend
 npm start
@@ -240,6 +258,7 @@ npm start
 ```
 
 **Terminal 4: Admin Panel**
+
 ```bash
 cd admin-panel
 npm start
@@ -249,12 +268,14 @@ npm start
 ## 📱 Platform-Specific Guides
 
 ### For Farmers
+
 - Register as a farmer to create agricultural product listings
 - Use price prediction to set optimal prices for your products
 - Track sales and revenue through the dashboard
 - Communicate with buyers via the chat system
 
 ### For Buyers
+
 - Browse and search agricultural products
 - Get personalized product recommendations
 - Add products to cart and make secure payments
@@ -262,16 +283,18 @@ npm start
 - Chat directly with farmers/sellers
 
 ### For Admins
+
 - View comprehensive analytics dashboard
 - Manage users, products, and orders
 - Generate sales and performance reports
 - Monitor platform activity and user interactions
 
-##  Development
+## Development
 
 ### Project Commands
 
 **Backend**
+
 ```bash
 npm run dev          # Development with auto-reload
 npm run migrate      # Run database migrations
@@ -281,6 +304,7 @@ npm run lint         # Run ESLint
 ```
 
 **Frontend**
+
 ```bash
 npm start            # Development server
 npm run build        # Production build
@@ -289,6 +313,7 @@ npm run eject        # Eject from create-react-app
 ```
 
 **Python Services**
+
 ```bash
 python app.py                           # Development server
 uvicorn app:app --reload --port 5000   # Using Uvicorn
@@ -311,21 +336,23 @@ docker-compose logs -f
 docker-compose down
 ```
 
-##  Testing
+## Testing
 
 ### Backend Tests
+
 ```bash
 cd backend
 npm test
 ```
 
 ### Frontend Tests
+
 ```bash
 cd frontend
 npm test
 ```
 
-##  Documentation
+## Documentation
 
 - [API Documentation](./docs/api/) - Complete API reference
 - [Deployment Guide](./docs/deployment/) - Production setup
@@ -336,33 +363,36 @@ npm test
 ### Screenshots
 
 #### ML Recommendations
+
 <img width="1366" height="682" alt="ML Recommendations Feature" src="https://github.com/user-attachments/assets/1f0370af-397b-4eb1-98a5-80b4e07fdc5c" />
 
 #### Platform Dashboard
+
 <img width="1366" height="687" alt="Platform Dashboard" src="https://github.com/user-attachments/assets/deb55ca0-61e1-4152-b1d8-e27adca842a5" />
 
 ## 🔐 Security Features
 
--  JWT token-based authentication
--  Password hashing with bcrypt
--  Rate limiting on API endpoints
--  XSS protection with xss-clean
--  HTTPS/SSL ready
--  CORS configuration
--  SQL injection prevention via Sequelize ORM
--  Input validation and sanitization
+- JWT token-based authentication
+- Password hashing with bcrypt
+- Rate limiting on API endpoints
+- XSS protection with xss-clean
+- HTTPS/SSL ready
+- CORS configuration
+- SQL injection prevention via Sequelize ORM
+- Input validation and sanitization
 
 ## 🤝 Contributing
 
 We welcome contributions to AgroLink! Please read [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on how to contribute.
 
-##  License
+## License
 
 This project is licensed under the MIT License - see [LICENSE.md](./LICENSE.md) for details.
 
-##  Support
+## Support
 
 For questions, issues, or feature requests:
+
 - Open an issue on GitHub
 - Contact: support@agrolink.com
 - Documentation: https://docs.agrolink.com

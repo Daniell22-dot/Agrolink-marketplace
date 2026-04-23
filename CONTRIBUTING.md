@@ -6,10 +6,13 @@ Thank you for your interest in contributing to AgroLink! This document provides 
 
 We are committed to providing a welcoming and inspiring community for all. Please read and adhere to our Code of Conduct:
 
-- **Be respectful**: Treat all contributors with respect and dignity
-- **Be inclusive**: Welcome people of all backgrounds and skill levels
-- **Be constructive**: Provide helpful feedback and support
-- **Be professional**: Keep discussions focused on the project
+**Be respectful**: Treat all contributors with respect and dignity
+
+**Be inclusive**: Welcome people of all backgrounds and skill levels
+
+**Be constructive**: Provide helpful feedback and support
+
+**Be professional**: Keep discussions focused on the project
 
 ## Getting Started
 
@@ -186,15 +189,14 @@ fix: Correct email case sensitivity in login
    git fetch upstream
    git rebase upstream/main
    ```
-
 2. Run all tests and linters:
 
    ```bash
    npm test
    npm run lint
    ```
-
 3. Build the project to ensure no errors:
+
    ```bash
    npm run build
    ```
@@ -206,14 +208,13 @@ fix: Correct email case sensitivity in login
    ```bash
    git push origin feature/your-feature-name
    ```
-
 2. Create Pull Request on GitHub with:
+
    - Clear, descriptive title
    - Description of changes made
    - Reference to related issues
    - Screenshots/videos if UI changes
    - Testing instructions
-
 3. PR Template:
 
    ```markdown

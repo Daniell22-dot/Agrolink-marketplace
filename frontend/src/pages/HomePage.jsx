@@ -11,10 +11,10 @@ import './HomePage.css';
 
 /* ── Static content (no fake metrics or awards) ──────────────── */
 const SERVICES = [
-  { icon: 'fas fa-link',      title: 'Market Linkage',       desc: 'Connect directly with verified buyers and sellers across Kenya, cutting out the middlemen.' },
-  { icon: 'fas fa-seedling',  title: 'Input Supplies',       desc: 'Source quality seeds, fertilizers, and agrochemicals from trusted suppliers.' },
-  { icon: 'fas fa-truck',     title: 'Transport & Logistics', desc: 'Reliable delivery services to get your produce to market fresh and on time.' },
-  { icon: 'fas fa-chart-pie', title: 'Agri Advisory',        desc: 'Access expert agronomic advice and AI-driven price insights to maximise your yields.' },
+  { icon: 'fas fa-link',      title: 'Market Linkage',       desc: 'Connect directly with verified buyers and sellers across Kenya, cutting out the middlemen.', path: '/products?category=market-linkage' },
+  { icon: 'fas fa-seedling',  title: 'Input Supplies',       desc: 'Source quality seeds, fertilizers, and agrochemicals from trusted suppliers.', path: '/products?category=input-supplies' },
+  { icon: 'fas fa-truck',     title: 'Transport & Logistics', desc: 'Reliable delivery services to get your produce to market fresh and on time.', path: '/products?category=transport' },
+  { icon: 'fas fa-chart-pie', title: 'Agri Advisory',        desc: 'Access expert agronomic advice and AI-driven price insights to maximise your yields.', path: '/products?category=advisory' },
 ];
 
 const STEPS = [
@@ -152,7 +152,7 @@ const HomePage = () => {
                 <div className="hp-service-icon"><i className={s.icon} /></div>
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
-                <Link to="/products" className="hp-link">Explore <i className="fas fa-arrow-right" /></Link>
+                <Link to={s.path} className="hp-link">Explore <i className="fas fa-arrow-right" /></Link>
               </div>
             ))}
           </div>
