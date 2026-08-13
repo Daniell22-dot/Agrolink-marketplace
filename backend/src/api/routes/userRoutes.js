@@ -5,7 +5,9 @@ const {
     updateUserProfile,
     changePassword,
     getMyProducts,
-    getMyOrders
+    getMyOrders,
+    updatePreferences,
+    deleteAccount
 } = require('../controllers/userController');
 const { protect } = require('../middleware/authMiddleware');
 const upload = require('../middleware/uploadMiddleware');
@@ -18,6 +20,8 @@ router.route('/profile')
     .put(upload.single('avatar'), updateUserProfile);
 
 router.put('/password', changePassword);
+router.put('/preferences', updatePreferences);
+router.delete('/account', deleteAccount);
 router.get('/my-products', getMyProducts);
 router.get('/my-orders', getMyOrders);
 

@@ -7,10 +7,10 @@ module.exports = {
     extend: {
       colors: {
         agrolink: {
-          green: '#22C55E',
-          orange: '#ff8c00',
-          lightGreen: '#86EFAC',
-          darkGreen: '#16A34A',
+          green: '#15803D',      // Primary emerald green (matches frontend index.css)
+          orange: '#F97316',     // E-commerce accent orange (Jumia style)
+          lightGreen: '#DCFCE7', // Soft mint accent
+          darkGreen: '#166534',  // Rich forest green
         }
       }
     },

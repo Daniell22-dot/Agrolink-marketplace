@@ -1,14 +1,37 @@
 const Queue = require('bull');
 const { sendEmail } = require('../services/emailService');
 
-const emailQueue = new Queue('email', {
-    redis: {
-        host: process.env.REDIS_HOST,
-        port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
-        password: process.env.REDIS_PASSWORD || undefined,
-        username: process.env.REDIS_USER_NAME || undefined
-    }
-});
+let emailQueue;
+
+if (process.env.USE_REDIS === 'false') {
+    console.log(' Redis is disabled. emailQueue running in mockup mode (immediate async delivery).');
+    emailQueue = {
+        process(handler) {
+            this.handler = handler;
+        },
+        async add(data, options) {
+            if (this.handler) {
+                setTimeout(async () => {
+                    try {
+                        await this.handler({ data });
+                    } catch (err) {
+                        console.error('Email mock queue execution error:', err);
+                    }
+                }, 0);
+            }
+            return { id: 'mock-job-id', data };
+        }
+    };
+} else {
+    emailQueue = new Queue('email', {
+        redis: {
+            host: process.env.REDIS_HOST,
+            port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
+            password: process.env.REDIS_PASSWORD || undefined,
+            username: process.env.REDIS_USER_NAME || undefined
+        }
+    });
+}
 
 // Process email jobs
 emailQueue.process(async (job) => {
@@ -36,3 +59,4 @@ exports.queueEmail = async (emailData) => {
 };
 
 module.exports = emailQueue;
+

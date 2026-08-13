@@ -8,6 +8,7 @@ import { store } from './redux/store';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import AnnouncementBar from './components/common/AnnouncementBar';
+import CookieBanner from './components/common/CookieBanner';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -97,6 +98,7 @@ function App() {
             </Routes>
           </main>
           <Footer />
+          <CookieBanner />
           <Toaster
             position="top-right"
             toastOptions={{

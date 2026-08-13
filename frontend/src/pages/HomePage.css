@@ -472,7 +472,7 @@
   .hp-product-grid  { grid-template-columns: repeat(3, 1fr); }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 768px) {
   .hp-hero-inner   { flex-direction: column; }
   .hp-hero-pills   { flex-direction: row; flex-wrap: wrap; justify-content: center; }
   .hp-steps-grid   { grid-template-columns: repeat(2, 1fr); }

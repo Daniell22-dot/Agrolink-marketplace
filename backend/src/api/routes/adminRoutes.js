@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {
+    verifyAdmin,
     getDashboardStats,
     getRecentActivity,
     getAllUsers,
@@ -19,6 +20,7 @@ const { checkRole } = require('../middleware/rbacMiddleware');
 router.use(protect);
 router.use(checkRole('admin'));
 
+router.get('/verify', verifyAdmin);
 router.get('/dashboard/stats', getDashboardStats);
 router.get('/dashboard/activity', getRecentActivity);
 router.get('/dashboard/chart/:type', getChartData);

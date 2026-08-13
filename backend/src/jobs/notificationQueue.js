@@ -1,14 +1,37 @@
 const Queue = require('bull');
 const { createNotification } = require('../services/notificationService');
 
-const notificationQueue = new Queue('notification', {
-    redis: {
-        host: process.env.REDIS_HOST || 'localhost',
-        port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
-        password: process.env.REDIS_PASSWORD || undefined,
-        username: process.env.REDIS_USER_NAME || undefined
-    }
-});
+let notificationQueue;
+
+if (process.env.USE_REDIS === 'false') {
+    console.log(' Redis is disabled. notificationQueue running in mockup mode (immediate async delivery).');
+    notificationQueue = {
+        process(handler) {
+            this.handler = handler;
+        },
+        async add(data, options) {
+            if (this.handler) {
+                setTimeout(async () => {
+                    try {
+                        await this.handler({ data });
+                    } catch (err) {
+                        console.error('Notification mock queue execution error:', err);
+                    }
+                }, 0);
+            }
+            return { id: 'mock-job-id', data };
+        }
+    };
+} else {
+    notificationQueue = new Queue('notification', {
+        redis: {
+            host: process.env.REDIS_HOST || 'localhost',
+            port: process.env.REDIS_PORT ? Number(process.env.REDIS_PORT) : 6379,
+            password: process.env.REDIS_PASSWORD || undefined,
+            username: process.env.REDIS_USER_NAME || undefined
+        }
+    });
+}
 
 // Process notification jobs
 notificationQueue.process(async (job) => {
@@ -33,3 +56,4 @@ exports.queueNotification = async (notificationData) => {
 };
 
 module.exports = notificationQueue;
+

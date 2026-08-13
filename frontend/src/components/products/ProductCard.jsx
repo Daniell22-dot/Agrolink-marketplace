@@ -26,6 +26,12 @@ const ProductCard = ({ product }) => {
 
   const isOutOfStock = product.quantity !== undefined && product.quantity <= 0;
 
+  // Calculate discount percentage if original_price exists
+  let discountPercentage = null;
+  if (product.original_price && product.price && product.original_price > product.price) {
+    discountPercentage = Math.round(((product.original_price - product.price) / product.original_price) * 100);
+  }
+
   return (
     <Link to={`/product/${product.id}`} className="product-card">
       {/* Image Section */}
@@ -38,12 +44,21 @@ const ProductCard = ({ product }) => {
           </div>
         )}
         
-        {/* Category Badge */}
-        {product.category && (
-          <span className="pc-badge">
+        {/* Discount / Category Badge */}
+        {discountPercentage ? (
+          <span className="pc-discount-badge">
+            -{discountPercentage}%
+          </span>
+        ) : product.category ? (
+          <span className="pc-category-badge">
             {product.category}
           </span>
-        )}
+        ) : null}
+
+        {/* Wishlist Heart */}
+        <button className="pc-wishlist-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
+          <i className="far fa-heart" />
+        </button>
 
         {/* Out of Stock Overlay */}
         {isOutOfStock && (
@@ -64,29 +79,28 @@ const ProductCard = ({ product }) => {
           </p>
         )}
 
-        {product.description && (
-          <p className="pc-description">
-            {product.description}
-          </p>
-        )}
-
-        {/* Footer with Price and Button */}
-        <div className="pc-footer">
-          <div className="pc-price-wrap">
-            <span className="pc-price">
-              KES {parseFloat(product.price || 0).toLocaleString()}
-            </span>
-            <span className="pc-unit">per {product.unit || 'kg'}</span>
+        {/* Rating row (Visual only) */}
+        <div className="pc-rating">
+          <div className="pc-stars">
+            <i className="fas fa-star" />
+            <i className="fas fa-star" />
+            <i className="fas fa-star" />
+            <i className="fas fa-star" />
+            <i className="fas fa-star-half-alt" />
           </div>
-          
-          <button
-            onClick={handleAddToCart}
-            disabled={isOutOfStock}
-            className="pc-add-btn"
-            title="Add to Cart"
-          >
-            <i className="fas fa-cart-plus" />
-          </button>
+          <span className="pc-rating-count">(4.5)</span>
+        </div>
+
+        {/* Price Wrap */}
+        <div className="pc-price-wrap">
+          <span className="pc-price">
+            KES {parseFloat(product.price || 0).toLocaleString()}
+          </span>
+          {product.original_price && product.original_price > product.price && (
+            <span className="pc-old-price">
+              KES {parseFloat(product.original_price).toLocaleString()}
+            </span>
+          )}
         </div>
 
         {/* Low Stock Warning */}
@@ -96,6 +110,18 @@ const ProductCard = ({ product }) => {
             Only {product.quantity} left!
           </div>
         )}
+
+        {/* Footer with Full-width Add to Cart */}
+        <div className="pc-footer">
+          <button
+            onClick={handleAddToCart}
+            disabled={isOutOfStock}
+            className="pc-add-btn"
+            title="Add to Cart"
+          >
+            ADD TO CART
+          </button>
+        </div>
       </div>
     </Link>
   );

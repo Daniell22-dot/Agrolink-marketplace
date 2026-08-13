@@ -42,3 +42,8 @@ venv
 .env.example
 .sixth/
 .sixth\
+pipelines_and_account_deletion_architecture.md
+security_audit.md
+status_and_security_architecture.md
+backend.zip
+frontend.zip

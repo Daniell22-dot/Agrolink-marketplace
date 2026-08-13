@@ -2,6 +2,22 @@ const User = require('../../models/User');
 const Product = require('../../models/Product');
 const Order = require('../../models/Order');
 
+// @desc    Verify Admin Token & return user profile
+// @route   GET /api/admin/verify
+// @access  Private/Admin
+exports.verifyAdmin = async (req, res) => {
+  res.json({
+    success: true,
+    data: {
+      id: req.user.id,
+      fullName: req.user.fullName,
+      email: req.user.email,
+      role: req.user.role,
+      avatar: req.user.avatar
+    }
+  });
+};
+
 // @desc    Get system stats
 // @route   GET /api/admin/dashboard/stats
 // @access  Private/Admin

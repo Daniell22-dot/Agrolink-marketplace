@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const otplib = require('otplib');
 const qrcode = require('qrcode');
 const { OAuth2Client } = require('google-auth-library');
+const { securityEvents, CATEGORIES } = require('../../services/securityEventService');
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -162,6 +163,15 @@ exports.login = async (req, res, next) => {
         user.accountLockedUntil = Date.now() + 30 * 60 * 1000; // 30 minutes lock
         user.failedLoginAttempts = 0; // Reset attempts after locking
         await user.save();
+
+        // Record brute-force lockout event
+        securityEvents.record(CATEGORIES.BRUTE_FORCE, {
+          ip: req.ip || req.connection?.remoteAddress || 'unknown',
+          email: user.email,
+          lockedUntil: new Date(user.accountLockedUntil).toISOString(),
+          userAgent: req.get('User-Agent'),
+        });
+
         return res.status(403).json({ message: 'Account locked due to too many failed attempts' });
       }
       await user.save();
@@ -431,6 +441,19 @@ exports.getMe = async (req, res, next) => {
       success: true,
       data: user
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Logout & revoke refresh token
+exports.logout = async (req, res, next) => {
+  try {
+    const { refreshToken } = req.body;
+    if (refreshToken) {
+      await RefreshToken.destroy({ where: { token: refreshToken } });
+    }
+    res.json({ success: true, message: 'Logged out successfully' });
   } catch (error) {
     next(error);
   }

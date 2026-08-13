@@ -26,6 +26,8 @@ exports.createNotification = async ({ userId, type, title, message, referenceId 
 
 // Send Order Notification
 exports.sendOrderNotification = async (order, user) => {
+    const prefs = user.preferences || { emailNotifications: true, smsAlerts: true, orderUpdates: true };
+
     // Create in-app notification
     await this.createNotification({
         userId: user.id,
@@ -35,23 +37,26 @@ exports.sendOrderNotification = async (order, user) => {
         referenceId: order.id
     });
 
-    // Send Email
-    try {
-        await sendEmail({
-            email: user.email,
-            template: 'orderConfirmation',
-            data: {
-                fullName: user.fullName,
-                orderId: order.id,
-                total: order.totalAmount
-            }
-        });
-    } catch (error) {
-        console.error('Email send failed:', error);
+    // Send Email (if enabled in user preferences)
+    if (prefs.emailNotifications !== false && prefs.orderUpdates !== false && user.email) {
+        try {
+            await sendEmail({
+                email: user.email,
+                subject: `AgroLink Order #${order.id} Update: ${order.status}`,
+                template: 'orderConfirmation',
+                data: {
+                    fullName: user.fullName,
+                    orderId: order.id,
+                    total: order.totalAmount
+                }
+            });
+        } catch (error) {
+            console.error('Email send failed:', error);
+        }
     }
 
-    // Send SMS
-    if (user.phone) {
+    // Send SMS (if enabled in user preferences)
+    if (prefs.smsAlerts !== false && user.phone) {
         try {
             await sendSMS(
                 user.phone,
@@ -65,6 +70,8 @@ exports.sendOrderNotification = async (order, user) => {
 
 // Send Payment Notification
 exports.sendPaymentNotification = async (payment, user) => {
+    const prefs = user.preferences || { emailNotifications: true, smsAlerts: true, orderUpdates: true };
+
     await this.createNotification({
         userId: user.id,
         type: 'payment',
@@ -73,11 +80,15 @@ exports.sendPaymentNotification = async (payment, user) => {
         referenceId: payment.id
     });
 
-    if (user.phone) {
-        await sendSMS(
-            user.phone,
-            `AgroLink: Payment received. KES ${payment.amount}. Receipt: ${payment.mpesaReceiptNumber}`
-        );
+    if (prefs.smsAlerts !== false && user.phone) {
+        try {
+            await sendSMS(
+                user.phone,
+                `AgroLink: Payment received. KES ${payment.amount}. Receipt: ${payment.mpesaReceiptNumber}`
+            );
+        } catch (error) {
+            console.error('SMS send failed:', error);
+        }
     }
 };
 

@@ -111,6 +111,16 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING(100),
     allowNull: true,
     unique: true
+  },
+  preferences: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    defaultValue: {
+      emailNotifications: true,
+      smsAlerts: true,
+      orderUpdates: true,
+      marketingEmails: false
+    }
   }
 }, {
   underscored: true,

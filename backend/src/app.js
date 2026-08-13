@@ -14,7 +14,10 @@ app.use(helmet());
 const allowedOrigins = [
     process.env.FRONTEND_URL || 'http://localhost:3000',
     process.env.ADMIN_URL || 'http://localhost:3001',
-    'http://localhost:4000'
+    'http://localhost:4000',
+    'https://agrolink.biz',
+    'https://www.agrolink.biz',
+    'https://admin.agrolink.biz'
 ];
 
 app.use(cors({
@@ -58,6 +61,7 @@ app.use('/api/webhooks', require('./api/routes/webhookRoutes'));
 app.use('/api/analytics', require('./api/routes/analyticsRoutes'));
 app.use('/api/pricing', require('./api/routes/pricingRoutes'));
 app.use('/api/images', require('./api/routes/imageRoutes'));
+app.use('/api/status', require('./api/routes/statusRoutes'));
 
 // Error Middleware (must be last)
 app.use(require('./api/middleware/errorMiddleware'));

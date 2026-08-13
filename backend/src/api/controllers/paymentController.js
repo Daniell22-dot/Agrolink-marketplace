@@ -1,6 +1,7 @@
 const Order = require('../../models/Order');
 const Payment = require('../../models/Payment');
 const { initiateMpesaPayment, processPaymentCallback } = require('../../services/paymentService');
+const { securityEvents, CATEGORIES } = require('../../services/securityEventService');
 
 // @desc    Initiate M-Pesa payment
 // @route   POST /api/payments/mpesa/initiate
@@ -38,6 +39,15 @@ exports.initiateMpesaPayment = async (req, res, next) => {
 // @access  Public (M-Pesa webhook)
 exports.handleMpesaCallback = async (req, res, next) => {
     try {
+        if (!req.body || !req.body.Body || !req.body.Body.stkCallback) {
+            // Record webhook rejection event
+            securityEvents.record(CATEGORIES.WEBHOOK_REJECTION, {
+                ip: req.ip || req.connection?.remoteAddress || 'unknown',
+                payload: JSON.stringify(req.body || {}).slice(0, 500),
+                userAgent: req.get('User-Agent'),
+            });
+            return res.status(400).json({ ResultCode: 1, ResultDesc: 'Invalid Callback Payload' });
+        }
         await processPaymentCallback(req.body);
         res.status(200).json({ ResultCode: 0, ResultDesc: 'Accepted' });
     } catch (error) {

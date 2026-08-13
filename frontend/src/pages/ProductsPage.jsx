@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/slices/productSlice';
 import ProductCard from '../components/products/ProductCard';
 import SearchBar from '../components/common/SearchBar';
-import FilterSidebar from '../components/products/FilterSidebar';
 import './ProductsPage.css';
 
 const ProductsPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
     const { products, loading, error } = useSelector((state) => state.products);
+    const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
     const filters = React.useMemo(() => ({
         search: searchParams.get('search') || '',
@@ -21,15 +21,14 @@ const ProductsPage = () => {
     }), [searchParams]);
 
     const categories = [
-        { id: 'vegetables', label: 'Vegetables' },
-        { id: 'fruits', label: 'Fruits' },
-        { id: 'grains', label: 'Grains' },
-        { id: 'livestock', label: 'Livestock' },
-        { id: 'dairy', label: 'Dairy' },
-        { id: 'other', label: 'Other' }
+        { id: 'vegetables', label: 'Vegetables', icon: 'fa-carrot' },
+        { id: 'fruits', label: 'Fruits', icon: 'fa-apple-alt' },
+        { id: 'grains', label: 'Grains', icon: 'fa-seedling' },
+        { id: 'livestock', label: 'Livestock', icon: 'fa-cow' },
+        { id: 'dairy', label: 'Dairy', icon: 'fa-cheese' },
+        { id: 'other', label: 'Other', icon: 'fa-box' }
     ];
 
-    // Prevent request spam: only fetch when user explicitly changes params
     const [debouncedFilters, setDebouncedFilters] = useState(filters);
     useEffect(() => {
         const t = setTimeout(() => setDebouncedFilters(filters), 400);
@@ -39,7 +38,6 @@ const ProductsPage = () => {
     useEffect(() => {
         dispatch(fetchProducts(debouncedFilters));
     }, [debouncedFilters, dispatch]);
-
 
     const handleFilterChange = (name, value) => {
         const newParams = new URLSearchParams(searchParams);
@@ -51,79 +49,87 @@ const ProductsPage = () => {
         setSearchParams(newParams);
     };
 
-    // Filter products to only show physical agricultural products
     const agriculturalProducts = products?.filter(p => 
         categories.some(cat => cat.id === p.category) || !p.category
     );
 
+    const currentCategoryLabel = filters.category 
+        ? categories.find(c => c.id === filters.category)?.label 
+        : 'All Produce';
+
     return (
-        <div className="products-page">
-            {/* Premium Hero Banner */}
-            <div className="products-hero-modern">
-                <div className="hero-background-effects">
-                    <div className="glow-orb orb-1"></div>
-                    <div className="glow-orb orb-2"></div>
+        <div className="jumia-products-page">
+            {/* Breadcrumb Bar */}
+            <div className="breadcrumb-bar">
+                <div className="container">
+                    <Link to="/">Home</Link>
+                    <span> <i className="fas fa-chevron-right"></i> </span>
+                    <Link to="/products">Products</Link>
+                    {filters.category && (
+                        <>
+                            <span> <i className="fas fa-chevron-right"></i> </span>
+                            <span className="current">{currentCategoryLabel}</span>
+                        </>
+                    )}
                 </div>
-                <div className="container hero-content-modern">
-                    <div className="hero-text-content">
-                        <h1>Fresh From <span className="text-gradient">The Farm</span></h1>
-                        <p>Discover premium agricultural produce directly from local farmers.</p>
-                    </div>
-                    <div className="hero-search-glass">
-                        <SearchBar
-                            onSearch={(value) => handleFilterChange('search', value)}
-                            placeholder="Search fresh tomatoes, organic honey, maize..."
-                            initialValue={filters.search}
-                        />
+            </div>
+
+            {/* Simplified Hero */}
+            <div className="premium-hero">
+                <div className="container">
+                    <div className="hero-content">
+                        <h1>Fresh From The Farm</h1>
+                        <div className="hero-search">
+                            <SearchBar
+                                onSearch={(value) => handleFilterChange('search', value)}
+                                placeholder="Search products, brands and categories..."
+                                initialValue={filters.search}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {/* Main Content */}
-            <div className="products-container container">
-                {/* Filters Sidebar */}
-                <aside className="filters-sidebar">
-                    <div className="sidebar-header">
-                        <h3>Filters</h3>
-                        <button className="reset-btn" onClick={() => setSearchParams({})}>Reset</button>
-                    </div>
+            <div className="jumia-layout container">
+                {/* Mobile Filter Toggle */}
+                <button 
+                    className="mobile-filter-toggle"
+                    onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
+                >
+                    <i className="fas fa-filter"></i> Filters
+                </button>
 
-                    <div className="filter-group">
-                        <h4><i className="fas fa-layer-group"></i> Category</h4>
-                        <div className="category-list">
-                            {categories.map(cat => (
-                                <label key={cat.id} className={`filter-chip ${filters.category === cat.id ? 'active' : ''}`}>
-                                    <input
-                                        type="radio"
-                                        name="category"
-                                        value={cat.id}
-                                        checked={filters.category === cat.id}
-                                        onChange={(e) => handleFilterChange('category', e.target.value)}
-                                        className="hidden-radio"
-                                    />
-                                    <span>{cat.label}</span>
-                                </label>
-                            ))}
-                        </div>
-                        {filters.category && (
-                            <button
-                                className="clear-filter"
+                {/* Left Sidebar */}
+                <aside className={`jumia-sidebar ${isMobileFiltersOpen ? 'open' : ''}`}>
+                    <div className="sidebar-section">
+                        <h3>Category</h3>
+                        <ul className="category-list-jumia">
+                            <li 
+                                className={!filters.category ? 'active' : ''}
                                 onClick={() => handleFilterChange('category', '')}
                             >
-                                Clear Selection
-                            </button>
-                        )}
+                                All Categories
+                            </li>
+                            {categories.map(cat => (
+                                <li 
+                                    key={cat.id} 
+                                    className={filters.category === cat.id ? 'active' : ''}
+                                    onClick={() => handleFilterChange('category', cat.id)}
+                                >
+                                    {cat.label}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
 
-                    <div className="filter-group">
-                        <h4><i className="fas fa-tags"></i> Price Range (KES)</h4>
-                        <div className="price-inputs">
+                    <div className="sidebar-section">
+                        <h3>Price (KES)</h3>
+                        <div className="jumia-price-inputs">
                             <input
                                 type="number"
                                 placeholder="Min"
                                 value={filters.minPrice}
                                 onChange={(e) => handleFilterChange('minPrice', e.target.value)}
-                                className="form-control"
                             />
                             <span>-</span>
                             <input
@@ -131,55 +137,63 @@ const ProductsPage = () => {
                                 placeholder="Max"
                                 value={filters.maxPrice}
                                 onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
-                                className="form-control"
                             />
                         </div>
                     </div>
-
-                    <div className="filter-group">
-                        <h4><i className="fas fa-sort-amount-down"></i> Sort By</h4>
-                        <select
-                            value={filters.sort}
-                            onChange={(e) => handleFilterChange('sort', e.target.value)}
-                            className="form-control"
-                        >
-                            <option value="newest">Newest First</option>
-                            <option value="price_asc">Price: Low to High</option>
-                            <option value="price_desc">Price: High to Low</option>
-                        </select>
-                    </div>
                 </aside>
 
-                {/* Products Grid */}
-                <main className="products-main">
-                    <div className="products-header">
-                        <h2>{filters.category ? categories.find(c => c.id === filters.category)?.label : 'All Produce'}</h2>
-                        <span className="products-badge">{agriculturalProducts?.length || 0} Results</span>
+                {/* Right Main Area */}
+                <main className="jumia-main">
+                    <div className="jumia-top-bar">
+                        <div className="results-count">
+                            {agriculturalProducts?.length || 0} products found
+                        </div>
+                        <div className="sort-bar">
+                            <label>Sort by:</label>
+                            <select
+                                value={filters.sort}
+                                onChange={(e) => handleFilterChange('sort', e.target.value)}
+                            >
+                                <option value="newest">Newest Arrivals</option>
+                                <option value="price_asc">Price: Low to High</option>
+                                <option value="price_desc">Price: High to Low</option>
+                                <option value="popular">Popularity</option>
+                            </select>
+                            <div className="view-toggles">
+                                <button className="active"><i className="fas fa-th"></i></button>
+                                <button><i className="fas fa-list"></i></button>
+                            </div>
+                        </div>
                     </div>
 
-                    {loading ? (
-                        <div className="loading-state">
-                            <div className="spinner"></div>
-                            <p>Loading fresh produce...</p>
-                        </div>
-                    ) : error ? (
-                        <div className="error-state">
-                            <i className="fas fa-exclamation-circle"></i>
-                            <p>{error}</p>
-                        </div>
-                    ) : agriculturalProducts && agriculturalProducts.length > 0 ? (
-                        <div className="products-grid">
-                            {agriculturalProducts.map(product => (
-                                <ProductCard key={product.id} product={product} />
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="empty-state">
-                            <i className="fas fa-search"></i>
-                            <h3>No produce found</h3>
-                            <p>Try adjusting your filters or search terms</p>
-                        </div>
-                    )}
+                    <div className="jumia-products-container">
+                        {loading ? (
+                            <div className="jumia-grid">
+                                {[1,2,3,4,5,6].map(i => (
+                                    <div key={i} className="skeleton-card"></div>
+                                ))}
+                            </div>
+                        ) : error ? (
+                            <div className="jumia-error">
+                                <i className="fas fa-exclamation-triangle"></i>
+                                <p>{error}</p>
+                            </div>
+                        ) : agriculturalProducts && agriculturalProducts.length > 0 ? (
+                            <div className="jumia-grid">
+                                {agriculturalProducts.map(product => (
+                                    <ProductCard key={product.id} product={product} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="jumia-empty">
+                                <div className="empty-icon-wrap">
+                                    <i className="fas fa-search"></i>
+                                </div>
+                                <h3>There are no products in this category</h3>
+                                <p>Try clearing filters or search for something else</p>
+                            </div>
+                        )}
+                    </div>
                 </main>
             </div>
         </div>

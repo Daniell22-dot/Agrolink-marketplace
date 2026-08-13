@@ -9,7 +9,8 @@ const {
   refreshToken,
   enable2FA,
   verify2FA,
-  disable2FA
+  disable2FA,
+  logout
 } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -28,6 +29,7 @@ router.post('/login', [
 router.post('/google', googleAuth);
 
 router.post('/refresh-token', refreshToken);
+router.post('/logout', logout);
 
 // 2FA Routes
 router.post('/2fa/enable', protect, enable2FA);
