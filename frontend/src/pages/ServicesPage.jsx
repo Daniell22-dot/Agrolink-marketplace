@@ -49,10 +49,69 @@ const ServicesPage = () => {
         setSearchParams(newParams);
     };
 
+    // Sample service items if backend has no active service products
+    const SAMPLE_SERVICES = [
+        {
+            id: 'serv-1',
+            title: 'Professional Veterinary Vaccination & Livestock Checkup',
+            price: 1500,
+            originalPrice: 2000,
+            unit: 'service',
+            category: 'advisory',
+            county: 'Nyeri',
+            rating: 5.0,
+            reviewsCount: 24,
+            images: ['https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop'],
+            farmer: { fullName: 'Mt Kenya Vet Services', isVerified: true }
+        },
+        {
+            id: 'serv-2',
+            title: 'Refrigerated Cold Chain Produce Truck Transport (3-Ton)',
+            price: 12000,
+            originalPrice: 15000,
+            unit: 'trip',
+            category: 'transport',
+            county: 'Kiambu',
+            rating: 4.9,
+            reviewsCount: 38,
+            images: ['https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=500&auto=format&fit=crop'],
+            farmer: { fullName: 'Highland Cold Freight Ltd', isVerified: true }
+        },
+        {
+            id: 'serv-3',
+            title: 'Full Farm Soil Testing & Agronomic Advisory Report',
+            price: 3500,
+            originalPrice: 4500,
+            unit: 'test',
+            category: 'advisory',
+            county: 'Uasin Gishu',
+            rating: 4.8,
+            reviewsCount: 16,
+            images: ['https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop'],
+            farmer: { fullName: 'CropCare Labs Kenya', isVerified: true }
+        },
+        {
+            id: 'serv-4',
+            title: 'Certified NPK 17:17:17 Yara Fertilizer (50kg Bag)',
+            price: 4200,
+            originalPrice: 4800,
+            unit: 'bag',
+            category: 'input-supplies',
+            county: 'Nakuru',
+            rating: 4.9,
+            reviewsCount: 45,
+            images: ['https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=500&auto=format&fit=crop'],
+            farmer: { fullName: 'Rift Valley Agrovet Distributors', isVerified: true }
+        }
+    ];
+
     // Filter products to only show those belonging to service categories
-    const serviceProducts = products?.filter(p => 
-        serviceCategories.some(sc => sc.id === p.category)
-    );
+    const rawServices = (products && products.length > 0) ? products : SAMPLE_SERVICES;
+    const serviceProducts = rawServices.filter(p => {
+        if (filters.category && p.category !== filters.category) return false;
+        if (filters.search && !p.title.toLowerCase().includes(filters.search.toLowerCase())) return false;
+        return true;
+    });
 
     return (
         <div className="services-page">

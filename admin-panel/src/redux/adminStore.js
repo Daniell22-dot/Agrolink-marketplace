@@ -5,6 +5,7 @@ import usersReducer from './slices/usersSlice';
 import productsReducer from './slices/productsSlice';
 import ordersReducer from './slices/ordersSlice';
 import reportsReducer from './slices/reportsSlice';
+import securityReducer from './slices/securitySlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     adminUsers: usersReducer,
     adminProducts: productsReducer,
     adminOrders: ordersReducer,
-    adminReports: reportsReducer
+    adminReports: reportsReducer,
+    security: securityReducer
   }
 });

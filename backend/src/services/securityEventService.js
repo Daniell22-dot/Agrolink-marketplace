@@ -15,6 +15,7 @@ const CATEGORIES = {
   RATE_LIMIT: 'rate_limit',
   WEBHOOK_REJECTION: 'webhook_rejection',
   XSS_INTERCEPTION: 'xss_interception',
+  SECURITY_ACCESS: 'security_access',
 };
 
 const MAX_EVENTS = 10000;     // Cap in-memory events to prevent unbounded growth
@@ -177,6 +178,7 @@ class SecurityEventCollector {
       [CATEGORIES.RATE_LIMIT]: 'medium',
       [CATEGORIES.WEBHOOK_REJECTION]: 'high',
       [CATEGORIES.XSS_INTERCEPTION]: 'critical',
+      [CATEGORIES.SECURITY_ACCESS]: 'high',
     };
     return map[category] || 'low';
   }

@@ -11,15 +11,18 @@ const SearchBar = ({ onSearch, placeholder = "Search products..." }) => {
 
     return (
         <form onSubmit={handleSubmit} className="search-bar">
-            <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={placeholder}
-                className="search-input"
-            />
+            <div className="search-input-wrapper">
+                <i className="fas fa-search search-icon-inside"></i>
+                <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder={placeholder}
+                    className="search-input"
+                />
+            </div>
             <button type="submit" className="search-button">
-                <i className="fas fa-search"></i> Search
+                Search
             </button>
         </form>
     );

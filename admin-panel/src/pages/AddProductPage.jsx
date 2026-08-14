@@ -65,7 +65,73 @@ const AddProductPage = () => {
         </button>
       </div>
       
-      <form onSubmit={handleCreateSubmit} className="p-8 space-y-6">
+        {/* PRESET CATALOG TEMPLATE PICKER & DISCOUNT SETTINGS */}
+        <div className="bg-green-50 border border-green-200 rounded-lg p-5 space-y-4">
+          <h3 className="font-bold text-agrolink-darkGreen flex items-center gap-2">
+            <span>⚡ Standard Catalog Presets (Auto-Fills Image & Template)</span>
+          </h3>
+          <p className="text-xs text-gray-600">
+            Select a standard product preset to automatically load default catalog photography for fruits, cereals, poultry, and veterinary services without manually uploading files.
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-h-96 overflow-y-auto pr-1">
+            {[
+              { label: 'Fresh Oranges', cat: 'fruits', img: 'https://images.unsplash.com/photo-1547514701-42782101795e?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Mangoes (Tomy)', cat: 'fruits', img: 'https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Mwea Pishori Rice', cat: 'grains', img: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&auto=format&fit=crop', unit: 'bags' },
+              { label: 'Fresh Cassava Roots', cat: 'vegetables', img: 'https://images.unsplash.com/photo-1596450514735-300456108115?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Tubers & Yams', cat: 'vegetables', img: 'https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Arabica Coffee Beans', cat: 'grains', img: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Black Tea Leaves', cat: 'other', img: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'White Cane Sugar', cat: 'other', img: 'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=500&auto=format&fit=crop', unit: 'bags' },
+              { label: 'Raw Sugarcane Stalks', cat: 'fruits', img: 'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=500&auto=format&fit=crop', unit: 'bunches' },
+              { label: 'White Maize (Grain)', cat: 'grains', img: 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&auto=format&fit=crop', unit: 'bags' },
+              { label: 'Sifted Maize Flour (Unga)', cat: 'grains', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop', unit: 'bags' },
+              { label: 'Grade A Wheat Grains', cat: 'grains', img: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop', unit: 'bags' },
+              { label: 'All-Purpose Wheat Flour', cat: 'grains', img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop', unit: 'bags' },
+              { label: 'Organic Soya Beans', cat: 'grains', img: 'https://images.unsplash.com/photo-1515543904379-3d757afe72e3?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Special Rosecoco Beans', cat: 'grains', img: 'https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Yellow Beans (Nyayo)', cat: 'grains', img: 'https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Sukuma Wiki (Collard Greens)', cat: 'vegetables', img: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&auto=format&fit=crop', unit: 'bunches' },
+              { label: 'Fresh Green Cabbage', cat: 'vegetables', img: 'https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500&auto=format&fit=crop', unit: 'pieces' },
+              { label: 'Kales (Organic Greens)', cat: 'vegetables', img: 'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&auto=format&fit=crop', unit: 'bunches' },
+              { label: 'Fresh Tilapia / Catfish', cat: 'other', img: 'https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Fresh Prime Beef Meat', cat: 'livestock', img: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Shangi Irish Potatoes', cat: 'vegetables', img: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop', unit: 'bags' },
+              { label: 'Sweet Yellow Potatoes', cat: 'vegetables', img: 'https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=500&auto=format&fit=crop', unit: 'bags' },
+              { label: 'Fresh Pork Cuts', cat: 'livestock', img: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&auto=format&fit=crop', unit: 'kg' },
+              { label: 'Day-Old Kienyeji Chicks', cat: 'livestock', img: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&auto=format&fit=crop', unit: 'pieces' },
+              { label: 'Friesian Dairy Cow', cat: 'livestock', img: 'https://images.unsplash.com/photo-1570042707223-21c60655d8f6?w=500&auto=format&fit=crop', unit: 'pieces' },
+              { label: 'Mature Kienyeji Rooster (Cock)', cat: 'livestock', img: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&auto=format&fit=crop', unit: 'pieces' },
+              { label: 'Dorper Breeding Sheep', cat: 'livestock', img: 'https://images.unsplash.com/photo-1484557052118-f32bd25b45b5?w=500&auto=format&fit=crop', unit: 'pieces' },
+              { label: 'Galla Dairy Goat', cat: 'livestock', img: 'https://images.unsplash.com/photo-1524024973431-2ad916746881?w=500&auto=format&fit=crop', unit: 'pieces' },
+              { label: 'Fresh Milk & Butter', cat: 'dairy', img: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&auto=format&fit=crop', unit: 'liters' },
+              { label: 'Veterinary Vaccination', cat: 'advisory', img: 'https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop', unit: 'service' }
+            ].map(preset => (
+              <button
+                key={preset.label}
+                type="button"
+                onClick={() => {
+                  setNewProduct({
+                    ...newProduct,
+                    name: preset.label,
+                    category: preset.cat,
+                    unit: preset.unit,
+                    image_url: preset.img
+                  });
+                  toast.success(`Loaded "${preset.label}" template & catalog image!`);
+                }}
+                className="text-left bg-white border border-gray-200 rounded-lg p-2 hover:border-agrolink-green transition-all shadow-sm flex items-center gap-2"
+              >
+                <img src={preset.img} alt={preset.label} className="w-10 h-10 rounded object-cover" />
+                <div>
+                  <div className="font-semibold text-xs text-gray-800 truncate max-w-[110px]">{preset.label}</div>
+                  <div className="text-[10px] text-gray-500 capitalize">{preset.cat}</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-600 uppercase tracking-tight">Product Name *</label>
@@ -87,6 +153,12 @@ const AddProductPage = () => {
               className="w-full px-4 py-3 border-2 border-gray-100 rounded-lg focus:border-agrolink-green outline-none transition-all"
             >
               <option value="">Select Category</option>
+              <option value="vegetables">Vegetables</option>
+              <option value="fruits">Fruits</option>
+              <option value="grains">Grains & Cereals</option>
+              <option value="livestock">Livestock & Poultry</option>
+              <option value="dairy">Dairy</option>
+              <option value="advisory">Veterinary & Advisory Services</option>
               {categories && categories.map(cat => (
                 <option key={cat.id} value={cat.id}>{cat.name}</option>
               ))}
@@ -100,11 +172,11 @@ const AddProductPage = () => {
             value={newProduct.description}
             onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
             className="w-full px-4 py-3 border-2 border-gray-100 rounded-lg focus:border-agrolink-green outline-none transition-all h-32"
-            placeholder="Describe the product..."
+            placeholder="Describe the product or veterinary service details..."
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-600 uppercase tracking-tight">Price (Ksh) *</label>
             <input
@@ -117,14 +189,24 @@ const AddProductPage = () => {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-gray-600 uppercase tracking-tight">Quantity *</label>
+            <label className="text-sm font-semibold text-gray-600 uppercase tracking-tight">Original Price / Discount (Ksh)</label>
+            <input
+              type="number"
+              value={newProduct.original_price || ''}
+              onChange={(e) => setNewProduct({ ...newProduct, original_price: e.target.value })}
+              className="w-full px-4 py-3 border-2 border-gray-100 rounded-lg focus:border-agrolink-green outline-none transition-all"
+              placeholder="e.g. 1200 (shows strike-through)"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-gray-600 uppercase tracking-tight">Quantity / Capacity *</label>
             <input
               type="number"
               required
               value={newProduct.quantity}
               onChange={(e) => setNewProduct({ ...newProduct, quantity: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-100 rounded-lg focus:border-agrolink-green outline-none transition-all"
-              placeholder="Quantity"
+              placeholder="e.g. 500"
             />
           </div>
           <div className="space-y-2">
@@ -140,6 +222,7 @@ const AddProductPage = () => {
               <option value="bags">Bags</option>
               <option value="crates">Crates</option>
               <option value="bunches">Bunches</option>
+              <option value="service">Per Service / Visit</option>
             </select>
           </div>
         </div>

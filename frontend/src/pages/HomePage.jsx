@@ -109,35 +109,141 @@ const HomePage = () => {
         </section>
       )}
 
-      {/* ── GUEST: PRODUCT PREVIEW ────────────────── */}
-      {!isAuthenticated && (
-        <section className="hp-section hp-section--light">
-          <div className="container">
+      {/* ── MAIN CONTENT WITH DUAL SIDEBARS ───────────────── */}
+      <section className="hp-section hp-section--light">
+        <div className="container hp-dual-layout">
+          
+          {/* LEFT SIDEBAR: Categories & Quick Links */}
+          <aside className="hp-sidebar hp-sidebar-left">
+            <div className="hp-sidebar-box">
+              <h3><i className="fas fa-th-large" /> Categories</h3>
+              <ul className="hp-sidebar-nav">
+                <li><Link to="/products?category=vegetables"><i className="fas fa-carrot" /> Vegetables</Link></li>
+                <li><Link to="/products?category=fruits"><i className="fas fa-apple-alt" /> Fresh Fruits</Link></li>
+                <li><Link to="/products?category=grains"><i className="fas fa-seedling" /> Grains & Cereals</Link></li>
+                <li><Link to="/products?category=dairy"><i className="fas fa-cheese" /> Dairy Produce</Link></li>
+                <li><Link to="/products?category=livestock"><i className="fas fa-cow" /> Livestock</Link></li>
+                <li><Link to="/products?category=other"><i className="fas fa-box" /> Other Supplies</Link></li>
+              </ul>
+            </div>
+
+            <div className="hp-sidebar-box hp-quick-support">
+              <h4><i className="fas fa-headset" /> Trade Support</h4>
+              <p>Need help finding bulk buyers or trusted transport?</p>
+              <a href="tel:+254112219135" className="hp-support-link"><i className="fas fa-phone-alt" /> +254 112 219 135</a>
+            </div>
+          </aside>
+
+          {/* MAIN CENTER CONTENT */}
+          <main className="hp-main-content">
+
+            {/* GUEST OR LOGGED-IN PRODUCE SECTION */}
             <div className="hp-section-head">
               <h2>Fresh From Kenyan Farms</h2>
               <Link to="/products" className="hp-view-all">View All <i className="fas fa-arrow-right" /></Link>
             </div>
+
             {guestLoading ? (
               <div className="hp-loading"><div className="spinner" /></div>
-            ) : guestProducts.length > 0 ? (
+            ) : (
               <div className="hp-product-grid">
-                {guestProducts.slice(0, 8).map(p => (
+                {((guestProducts && guestProducts.length > 0) ? guestProducts : [
+                  {
+                    id: 'sample-1',
+                    title: 'Fresh Grade A Hybrid Tomatoes (50kg Crate)',
+                    price: 3200,
+                    originalPrice: 3800,
+                    unit: 'crate',
+                    category: 'vegetables',
+                    county: 'Kiambu',
+                    rating: 4.8,
+                    images: ['https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop'],
+                    farmer: { fullName: 'Mwangi Fresh Farm' }
+                  },
+                  {
+                    id: 'sample-2',
+                    title: 'Organic White Maize (90kg Bag)',
+                    price: 2800,
+                    originalPrice: 3200,
+                    unit: 'bag',
+                    category: 'grains',
+                    county: 'Uasin Gishu',
+                    rating: 4.9,
+                    images: ['https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&auto=format&fit=crop'],
+                    farmer: { fullName: 'Eldoret Granary Ltd' }
+                  },
+                  {
+                    id: 'sample-3',
+                    title: 'Fresh Farm Milk (10L Container)',
+                    price: 750,
+                    originalPrice: 850,
+                    unit: 'liter',
+                    category: 'dairy',
+                    county: 'Nakuru',
+                    rating: 4.7,
+                    images: ['https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&auto=format&fit=crop'],
+                    farmer: { fullName: 'Rift Valley Dairies' }
+                  },
+                  {
+                    id: 'sample-4',
+                    title: 'Sweet Hass Avocados (Export Grade - 10kg Box)',
+                    price: 1800,
+                    originalPrice: 2200,
+                    unit: 'kg',
+                    category: 'fruits',
+                    county: 'Murang\'a',
+                    rating: 5.0,
+                    images: ['https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop'],
+                    farmer: { fullName: 'Highland Avocado Orchards' }
+                  }
+                ]).slice(0, 6).map(p => (
                   <ProductCard key={p.id} product={p} />
                 ))}
               </div>
-            ) : (
-              <div className="hp-empty">
-                <i className="fas fa-seedling" />
-                <p>Products loading — check back shortly.</p>
+            )}
+
+            {!isAuthenticated && (
+              <div className="hp-guest-cta">
+                <p>Create a free account to add items to your cart and access exclusive deals.</p>
+                <Link to="/register" className="btn btn-primary">Get Started — It is Free</Link>
               </div>
             )}
-            <div className="hp-guest-cta">
-              <p>Create a free account to add items to your cart and access exclusive deals.</p>
-              <Link to="/register" className="btn btn-primary">Get Started — It is Free</Link>
+          </main>
+
+          {/* RIGHT SIDEBAR: Advertisements & Promotional Deals */}
+          <aside className="hp-sidebar hp-sidebar-right">
+            
+            {/* AD BANNER 1: Fertilizer / Input Promotion */}
+            <div className="hp-ad-card hp-ad-orange">
+              <span className="hp-ad-tag">SPONSORED AD</span>
+              <div className="hp-ad-icon"><i className="fas fa-percentage" /></div>
+              <h4>Yara Fertilizer Sale</h4>
+              <p>Save up to 15% on NPK & CAN fertilizers this season.</p>
+              <Link to="/products?category=input-supplies" className="btn btn-white btn-sm">Shop Deal</Link>
             </div>
-          </div>
-        </section>
-      )}
+
+            {/* AD BANNER 2: Transport & Logistics Offer */}
+            <div className="hp-ad-card hp-ad-green">
+              <span className="hp-ad-tag">LOGISTICS DEAL</span>
+              <div className="hp-ad-icon"><i className="fas fa-truck" /></div>
+              <h4>Countrywide Freight</h4>
+              <p>Flat rates for refrigerated produce transport across Kenya.</p>
+              <Link to="/services" className="btn btn-white-outline btn-sm">Book Truck</Link>
+            </div>
+
+            {/* AD BANNER 3: Agro Advisory App */}
+            <div className="hp-ad-card hp-ad-dark">
+              <span className="hp-ad-tag">AGRI ADVISORY</span>
+              <div className="hp-ad-icon"><i className="fas fa-robot" /></div>
+              <h4>AI Price Insights</h4>
+              <p>Predict crop prices 30 days ahead with AgroLink AI.</p>
+              <Link to="/pricing" className="btn btn-white btn-sm">Try Insights</Link>
+            </div>
+
+          </aside>
+
+        </div>
+      </section>
 
       {/* ── SERVICES ──────────────────────────────── */}
       <section className="hp-section">

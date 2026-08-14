@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutAdmin } from '../../redux/slices/adminAuthSlice';
 
 const AdminSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.adminAuth.user);
   const [isOpen, setIsOpen] = useState(true);
+
+  const hasSecurityAccess = ['super_admin', 'security_auditor'].includes(user?.role);
 
   const menuItems = [
     { path: '/admin', label: 'Dashboard', icon: '' },
@@ -15,7 +18,10 @@ const AdminSidebar = () => {
     { path: '/admin/orders', label: 'Orders', icon: '' },
     { path: '/admin/reports', label: 'Reports', icon: '' },
     { path: '/admin/analytics', label: 'Analytics', icon: '' },
-    { path: '/admin/settings', label: 'Settings', icon: '' }
+    { path: '/admin/settings', label: 'Settings', icon: '' },
+    ...(hasSecurityAccess
+      ? [{ path: '/admin/security', label: 'Security', icon: '' }]
+      : [])
   ];
 
   const isActive = (path) => location.pathname === path ? 'bg-agrolink-green text-white shadow-md' : 'text-gray-400 hover:text-white hover:bg-gray-800';

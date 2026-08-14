@@ -62,11 +62,11 @@ const Footer = () => {
                 with consumers for fresher produce and fairer prices.
               </p>
               <div className="social-links">
-                <a href="#" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-                <a href="#" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-                <a href="#" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
-                <a href="#" aria-label="TikTok"><i className="fab fa-tiktok"></i></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
+                <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i className="fab fa-tiktok"></i></a>
               </div>
             </div>
 
@@ -89,8 +89,8 @@ const Footer = () => {
                 <li><Link to="/contact">Contact Us</Link></li>
                 <li><Link to="/terms">Returns & Refunds</Link></li>
                 <li><Link to="/faq">FAQs</Link></li>
-                <li><Link to="/track-order">Track Your Order</Link></li>
-                <li><Link to="/terms">Delivery Info</Link></li>
+                <li><Link to="/orders">Track Your Order</Link></li>
+                <li><Link to="/how-it-works">Delivery Info</Link></li>
               </ul>
             </div>
 
@@ -114,14 +114,14 @@ const Footer = () => {
 
               <h4 className="app-heading">Download Our App</h4>
               <div className="app-badges">
-                <a href="#" className="app-badge">
+                <a href="https://play.google.com" target="_blank" rel="noopener noreferrer" className="app-badge">
                   <i className="fab fa-google-play"></i>
                   <div>
                     <span className="badge-small">GET IT ON</span>
                     <span className="badge-large">Google Play</span>
                   </div>
                 </a>
-                <a href="#" className="app-badge">
+                <a href="https://apple.com/app-store" target="_blank" rel="noopener noreferrer" className="app-badge">
                   <i className="fab fa-apple"></i>
                   <div>
                     <span className="badge-small">Download on the</span>
@@ -164,6 +164,8 @@ const Footer = () => {
             <Link to="/privacy">Privacy Policy</Link>
             <span className="separator">•</span>
             <Link to="/terms">Terms of Service</Link>
+            <span className="separator">•</span>
+            <Link to="/status">System Status</Link>
           </div>
         </div>
       </div>

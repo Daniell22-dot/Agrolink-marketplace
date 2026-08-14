@@ -4,6 +4,8 @@ import toast from 'react-hot-toast';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
 
+const ADMIN_ROLES = ['admin', 'super_admin', 'security_auditor'];
+
 export const loginAdmin = createAsyncThunk(
   'adminAuth/login',
   async ({ email, password }, { rejectWithValue }) => {
@@ -66,7 +68,7 @@ const adminAuthSlice = createSlice({
       })
       .addCase(loginAdmin.fulfilled, (state, action) => {
         state.isLoading = false;
-        if (action.payload.data?.role !== 'admin') {
+        if (!ADMIN_ROLES.includes(action.payload.data?.role)) {
           state.error = 'Access denied. Admin only.';
           state.isAuthenticated = false;
           return;

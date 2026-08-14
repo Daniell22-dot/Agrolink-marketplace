@@ -13,23 +13,24 @@ const {
   logout
 } = require('../controllers/authController');
 const { protect } = require('../middleware/authMiddleware');
+const { loginLimiter, authLimiter } = require('../middleware/rateLimitMiddleware');
 
-router.post('/register', [
+router.post('/register', authLimiter, [
   body('fullName').notEmpty().withMessage('Full Name is required'),
   body('email').isEmail().withMessage('Valid email required'),
   body('phone').notEmpty().withMessage('Phone required'),
   body('password').isLength({ min: 6 }).withMessage('Password min 6 characters')
 ], register);
 
-router.post('/login', [
+router.post('/login', loginLimiter, [
   body('email').isEmail().withMessage('Valid email required'),
   body('password').notEmpty().withMessage('Password required')
 ], login);
 
-router.post('/google', googleAuth);
+router.post('/google', authLimiter, googleAuth);
 
-router.post('/refresh-token', refreshToken);
-router.post('/logout', logout);
+router.post('/refresh-token', authLimiter, refreshToken);
+router.post('/logout', authLimiter, logout);
 
 // 2FA Routes
 router.post('/2fa/enable', protect, enable2FA);

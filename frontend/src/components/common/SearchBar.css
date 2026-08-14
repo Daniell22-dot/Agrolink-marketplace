@@ -2,31 +2,45 @@
     display: flex;
     align-items: center;
     background: var(--white);
+    border: 2px solid var(--primary-green);
     border-radius: var(--radius-full);
-    padding: 4px;
-    box-shadow: var(--shadow-md);
-    max-width: 480px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(21, 128, 61, 0.05);
+    max-width: 600px;
     margin: 0 auto;
     width: 100%;
     position: relative;
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .search-bar:focus-within {
-    border-color: var(--accent-yellow, #ffd54f);
-    box-shadow: 0 0 0 4px rgba(255, 213, 79, 0.2);
+    border-color: var(--primary-orange, #F97316);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
+}
+
+.search-input-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    position: relative;
+}
+
+.search-icon-inside {
+    color: var(--gray-600);
+    font-size: 15px;
+    margin-right: 10px;
 }
 
 .search-input {
-    flex: 1;
+    width: 100%;
     border: none;
-    padding: 8px 16px;
-    font-size: 0.95rem;
-    color: var(--gray-800);
-    background: transparent;
+    padding: 10px 0;
+    font-size: 14px;
     outline: none;
-    line-height: 1.5;
+    color: var(--black);
+    font-family: var(--font-sans);
+    background: transparent;
 }
 
 .search-input::placeholder {
@@ -34,40 +48,36 @@
 }
 
 .search-button {
-    background: var(--primary-green);
+    background-color: var(--primary-green);
     color: var(--white);
     border: none;
-    border-radius: var(--radius-full);
-    padding: 8px 20px;
-    font-size: 0.95rem;
-    font-weight: 600;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    transition: background-color 0.2s ease;
+    font-family: var(--font-sans);
+    border-radius: 0;
     white-space: nowrap;
 }
 
-.search-button:hover {
-    background: var(--dark-green);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+.search-bar:focus-within .search-button {
+    background-color: var(--primary-orange, #F97316);
 }
 
-.search-button i {
-    font-size: 1.1rem;
+.search-button:hover {
+    background-color: var(--dark-green);
 }
 
 /* Adjust sizes for smaller screens */
 @media (max-width: 768px) {
     .search-input {
-        padding: 6px 12px;
-        font-size: 0.85rem;
+        padding: 8px 0;
+        font-size: 13px;
     }
 
     .search-button {
-        padding: 6px 14px;
-        font-size: 0.85rem;
+        padding: 8px 16px;
+        font-size: 13px;
     }
 }

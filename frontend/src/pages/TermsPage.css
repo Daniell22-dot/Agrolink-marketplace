@@ -1,0 +1,57 @@
+.terms-page {
+  background-color: var(--gray-50);
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+.terms-hero {
+  background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+  color: var(--white);
+  padding: 48px 0;
+  text-align: center;
+}
+
+.terms-hero h1 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  font-family: var(--font-title);
+}
+
+.terms-hero p {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+.terms-content {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--white);
+  border-radius: var(--radius-md);
+  padding: 40px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--gray-100);
+}
+
+.terms-section {
+  margin-bottom: 32px;
+}
+
+.terms-section h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.terms-section p {
+  color: var(--gray-600);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.terms-actions {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--gray-100);
+}

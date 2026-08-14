@@ -10,7 +10,10 @@ const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector(state => state.auth);
 
-  const displayImage = product.images && product.images.length > 0 ? product.images[0] : product.image_url;
+  const displayImage = (product.images && product.images.length > 0 ? product.images[0] : null) || product.image_url || product.image || 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop';
+  const title = product.name || product.title || 'Fresh Produce';
+  const price = product.price || 0;
+  const originalPrice = product.originalPrice || product.original_price;
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -21,28 +24,31 @@ const ProductCard = ({ product }) => {
       return;
     }
     dispatch(addToCart({ productId: product.id, quantity: 1 }));
-    toast.success(`${product.name} added to cart!`);
+    toast.success(`${title} added to cart!`);
   };
 
   const isOutOfStock = product.quantity !== undefined && product.quantity <= 0;
 
-  // Calculate discount percentage if original_price exists
+  // Calculate discount percentage if originalPrice exists
   let discountPercentage = null;
-  if (product.original_price && product.price && product.original_price > product.price) {
-    discountPercentage = Math.round(((product.original_price - product.price) / product.original_price) * 100);
+  if (originalPrice && price && originalPrice > price) {
+    discountPercentage = Math.round(((originalPrice - price) / originalPrice) * 100);
   }
 
   return (
     <Link to={`/product/${product.id}`} className="product-card">
       {/* Image Section */}
       <div className="pc-image-wrapper">
-        {displayImage ? (
-          <img src={displayImage} alt={product.name} className="pc-image" loading="lazy" />
-        ) : (
-          <div className="pc-placeholder">
-            <i className="fas fa-seedling" />
-          </div>
-        )}
+        <img 
+          src={displayImage} 
+          alt={title} 
+          className="pc-image" 
+          loading="lazy"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop';
+          }}
+        />
         
         {/* Discount / Category Badge */}
         {discountPercentage ? (
@@ -70,7 +76,7 @@ const ProductCard = ({ product }) => {
 
       {/* Content Section */}
       <div className="pc-content">
-        <h3 className="pc-title">{product.name}</h3>
+        <h3 className="pc-title">{title}</h3>
         
         {(product.farmer_name || product.county) && (
           <p className="pc-location">

@@ -17,7 +17,8 @@ const io = socketio(server, {
   cors: {
     origin: [
       process.env.FRONTEND_URL || 'http://localhost:3000',
-      process.env.ADMIN_URL || 'http://localhost:3001'
+      process.env.ADMIN_URL || 'http://localhost:3001',
+      /\.vercel\.app$/
     ],
     methods: ['GET', 'POST'],
     credentials: true
@@ -28,38 +29,43 @@ const io = socketio(server, {
 app.set('io', io);
 
 // Initialize Socket handlers
-require('./src/sockets/chatSocket')(io);
-
-// Additional route mounting (if not in app.js)
-app.use('/api/payments', require('./src/api/routes/paymentRoutes'));
-app.use('/api/webhooks', require('./src/api/routes/webhookRoutes'));
+try {
+  require('./src/sockets/chatSocket')(io);
+} catch (err) {
+  console.warn('Socket handlers not loaded:', err.message);
+}
 
 // Database connection and sync
 const startServer = async () => {
   try {
     await sequelize.authenticate();
-    console.log(' MySQL Connected');
+    console.log('MySQL Connected');
 
-    // Sync database (creates tables if they don't exist)
-    if (process.env.NODE_ENV === 'development') {
-      await sequelize.sync({ alter: false }); // Set to true to update tables
-      console.log(' Database synced');
-      
-      // Seed Super Admin
+    // Sync database — creates new tables automatically in ALL environments
+    // alter: true adds new columns/tables without dropping existing ones
+    await sequelize.sync({ alter: true });
+    console.log('Database synced (new tables auto-created)');
+
+    // Seed Super Admin (runs idempotently — safe for production)
+    try {
       const seedSuperAdmin = require('./src/seeds/superAdmin');
       await seedSuperAdmin();
+    } catch (seedErr) {
+      console.warn('Super admin seed skipped:', seedErr.message);
     }
 
-    const PORT = process.env.PORT || 5000;
-    server.listen(PORT, () => {
-      console.log(` Server running on port ${PORT}`);
-      console.log(` Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
-      console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
-    });
+    // Only start HTTP listener in local dev (Vercel handles requests as serverless)
+    if (!process.env.VERCEL) {
+      const PORT = process.env.PORT || 5000;
+      server.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+      });
+    }
 
   } catch (error) {
-    console.error(' Unable to start server:', error);
-    process.exit(1);
+    console.error('Unable to start server:', error);
   }
 };
 
@@ -71,11 +77,6 @@ try {
   console.warn(' Cron jobs failed to initialize:', error.message);
 }
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error(' Unhandled Rejection:', err);
-  // Close server & exit process
-  server.close(() => process.exit(1));
-});
-
 startServer();
+
+module.exports = app;

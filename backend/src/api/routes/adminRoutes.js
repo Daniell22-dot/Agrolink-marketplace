@@ -18,7 +18,7 @@ const { protect } = require('../middleware/authMiddleware');
 const { checkRole } = require('../middleware/rbacMiddleware');
 
 router.use(protect);
-router.use(checkRole('admin'));
+router.use(checkRole('admin', 'super_admin'));
 
 router.get('/verify', verifyAdmin);
 router.get('/dashboard/stats', getDashboardStats);

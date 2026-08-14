@@ -48,12 +48,11 @@ const PLACEHOLDER_REVIEWS = [
 
 const ReviewMarquee = () => {
   const [reviews, setReviews] = useState(PLACEHOLDER_REVIEWS);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:3000/api'}/reviews/latest`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/reviews/latest`);
         if (response.data?.data && response.data.data.length > 0) {
           setReviews(response.data.data);
         }

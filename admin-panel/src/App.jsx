@@ -16,18 +16,39 @@ import ManageOrders from './pages/ManageOrders';
 import ManageReports from './pages/ManageReports';
 import AnalyticsPage from './pages/AnalyticsPage';
 import SettingsPage from './pages/SettingsPage';
+import SecurityDashboard from './pages/SecurityDashboard';
 
 // Auth Page
 import AdminLoginPage from './pages/AdminLoginPage';
 
-// Protected Route Component
+// Protected Route Component (admin/super_admin full access; security_auditor is restricted)
 const AdminProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useSelector(state => state.adminAuth);
+  const { isAuthenticated, user } = useSelector(state => state.adminAuth);
   
   if (!isAuthenticated) {
     return <Navigate to="/admin/login" replace />;
   }
+
+  if (user?.role === 'security_auditor') {
+    return <Navigate to="/admin/security" replace />;
+  }
   
+  return <AdminLayout>{children}</AdminLayout>;
+};
+
+// Security Dashboard Protected Route (SUPER_ADMIN / SECURITY_AUDITOR only)
+const SecurityProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useSelector(state => state.adminAuth);
+
+  if (!isAuthenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  const hasSecurityAccess = ['super_admin', 'security_auditor'].includes(user?.role);
+  if (!hasSecurityAccess) {
+    return <Navigate to="/admin" replace />;
+  }
+
   return <AdminLayout>{children}</AdminLayout>;
 };
 
@@ -107,6 +128,12 @@ function App() {
             <AdminProtectedRoute>
               <SettingsPage />
             </AdminProtectedRoute>
+          } />
+
+          <Route path="/admin/security" element={
+            <SecurityProtectedRoute>
+              <SecurityDashboard />
+            </SecurityProtectedRoute>
           } />
 
           {/* Redirect root to admin dashboard */}

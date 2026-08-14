@@ -28,6 +28,9 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import HowItWorksPage from './pages/HowItWorksPage';
 import PricingPage from './pages/PricingPage';
+import StatusPage from './pages/StatusPage';
+import FaqPage from './pages/FaqPage';
+import TermsPage from './pages/TermsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 // Protected Route Component
@@ -55,6 +58,9 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/how-it-works" element={<HowItWorksPage />} />
               <Route path="/pricing" element={<PricingPage />} />
+              <Route path="/status" element={<StatusPage />} />
+              <Route path="/faq" element={<FaqPage />} />
+              <Route path="/terms" element={<TermsPage />} />
 
               {/* Protected Routes */}
               <Route path="/dashboard" element={

@@ -15,22 +15,32 @@ const allowedOrigins = [
     process.env.FRONTEND_URL || 'http://localhost:3000',
     process.env.ADMIN_URL || 'http://localhost:3001',
     'http://localhost:4000',
+    'http://localhost:5000',
     'https://agrolink.biz',
     'https://www.agrolink.biz',
     'https://admin.agrolink.biz'
 ];
 
+// Dynamically add Vercel preview/production URLs
+if (process.env.VERCEL_URL) {
+    allowedOrigins.push(`https://${process.env.VERCEL_URL}`);
+}
+
 app.use(cors({
     origin: function (origin, callback) {
-        // allow requests with no origin (like mobile apps or curl requests)
+        // allow requests with no origin (mobile apps, curl, serverless same-origin)
         if (!origin) return callback(null, true);
+        // allow any *.vercel.app preview deployments
+        if (origin.endsWith('.vercel.app')) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
             const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
             return callback(new Error(msg), false);
         }
         return callback(null, true);
     },
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 app.use(xss());
 app.use(hpp());
@@ -62,6 +72,7 @@ app.use('/api/analytics', require('./api/routes/analyticsRoutes'));
 app.use('/api/pricing', require('./api/routes/pricingRoutes'));
 app.use('/api/images', require('./api/routes/imageRoutes'));
 app.use('/api/status', require('./api/routes/statusRoutes'));
+app.use('/api/admin/security', require('./api/routes/securityRoutes'));
 
 // Error Middleware (must be last)
 app.use(require('./api/middleware/errorMiddleware'));

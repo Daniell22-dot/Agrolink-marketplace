@@ -19,7 +19,7 @@ const seedSuperAdmin = async () => {
         if (existingAdmin) {
             console.log('Super Admin already exists. Updating password...');
             existingAdmin.password = adminPassword;
-            existingAdmin.role = 'admin';
+            existingAdmin.role = 'super_admin';
             existingAdmin.fullName = adminName;
             existingAdmin.email = adminEmail;
             existingAdmin.isVerified = true;
@@ -34,7 +34,7 @@ const seedSuperAdmin = async () => {
                 email: adminEmail,
                 phone: adminPhone,
                 password: adminPassword,
-                role: 'admin',
+                role: 'super_admin',
                 isVerified: true,
                 isActive: true
             });
