@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { store } from './redux/store';
+import { fetchImageCatalog } from './redux/slices/productSlice';
 
 // Layout Components
 import Header from './components/common/Header';
@@ -38,9 +39,20 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 
 import './App.css';
 
+// Fetches the API-driven image catalog once on startup (falls back to the
+// bundled mirror catalog automatically if the API is unavailable)
+function AppInit() {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(fetchImageCatalog());
+  }, [dispatch]);
+  return null;
+}
+
 function App() {
   return (
     <Provider store={store}>
+      <AppInit />
       <Router>
         <div className="App">
           <AnnouncementBar />

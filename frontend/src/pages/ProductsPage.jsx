@@ -31,7 +31,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Busia',
         rating: 4.7,
         reviewsCount: 32,
-        images: ['https://images.unsplash.com/photo-1596450514735-300456108115?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/7543161/pexels-photo-7543161.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Western Roots Farm', isVerified: true }
     },
     {
@@ -122,7 +122,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nairobi',
         rating: 4.9,
         reviewsCount: 210,
-        images: ['https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/6086003/pexels-photo-6086003.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Grain Millers Kenya', isVerified: true }
     },
     {
@@ -161,7 +161,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Bungoma',
         rating: 4.7,
         reviewsCount: 39,
-        images: ['https://images.unsplash.com/photo-1585995601931-299335f60eb3?w=500&auto=format&fit=crop'],
+        images: ['https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop'],
         farmer: { fullName: 'Bungoma Soya Co-op', isVerified: true }
     },
     {
@@ -174,7 +174,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Machakos',
         rating: 4.9,
         reviewsCount: 92,
-        images: ['https://images.unsplash.com/photo-1585995601931-299335f60eb3?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/13620780/pexels-photo-13620780.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Eastern Pulse Growers', isVerified: true }
     },
     {
@@ -187,7 +187,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kitui',
         rating: 4.8,
         reviewsCount: 61,
-        images: ['https://images.unsplash.com/photo-1585995601931-299335f60eb3?w=500&auto=format&fit=crop'],
+        images: ['https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop'],
         farmer: { fullName: 'Kitui Farmers Hub', isVerified: true }
     },
     {
@@ -239,7 +239,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kisumu',
         rating: 4.9,
         reviewsCount: 130,
-        images: ['https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/229789/pexels-photo-229789.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Lake Victoria Fisheries', isVerified: true }
     },
     {
@@ -278,7 +278,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Bomet',
         rating: 4.8,
         reviewsCount: 42,
-        images: ['https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/7999009/pexels-photo-7999009.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Bomet Potato Growers', isVerified: true }
     },
     {
@@ -317,7 +317,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nakuru',
         rating: 5.0,
         reviewsCount: 29,
-        images: ['https://images.unsplash.com/photo-1570042707223-21c60655d8f6?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/422202/pexels-photo-422202.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Rift Valley Breeders', isVerified: true }
     },
     {

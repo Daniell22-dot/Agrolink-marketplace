@@ -31,6 +31,19 @@ export const fetchCategories = createAsyncThunk(
   }
 );
 
+export const fetchImageCatalog = createAsyncThunk(
+  'adminProducts/fetchImageCatalog',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_URL}/images/catalog`);
+      return response.data.data;
+    } catch (error) {
+      // Non-fatal: the form falls back to its bundled preset list
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const createProduct = createAsyncThunk(
   'adminProducts/create',
   async (productData, { rejectWithValue }) => {
@@ -125,6 +138,7 @@ const initialState = {
   isLoading: false,
   isCreating: false,
   categories: [],
+  imageCatalog: null,
   error: null,
   filters: {
     category: '',
@@ -189,6 +203,10 @@ const adminProductsSlice = createSlice({
       // Categories
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categories = action.payload.data || [];
+      })
+      // Image Catalog
+      .addCase(fetchImageCatalog.fulfilled, (state, action) => {
+        state.imageCatalog = action.payload;
       })
       // Create Product
       .addCase(createProduct.pending, (state) => {

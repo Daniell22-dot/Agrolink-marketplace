@@ -52,9 +52,9 @@ const SecurityInvite = sequelize.define('SecurityInvite', {
     timestamps: true
 });
 
-SecurityInvite.belongsTo(User, { foreignKey: 'createdBy', as: 'inviter', targetKey: 'id' });
-User.hasMany(SecurityInvite, { foreignKey: 'createdBy', as: 'securityInvitesCreated' });
+SecurityInvite.belongsTo(User, { foreignKey: 'createdBy', as: 'inviter', targetKey: 'id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+User.hasMany(SecurityInvite, { foreignKey: 'createdBy', as: 'securityInvitesCreated', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
-SecurityInvite.belongsTo(User, { foreignKey: 'acceptedBy', as: 'acceptor', targetKey: 'id' });
+SecurityInvite.belongsTo(User, { foreignKey: 'acceptedBy', as: 'acceptor', targetKey: 'id', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 module.exports = SecurityInvite;

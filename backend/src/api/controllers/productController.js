@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 const { Op } = require('sequelize');
 const searchService = require('../../services/searchService');
 const recommendationService = require('../../services/recommendationService');
+const { resolveImages, getCatalog } = require('../../services/productImageService');
 
 // Helper to upload buffer to Cloudinary
 const uploadToCloudinary = (buffer) => {
@@ -70,6 +71,13 @@ exports.getProducts = async (req, res, next) => {
             order
         });
 
+        // Auto-resolve images for any product that has none (legacy data)
+        rows.forEach((row) => {
+            if (!row.images || row.images.length === 0) {
+                row.images = resolveImages(row);
+            }
+        });
+
         res.json({
             success: true,
             count,
@@ -91,6 +99,11 @@ exports.getProduct = async (req, res, next) => {
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Auto-resolve image for products with no images
+        if (!product.images || product.images.length === 0) {
+            product.images = resolveImages(product);
         }
 
         // Increment view counter
@@ -126,12 +139,24 @@ exports.createProduct = async (req, res, next) => {
 
         const { name, description, category, price, quantity, unit, location } = req.body;
 
-        // Handle Image Upload
+        // Handle Image Upload (optional - auto-resolve from catalog when no files uploaded)
         let imageUrls = [];
         if (req.files && req.files.length > 0) {
             const uploadPromises = req.files.map(file => uploadToCloudinary(file.buffer));
             const results = await Promise.all(uploadPromises);
             imageUrls = results.map(result => result.secure_url);
+        } else if (req.body.images) {
+            try {
+                const parsed = JSON.parse(req.body.images);
+                if (Array.isArray(parsed)) {
+                    imageUrls = parsed.filter(u => typeof u === 'string' && u.length > 0);
+                }
+            } catch (e) {
+                imageUrls = [];
+            }
+        }
+        if (imageUrls.length === 0) {
+            imageUrls = resolveImages({ name, category });
         }
 
         const product = await Product.create({
@@ -192,6 +217,9 @@ exports.updateProduct = async (req, res, next) => {
         let updatedImages = product.images || [];
         if (newImageUrls.length > 0) {
             updatedImages = [...updatedImages, ...newImageUrls];
+        } else if (updatedImages.length === 0) {
+            // No images at all - auto-resolve from catalog so the product always shows an image
+            updatedImages = resolveImages({ name, category });
         }
 
         await product.update({

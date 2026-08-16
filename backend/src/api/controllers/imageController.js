@@ -1,4 +1,17 @@
 const pythonApiClient = require('../../services/pythonApiClient');
+const { getCatalog } = require('../../services/productImageService');
+
+/**
+ * @desc    Get the product image catalog (auto-resolve presets)
+ * @route   GET /api/images/catalog
+ * @access  Public
+ */
+exports.getCatalog = async (req, res) => {
+    res.json({
+        success: true,
+        data: getCatalog()
+    });
+};
 
 /**
  * @desc    Optimize product image (create multiple sizes)

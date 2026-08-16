@@ -22,11 +22,15 @@ const RefreshToken = sequelize.define('RefreshToken', {
 
 RefreshToken.belongsTo(User, {
     foreignKey: 'userId',
-    targetKey: 'id'
+    targetKey: 'id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 User.hasMany(RefreshToken, {
     foreignKey: 'userId',
-    sourceKey: 'id'
+    sourceKey: 'id',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 RefreshToken.createToken = async function (user) {

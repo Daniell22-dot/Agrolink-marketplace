@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/slices/cartSlice';
+import { resolveProductImage } from '../../utils/productImages';
 import toast from 'react-hot-toast';
 import './ProductCard.css';
 
@@ -9,11 +10,15 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector(state => state.auth);
+  const imageCatalog = useSelector(state => state.products.imageCatalog);
 
-  const displayImage = (product.images && product.images.length > 0 ? product.images[0] : null) || product.image_url || product.image || 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop';
+  const displayImage = resolveProductImage(product, imageCatalog);
   const title = product.name || product.title || 'Fresh Produce';
   const price = product.price || 0;
   const originalPrice = product.originalPrice || product.original_price;
+
+  const isOutOfStock = product.quantity !== undefined && product.quantity <= 0;
+  const isUnavailable = product.isAvailable === false;
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -23,11 +28,16 @@ const ProductCard = ({ product }) => {
       navigate('/login');
       return;
     }
+    if (isOutOfStock) {
+      toast.error(`${title} is out of stock`);
+      return;
+    }
+    if (isUnavailable) {
+      toast.error(`${title} is currently unavailable`);
+      return;
+    }
     dispatch(addToCart({ productId: product.id, quantity: 1 }));
-    toast.success(`${title} added to cart!`);
   };
-
-  const isOutOfStock = product.quantity !== undefined && product.quantity <= 0;
 
   // Calculate discount percentage if originalPrice exists
   let discountPercentage = null;
@@ -67,9 +77,9 @@ const ProductCard = ({ product }) => {
         </button>
 
         {/* Out of Stock Overlay */}
-        {isOutOfStock && (
+        {(isOutOfStock || isUnavailable) && (
           <div className="pc-out-of-stock">
-            <span>Out of Stock</span>
+            <span>{isOutOfStock ? 'Out of Stock' : 'Unavailable'}</span>
           </div>
         )}
       </div>
@@ -110,7 +120,7 @@ const ProductCard = ({ product }) => {
         </div>
 
         {/* Low Stock Warning */}
-        {!isOutOfStock && product.quantity <= 10 && product.quantity > 0 && (
+        {!isOutOfStock && !isUnavailable && product.quantity <= 10 && product.quantity > 0 && (
           <div className="pc-stock-alert">
             <i className="fas fa-bolt" />
             Only {product.quantity} left!
@@ -121,9 +131,8 @@ const ProductCard = ({ product }) => {
         <div className="pc-footer">
           <button
             onClick={handleAddToCart}
-            disabled={isOutOfStock}
             className="pc-add-btn"
-            title="Add to Cart"
+            title={isOutOfStock ? 'Out of stock' : 'Add to Cart'}
           >
             ADD TO CART
           </button>

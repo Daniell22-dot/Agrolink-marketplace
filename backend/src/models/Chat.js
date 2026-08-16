@@ -37,8 +37,8 @@ const Chat = sequelize.define('Chat', {
 });
 
 // Associations
-Chat.belongsTo(User, { as: 'Buyer', foreignKey: 'buyerId' });
-Chat.belongsTo(User, { as: 'Farmer', foreignKey: 'farmerId' });
-Chat.belongsTo(Product, { foreignKey: 'productId' });
+Chat.belongsTo(User, { as: 'Buyer', foreignKey: 'buyerId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Chat.belongsTo(User, { as: 'Farmer', foreignKey: 'farmerId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Chat.belongsTo(Product, { foreignKey: 'productId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 module.exports = Chat;

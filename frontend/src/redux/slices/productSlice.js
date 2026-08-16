@@ -30,6 +30,19 @@ export const fetchProductById = createAsyncThunk(
   }
 );
 
+export const fetchImageCatalog = createAsyncThunk(
+  'products/fetchImageCatalog',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${API_URL}/images/catalog`);
+      return response.data.data;
+    } catch (error) {
+      // Non-fatal: frontend falls back to its bundled mirror catalog
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 export const createProduct = createAsyncThunk(
   'products/createProduct',
   async (productData, { rejectWithValue }) => {
@@ -81,6 +94,7 @@ export const deleteProduct = createAsyncThunk(
 const initialState = {
   products: [],
   selectedProduct: null,
+  imageCatalog: null,
   pagination: {
     page: 1,
     limit: 10,
@@ -140,6 +154,10 @@ const productSlice = createSlice({
       .addCase(fetchProductById.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+      })
+      // Fetch Image Catalog
+      .addCase(fetchImageCatalog.fulfilled, (state, action) => {
+        state.imageCatalog = action.payload;
       })
       // Create Product
       .addCase(createProduct.pending, (state) => {

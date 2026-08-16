@@ -30,8 +30,8 @@ const Message = sequelize.define('Message', {
     timestamps: true
 });
 
-Message.belongsTo(Chat, { foreignKey: 'chatId' });
-Message.belongsTo(User, { as: 'Sender', foreignKey: 'senderId' });
-Chat.hasMany(Message, { foreignKey: 'chatId' });
+Message.belongsTo(Chat, { foreignKey: 'chatId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Message.belongsTo(User, { as: 'Sender', foreignKey: 'senderId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Chat.hasMany(Message, { foreignKey: 'chatId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 module.exports = Message;

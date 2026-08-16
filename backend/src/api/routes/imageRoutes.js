@@ -5,10 +5,18 @@ const {
     optimizeImage,
     validateImage,
     extractImageFeatures,
-    batchOptimizeImages
+    batchOptimizeImages,
+    getCatalog
 } = require('../controllers/imageController');
 
 const router = express.Router();
+
+/**
+ * @route   GET /api/images/catalog
+ * @desc    Get product image catalog (public - used to auto-fill product images)
+ * @access  Public
+ */
+router.get('/catalog', getCatalog);
 
 // Multer configuration for image uploads
 const storage = multer.memoryStorage();

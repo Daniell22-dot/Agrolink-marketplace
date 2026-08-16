@@ -36,9 +36,9 @@ const Review = sequelize.define('Review', {
 });
 
 // Associations
-Review.belongsTo(User, { foreignKey: 'userId' });
-Review.belongsTo(Product, { foreignKey: 'productId' });
-Product.hasMany(Review, { foreignKey: 'productId' });
-User.hasMany(Review, { foreignKey: 'userId' });
+Review.belongsTo(User, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Review.belongsTo(Product, { foreignKey: 'productId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Product.hasMany(Review, { foreignKey: 'productId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+User.hasMany(Review, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 module.exports = Review;

@@ -1,8 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useCart } from '../../hooks/useCart';
+import { resolveProductImage } from '../../utils/productImages';
 
 const CartItem = ({ item }) => {
     const { updateItemQuantity, removeItem } = useCart();
+    const imageCatalog = useSelector(state => state.products.imageCatalog);
 
     const handleQuantityChange = (newQuantity) => {
         if (newQuantity < 1) return;
@@ -12,7 +15,14 @@ const CartItem = ({ item }) => {
     return (
         <div className="cart-item-card">
             <div className="cart-item-image">
-                <img src={item.image || '/placeholder.jpg'} alt={item.name} />
+                <img
+                    src={resolveProductImage(item, imageCatalog)}
+                    alt={item.name}
+                    onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop';
+                    }}
+                />
             </div>
             
             <div className="cart-item-info">
