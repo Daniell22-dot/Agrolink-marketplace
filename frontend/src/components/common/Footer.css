@@ -3,7 +3,7 @@
    ============================================= */
 
 .footer {
-  background: #0f172a;
+  background: var(--black, #0F172A);
   color: #e2e8f0;
   margin-top: auto;
 }
@@ -127,7 +127,7 @@
   bottom: 0;
   width: 30px;
   height: 2px;
-  background: var(--primary-green);
+  background: var(--primary-green, #15803D);
   border-radius: 2px;
 }
 

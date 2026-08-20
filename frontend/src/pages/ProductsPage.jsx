@@ -391,10 +391,14 @@ const ProductsPage = () => {
     const categories = [
         { id: 'vegetables', label: 'Vegetables', icon: 'fa-carrot' },
         { id: 'fruits', label: 'Fruits', icon: 'fa-apple-alt' },
-        { id: 'grains', label: 'Grains', icon: 'fa-seedling' },
+        { id: 'grains', label: 'Grains & Cereals', icon: 'fa-seedling' },
         { id: 'livestock', label: 'Livestock', icon: 'fa-cow' },
-        { id: 'dairy', label: 'Dairy', icon: 'fa-cheese' },
-        { id: 'other', label: 'Other', icon: 'fa-box' }
+        { id: 'dairy', label: 'Dairy & Eggs', icon: 'fa-cheese' },
+        { id: 'farm-inputs', label: 'Farm Inputs', icon: 'fa-tractor' },
+        { id: 'seeds', label: 'Seeds', icon: 'fa-seedling' },
+        { id: 'fertilizers', label: 'Fertilizers', icon: 'fa-flask' },
+        { id: 'tools', label: 'Farm Tools', icon: 'fa-tools' },
+        { id: 'other', label: 'Other Produce', icon: 'fa-box' },
     ];
 
     const [debouncedFilters, setDebouncedFilters] = useState(filters);
@@ -429,7 +433,7 @@ const ProductsPage = () => {
     });
 
     const currentCategoryLabel = filters.category 
-        ? categories.find(c => c.id === filters.category)?.label 
+        ? categories.find(c => c.id === filters.category)?.label || filters.category
         : 'All Produce';
 
     return (

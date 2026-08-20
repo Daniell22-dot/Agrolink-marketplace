@@ -48,19 +48,23 @@ const Header = () => {
     { id: 'grains', label: 'Grains & Cereals' },
     { id: 'livestock', label: 'Livestock' },
     { id: 'dairy', label: 'Dairy & Eggs' },
+    { id: 'farm-inputs', label: 'Farm Inputs' },
+    { id: 'seeds', label: 'Seeds' },
+    { id: 'fertilizers', label: 'Fertilizers' },
+    { id: 'tools', label: 'Farm Tools' },
     { id: 'herbs', label: 'Herbs & Spices' },
     { id: 'other', label: 'Other Produce' },
   ];
 
   const navLinks = [
-    { to: '/products?deal=true', label: 'Flash Deals' },
-    { to: '/products?category=farm-inputs', label: 'Farm Inputs' },
-    { to: '/products?category=seeds', label: 'Seeds' },
-    { to: '/products?category=fertilizers', label: 'Fertilizers' },
-    { to: '/products?category=tools', label: 'Farm Tools' },
+    { to: '/category/farm-inputs', label: 'Farm Inputs' },
+    { to: '/category/seeds', label: 'Seeds' },
+    { to: '/category/tools', label: 'Farm Tools' },
+    { to: '/category/fertilizers', label: 'Fertilizers' },
+    { to: '/category/baskets', label: 'Baskets & Storage' },
     { to: '/products?category=livestock', label: 'Livestock' },
     { to: '/products?category=dairy', label: 'Dairy' },
-    { to: '/products?deal=true', label: 'Deals' },
+    { to: '/products?sort=newest', label: 'New Arrivals' },
   ];
 
   return (
@@ -196,7 +200,7 @@ const Header = () => {
 
           <nav className="cat-nav-links">
             {navLinks.map((link, idx) => (
-              <Link to={link.to} key={idx} className={link.label === 'Flash Deals' || link.label === 'Deals' ? 'nav-deal-link' : ''}>
+              <Link to={link.to} key={idx}>
                 {link.label}
               </Link>
             ))}

@@ -33,6 +33,8 @@ import StatusPage from './pages/StatusPage';
 import FaqPage from './pages/FaqPage';
 import TermsPage from './pages/TermsPage';
 import NotFoundPage from './pages/NotFoundPage';
+import WishlistPage from './pages/WishlistPage';
+import CategoryPage from './pages/CategoryPage';
 
 // Protected Route Component
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -73,6 +75,8 @@ function App() {
               <Route path="/status" element={<StatusPage />} />
               <Route path="/faq" element={<FaqPage />} />
               <Route path="/terms" element={<TermsPage />} />
+              <Route path="/wishlist" element={<WishlistPage />} />
+              <Route path="/category/:slug" element={<CategoryPage />} />
 
               {/* Protected Routes */}
               <Route path="/dashboard" element={

@@ -8,23 +8,23 @@ import './HomePage.css';
 const HERO_CATEGORIES = [
   { icon: 'fas fa-carrot', name: 'Vegetables', slug: 'vegetables', image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=80&auto=format&fit=crop' },
   { icon: 'fas fa-apple-alt', name: 'Fruits', slug: 'fruits', image: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-seedling', name: 'Grains', slug: 'grains', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=80&auto=format&fit=crop' },
+  { icon: 'fas fa-seedling', name: 'Seeds', slug: 'seeds', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=80&auto=format&fit=crop' },
   { icon: 'fas fa-cow', name: 'Livestock', slug: 'livestock', image: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=80&auto=format&fit=crop' },
   { icon: 'fas fa-cheese', name: 'Dairy', slug: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&auto=format&fit=crop' },
   { icon: 'fas fa-seedling', name: 'Farm Inputs', slug: 'farm-inputs', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-spray-can', name: 'Fertilizers', slug: 'fertilizer', image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-tools', name: 'Farm Tools', slug: 'tools', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=80&auto=format&fit=crop' },
+  { icon: 'fas fa-flask', name: 'Fertilizers', slug: 'fertilizers', image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=80&auto=format&fit=crop' },
+  { icon: 'fas fa-tools', name: 'Farm Tools', slug: 'tools', image: 'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=80&auto=format&fit=crop' },
 ];
 
 const GRID_CATEGORIES = [
   { name: 'Vegetables', slug: 'vegetables', image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&auto=format&fit=crop' },
   { name: 'Fruits', slug: 'fruits', image: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=300&auto=format&fit=crop' },
-  { name: 'Grains', slug: 'grains', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&auto=format&fit=crop' },
+  { name: 'Grains & Cereals', slug: 'grains', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&auto=format&fit=crop' },
   { name: 'Livestock', slug: 'livestock', image: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=300&auto=format&fit=crop' },
-  { name: 'Dairy', slug: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300&auto=format&fit=crop' },
   { name: 'Farm Inputs', slug: 'farm-inputs', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=300&auto=format&fit=crop' },
-  { name: 'Fertilizers', slug: 'fertilizer', image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop' },
-  { name: 'Farm Tools', slug: 'tools', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&auto=format&fit=crop' },
+  { name: 'Seeds', slug: 'seeds', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&auto=format&fit=crop' },
+  { name: 'Farm Tools', slug: 'tools', image: 'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=300&auto=format&fit=crop' },
+  { name: 'Fertilizers', slug: 'fertilizers', image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop' },
 ];
 
 const FLASH_DEALS = [
@@ -86,9 +86,9 @@ const HomePage = () => {
   const pad = (n) => String(n).padStart(2, '0');
 
   const heroBanners = [
-    { text: 'Fresh Farm Products', sub: 'Direct from Farmers', gradient: 'linear-gradient(135deg, #2d6a4f 0%, #40916c 50%, #52b788 100%)' },
-    { text: 'Planting Season Deals', sub: 'Up to 40% Off Seeds & Fertilizer', gradient: 'linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #40916c 100%)' },
-    { text: 'Livestock Marketplace', sub: 'Buy & Sell Livestock Securely', gradient: 'linear-gradient(135deg, #081c15 0%, #1b4332 50%, #2d6a4f 100%)' },
+    { text: 'Fresh Farm Products', sub: 'Direct from Farmers to Your Table', gradient: 'linear-gradient(135deg, #15803D 0%, #166534 50%, #14532D 100%)' },
+    { text: 'Planting Season Deals', sub: 'Up to 40% Off Seeds & Fertilizer', gradient: 'linear-gradient(135deg, #166534 0%, #15803D 50%, #22C55E 100%)' },
+    { text: 'Livestock Marketplace', sub: 'Buy & Sell Livestock Securely', gradient: 'linear-gradient(135deg, #14532D 0%, #166534 50%, #15803D 100%)' },
   ];
 
   return (
@@ -98,12 +98,19 @@ const HomePage = () => {
       <section className="j-hero">
         <div className="j-hero-inner">
           <div className="j-hero-categories">
-            {HERO_CATEGORIES.map((cat) => (
-              <Link to={`/products?category=${cat.slug}`} key={cat.slug} className="j-hero-cat-item">
-                <img src={cat.image} alt={cat.name} className="j-hero-cat-img" />
-                <span>{cat.name}</span>
-              </Link>
-            ))}
+            {HERO_CATEGORIES.map((cat) => {
+              const hasLandingPage = ['farm-inputs', 'seeds', 'tools', 'fertilizers'].includes(cat.slug);
+              return (
+                <Link
+                  to={hasLandingPage ? `/category/${cat.slug}` : `/products?category=${cat.slug}`}
+                  key={cat.slug}
+                  className="j-hero-cat-item"
+                >
+                  <img src={cat.image} alt={cat.name} className="j-hero-cat-img" />
+                  <span>{cat.name}</span>
+                </Link>
+              );
+            })}
           </div>
           <div className="j-hero-banner">
             <div
@@ -176,14 +183,21 @@ const HomePage = () => {
         <div className="j-section-container">
           <h2 className="j-section-title">Categories</h2>
           <div className="j-categories-grid">
-            {GRID_CATEGORIES.map((cat) => (
-              <Link to={`/products?category=${cat.slug}`} key={cat.slug} className="j-category-tile">
-                <div className="j-category-tile-img">
-                  <img src={cat.image} alt={cat.name} />
-                </div>
-                <span className="j-category-tile-name">{cat.name}</span>
-              </Link>
-            ))}
+            {GRID_CATEGORIES.map((cat) => {
+              const hasLandingPage = ['farm-inputs', 'seeds', 'tools', 'fertilizers'].includes(cat.slug);
+              return (
+                <Link
+                  to={hasLandingPage ? `/category/${cat.slug}` : `/products?category=${cat.slug}`}
+                  key={cat.slug}
+                  className="j-category-tile"
+                >
+                  <div className="j-category-tile-img">
+                    <img src={cat.image} alt={cat.name} />
+                  </div>
+                  <span className="j-category-tile-name">{cat.name}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -192,24 +206,38 @@ const HomePage = () => {
       <section className="j-foryou-section">
         <div className="j-foryou-inner">
           <div className="j-foryou-banners">
-            <div className="j-foryou-banner j-foryou-banner-green">
-              <span className="j-foryou-banner-tag">SALE</span>
-              <h3>Farm Inputs Sale</h3>
-              <p>Up to 30% Off</p>
-              <Link to="/products?category=farm-inputs">Shop Now</Link>
-            </div>
-            <div className="j-foryou-banner j-foryou-banner-orange">
-              <span className="j-foryou-banner-tag">NEW</span>
-              <h3>New Arrivals</h3>
-              <p>Fresh This Week</p>
-              <Link to="/products?sort=newest">See All</Link>
-            </div>
-            <div className="j-foryou-banner j-foryou-banner-dark">
-              <span className="j-foryou-banner-tag">BULK</span>
-              <h3>Bulk Orders</h3>
-              <p>Best Wholesale Prices</p>
-              <Link to="/products">Order Now</Link>
-            </div>
+            <Link to="/category/farm-inputs" className="j-foryou-banner j-foryou-banner-green">
+              <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&auto=format&fit=crop" alt="Farm Inputs" className="j-foryou-banner-bg" />
+              <div className="j-foryou-banner-content">
+                <span className="j-foryou-banner-tag">SALE</span>
+                <h3>Farm Inputs</h3>
+                <p>Up to 30% Off</p>
+              </div>
+            </Link>
+            <Link to="/category/seeds" className="j-foryou-banner j-foryou-banner-dark">
+              <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&auto=format&fit=crop" alt="Seeds" className="j-foryou-banner-bg" />
+              <div className="j-foryou-banner-content">
+                <span className="j-foryou-banner-tag">NEW</span>
+                <h3>Quality Seeds</h3>
+                <p>Fresh This Season</p>
+              </div>
+            </Link>
+            <Link to="/category/tools" className="j-foryou-banner j-foryou-banner-orange">
+              <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&auto=format&fit=crop" alt="Farm Tools" className="j-foryou-banner-bg" />
+              <div className="j-foryou-banner-content">
+                <span className="j-foryou-banner-tag">BULK</span>
+                <h3>Farm Tools</h3>
+                <p>Best Wholesale Prices</p>
+              </div>
+            </Link>
+            <Link to="/category/baskets" className="j-foryou-banner j-foryou-banner-teal">
+              <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&auto=format&fit=crop" alt="Baskets & Storage" className="j-foryou-banner-bg" />
+              <div className="j-foryou-banner-content">
+                <span className="j-foryou-banner-tag">HOT</span>
+                <h3>Baskets & Storage</h3>
+                <p>Harvest Essentials</p>
+              </div>
+            </Link>
           </div>
           <div className="j-foryou-main">
             <div className="j-foryou-header">

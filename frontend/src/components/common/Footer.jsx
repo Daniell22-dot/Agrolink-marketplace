@@ -76,9 +76,10 @@ const Footer = () => {
               <ul>
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/products">All Products</Link></li>
-                <li><Link to="/about">About AgroLink</Link></li>
-                <li><Link to="/pricing">Seller Plans</Link></li>
-                <li><Link to="/contact">Help Center</Link></li>
+                <li><Link to="/category/farm-inputs">Farm Inputs</Link></li>
+                <li><Link to="/category/seeds">Seeds</Link></li>
+                <li><Link to="/category/tools">Farm Tools</Link></li>
+                <li><Link to="/wishlist">Wishlist</Link></li>
               </ul>
             </div>
 
