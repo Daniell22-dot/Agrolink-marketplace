@@ -1,144 +1,104 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './FlashDeals.css';
 
-const flashDealsData = [
-  {
-    id: 1,
-    name: 'H614 Hybrid Maize Seeds - 2kg',
-    image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&auto=format&fit=crop',
-    oldPrice: 1200,
-    newPrice: 799,
-    discount: 33,
-    sold: 78,
-  },
-  {
-    id: 2,
-    name: 'NPK 50kg Fertilizer Bag',
-    image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=400&auto=format&fit=crop',
-    oldPrice: 3500,
-    newPrice: 2499,
-    discount: 29,
-    sold: 65,
-  },
-  {
-    id: 3,
-    name: 'Garden Hoe - Heavy Duty',
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&auto=format&fit=crop',
-    oldPrice: 850,
-    newPrice: 549,
-    discount: 35,
-    sold: 82,
-  },
-  {
-    id: 4,
-    name: 'Tomato Seeds - KDH1 (50g)',
-    image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&auto=format&fit=crop',
-    oldPrice: 600,
-    newPrice: 399,
-    discount: 33,
-    sold: 54,
-  },
-  {
-    id: 5,
-    name: 'Drip Irrigation Starter Kit',
-    image: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&auto=format&fit=crop',
-    oldPrice: 4500,
-    newPrice: 2999,
-    discount: 33,
-    sold: 41,
-  },
-  {
-    id: 6,
-    name: 'CAN Fertilizer - 50kg',
-    image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&auto=format&fit=crop',
-    oldPrice: 3200,
-    newPrice: 2299,
-    discount: 28,
-    sold: 70,
-  },
-  {
-    id: 7,
-    name: 'Pesticide Sprayer - 16L',
-    image: 'https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=400&auto=format&fit=crop',
-    oldPrice: 2800,
-    newPrice: 1899,
-    discount: 32,
-    sold: 59,
-  },
-  {
-    id: 8,
-    name: 'Bean Seeds - Rose Coco (2kg)',
-    image: 'https://images.unsplash.com/photo-1509622905150-fa66d3906e09?w=400&auto=format&fit=crop',
-    oldPrice: 800,
-    newPrice: 499,
-    discount: 38,
-    sold: 88,
-  },
+const DEFAULT_DEALS = [
+  { id: 'fd1', title: 'H614 Hybrid Maize Seeds - 2kg', price: 799, originalPrice: 1200, discount: 33, image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&auto=format&fit=crop', sold: 78 },
+  { id: 'fd2', title: 'NPK 50kg Fertilizer Bag', price: 2499, originalPrice: 3500, discount: 29, image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=400&auto=format&fit=crop', sold: 65 },
+  { id: 'fd3', title: 'Garden Hoe - Heavy Duty', price: 549, originalPrice: 850, discount: 35, image: 'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=400&auto=format&fit=crop', sold: 82 },
+  { id: 'fd4', title: 'Tomato Seeds - KDH1 (50g)', price: 399, originalPrice: 600, discount: 33, image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&auto=format&fit=crop', sold: 54 },
+  { id: 'fd5', title: 'Drip Irrigation Starter Kit', price: 2999, originalPrice: 4500, discount: 33, image: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&auto=format&fit=crop', sold: 41 },
+  { id: 'fd6', title: 'CAN Fertilizer - 50kg', price: 2299, originalPrice: 3200, discount: 28, image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&auto=format&fit=crop', sold: 70 },
+  { id: 'fd7', title: 'Pesticide Sprayer - 16L', price: 1899, originalPrice: 2800, discount: 32, image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=400&auto=format&fit=crop', sold: 59 },
+  { id: 'fd8', title: 'Bean Seeds - Rose Coco (2kg)', price: 499, originalPrice: 800, discount: 38, image: 'https://images.unsplash.com/photo-1509622905150-fa66d3906e09?w=400&auto=format&fit=crop', sold: 88 },
 ];
 
-const FlashDeals = () => {
+const pad = (n) => String(n).padStart(2, '0');
+
+const FlashDeals = ({ deals }) => {
   const scrollRef = useRef(null);
+  const [countdown, setCountdown] = useState({ hours: 5, minutes: 23, seconds: 47 });
+  const [autoScrollDir, setAutoScrollDir] = useState('right');
+  const displayData = (deals && deals.length > 0) ? deals : DEFAULT_DEALS;
+
+  // Countdown timer
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        let { hours, minutes, seconds } = prev;
+        seconds -= 1;
+        if (seconds < 0) { seconds = 59; minutes -= 1; }
+        if (minutes < 0) { minutes = 59; hours -= 1; }
+        if (hours < 0) { hours = 23; minutes = 59; seconds = 59; }
+        return { hours, minutes, seconds };
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Auto-scroll every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!scrollRef.current) return;
+      const el = scrollRef.current;
+      const maxScroll = el.scrollWidth - el.clientWidth;
+
+      if (el.scrollLeft >= maxScroll - 5) {
+        setAutoScrollDir('left');
+      } else if (el.scrollLeft <= 5) {
+        setAutoScrollDir('right');
+      }
+
+      el.scrollBy({
+        left: autoScrollDir === 'right' ? 200 : -200,
+        behavior: 'smooth',
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [autoScrollDir]);
 
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const scrollAmount = 200;
       scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        left: direction === 'left' ? -200 : 200,
         behavior: 'smooth',
       });
     }
   };
 
   return (
-    <section className="flash-deals-section">
-      <div className="container">
-        <div className="flash-deals-header">
-          <div className="flash-deals-title">
-            <i className="fas fa-bolt"></i>
-            <h2>Flash Deals</h2>
-          </div>
-          <div className="flash-deals-timer">
-            <i className="fas fa-clock"></i>
-            <span>Ends in</span>
-            <span className="timer-segment">04</span>:
-            <span className="timer-segment">23</span>:
-            <span className="timer-segment">57</span>
-          </div>
-        </div>
+    <div className="flash-deals-scroll-wrapper">
+      <button className="flash-scroll-btn flash-scroll-left" onClick={() => scroll('left')} aria-label="Scroll left">
+        <i className="fas fa-chevron-left" />
+      </button>
+      <button className="flash-scroll-btn flash-scroll-right" onClick={() => scroll('right')} aria-label="Scroll right">
+        <i className="fas fa-chevron-right" />
+      </button>
 
-        <div className="flash-deals-scroll-wrapper">
-          <button className="scroll-btn scroll-btn-left" onClick={() => scroll('left')} aria-label="Scroll left">
-            <i className="fas fa-chevron-left"></i>
-          </button>
-          <button className="scroll-btn scroll-btn-right" onClick={() => scroll('right')} aria-label="Scroll right">
-            <i className="fas fa-chevron-right"></i>
-          </button>
-
-          <div className="flash-deals-scroll" ref={scrollRef}>
-            {flashDealsData.map((deal) => (
-              <div className="flash-deal-card" key={deal.id}>
-                <div className="flash-deal-image">
-                  <div className="flash-deal-discount">-{deal.discount}%</div>
-                  <img src={deal.image} alt={deal.name} className="flash-deal-img" />
-                </div>
-                <div className="flash-deal-info">
-                  <div className="flash-deal-name">{deal.name}</div>
-                  <div className="flash-deal-prices">
-                    <span className="flash-deal-price-new">KES {deal.newPrice.toLocaleString()}</span>
-                    <span className="flash-deal-price-old">KES {deal.oldPrice.toLocaleString()}</span>
-                  </div>
-                  <div className="flash-deal-sold-bar">
-                    <div className="flash-deal-sold-fill" style={{ width: `${deal.sold}%` }}></div>
-                  </div>
-                  <div className="flash-deal-sold-text">{deal.sold}% sold</div>
-                </div>
+      <div className="flash-deals-scroll" ref={scrollRef}>
+        {displayData.map((deal) => (
+          <Link to={`/product/${deal.id}`} className="flash-deal-card" key={deal.id}>
+            <div className="flash-deal-image">
+              <div className="flash-deal-discount">-{deal.discount}%</div>
+              <img src={deal.image} alt={deal.title} className="flash-deal-img" />
+            </div>
+            <div className="flash-deal-info">
+              <div className="flash-deal-name">{deal.title}</div>
+              <div className="flash-deal-prices">
+                <span className="flash-deal-price-new">KES {deal.price.toLocaleString()}</span>
+                <span className="flash-deal-price-old">KES {deal.originalPrice.toLocaleString()}</span>
               </div>
-            ))}
-          </div>
-        </div>
+              <div className="flash-deal-sold-bar">
+                <div className="flash-deal-sold-fill" style={{ width: `${deal.sold}%` }} />
+              </div>
+              <div className="flash-deal-sold-text">{deal.sold}% sold</div>
+            </div>
+          </Link>
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 
+export { pad };
 export default FlashDeals;
