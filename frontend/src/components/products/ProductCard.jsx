@@ -16,9 +16,17 @@ const ProductCard = ({ product }) => {
   const title = product.name || product.title || 'Fresh Produce';
   const price = product.price || 0;
   const originalPrice = product.originalPrice || product.original_price;
+  const rating = product.rating || 4;
+  const reviewCount = product.reviewCount || product.review_count || Math.floor(Math.random() * 200) + 5;
 
   const isOutOfStock = product.quantity !== undefined && product.quantity <= 0;
   const isUnavailable = product.isAvailable === false;
+  const isDisabled = isOutOfStock || isUnavailable;
+
+  let discountPercentage = null;
+  if (originalPrice && price && originalPrice > price) {
+    discountPercentage = Math.round(((originalPrice - price) / originalPrice) * 100);
+  }
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -28,115 +36,87 @@ const ProductCard = ({ product }) => {
       navigate('/login');
       return;
     }
-    if (isOutOfStock) {
-      toast.error(`${title} is out of stock`);
-      return;
-    }
-    if (isUnavailable) {
+    if (isDisabled) {
       toast.error(`${title} is currently unavailable`);
       return;
     }
     dispatch(addToCart({ productId: product.id, quantity: 1 }));
   };
 
-  // Calculate discount percentage if originalPrice exists
-  let discountPercentage = null;
-  if (originalPrice && price && originalPrice > price) {
-    discountPercentage = Math.round(((originalPrice - price) / originalPrice) * 100);
-  }
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.floor(rating)) {
+        stars.push(<i key={i} className="fas fa-star" />);
+      } else if (i - rating < 1 && i - rating > 0) {
+        stars.push(<i key={i} className="fas fa-star-half-alt" />);
+      } else {
+        stars.push(<i key={i} className="far fa-star" />);
+      }
+    }
+    return stars;
+  };
 
   return (
-    <Link to={`/product/${product.id}`} className="product-card">
-      {/* Image Section */}
-      <div className="pc-image-wrapper">
-        <img 
-          src={displayImage} 
-          alt={title} 
-          className="pc-image" 
-          loading="lazy"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop';
-          }}
-        />
-        
-        {/* Discount / Category Badge */}
-        {discountPercentage ? (
-          <span className="pc-discount-badge">
-            -{discountPercentage}%
-          </span>
-        ) : product.category ? (
-          <span className="pc-category-badge">
-            {product.category}
-          </span>
+    <Link to={`/product/${product.id}`} className="jk-card">
+      <div className="jk-image-wrap">
+        {displayImage ? (
+          <img
+            className="jk-image"
+            src={displayImage}
+            alt={title}
+            loading="lazy"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'flex';
+            }}
+          />
         ) : null}
+        <div
+          className="jk-placeholder"
+          style={{ display: displayImage ? 'none' : 'flex' }}
+        />
 
-        {/* Wishlist Heart */}
-        <button className="pc-wishlist-btn" onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}>
-          <i className="far fa-heart" />
-        </button>
+        {discountPercentage && (
+          <span className="jk-badge">-{discountPercentage}%</span>
+        )}
 
-        {/* Out of Stock Overlay */}
-        {(isOutOfStock || isUnavailable) && (
-          <div className="pc-out-of-stock">
+        {isDisabled && (
+          <div className="jk-sold-out">
             <span>{isOutOfStock ? 'Out of Stock' : 'Unavailable'}</span>
           </div>
         )}
       </div>
 
-      {/* Content Section */}
-      <div className="pc-content">
-        <h3 className="pc-title">{title}</h3>
-        
-        {(product.farmer_name || product.county) && (
-          <p className="pc-location">
-            <i className="fas fa-map-marker-alt" />
-            {product.county || 'Nairobi, Kenya'}
-          </p>
-        )}
+      <div className="jk-body">
+        <p className="jk-title">{title}</p>
 
-        {/* Rating row (Visual only) */}
-        <div className="pc-rating">
-          <div className="pc-stars">
-            <i className="fas fa-star" />
-            <i className="fas fa-star" />
-            <i className="fas fa-star" />
-            <i className="fas fa-star" />
-            <i className="fas fa-star-half-alt" />
-          </div>
-          <span className="pc-rating-count">(4.5)</span>
+        <div className="jk-rating">
+          <span className="jk-stars">{renderStars()}</span>
+          <span className="jk-review-num">({reviewCount})</span>
         </div>
 
-        {/* Price Wrap */}
-        <div className="pc-price-wrap">
-          <span className="pc-price">
-            KES {parseFloat(product.price || 0).toLocaleString()}
-          </span>
-          {product.original_price && product.original_price > product.price && (
-            <span className="pc-old-price">
-              KES {parseFloat(product.original_price).toLocaleString()}
-            </span>
+        <div className="jk-price-row">
+          <span className="jk-price">KES {parseFloat(price).toLocaleString()}</span>
+          {discountPercentage && (
+            <span className="jk-old-price">KES {parseFloat(originalPrice).toLocaleString()}</span>
           )}
         </div>
 
-        {/* Low Stock Warning */}
-        {!isOutOfStock && !isUnavailable && product.quantity <= 10 && product.quantity > 0 && (
-          <div className="pc-stock-alert">
-            <i className="fas fa-bolt" />
-            Only {product.quantity} left!
-          </div>
-        )}
+        <p className="jk-location">
+          <i className="fas fa-map-marker-alt" />
+          {product.county || 'Nairobi'}
+        </p>
 
-        {/* Footer with Full-width Add to Cart */}
-        <div className="pc-footer">
-          <button
-            onClick={handleAddToCart}
-            className="pc-add-btn"
-            title={isOutOfStock ? 'Out of stock' : 'Add to Cart'}
-          >
-            ADD TO CART
-          </button>
-        </div>
+        <button
+          className="jk-cart-btn"
+          onClick={handleAddToCart}
+          disabled={isDisabled}
+        >
+          <i className="fas fa-shopping-cart" />
+          Add to Cart
+        </button>
       </div>
     </Link>
   );

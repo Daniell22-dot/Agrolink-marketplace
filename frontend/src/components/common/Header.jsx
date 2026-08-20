@@ -10,7 +10,7 @@ const Header = () => {
   const [searchVal, setSearchVal] = useState('');
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  
+
   const { user } = useSelector((state) => state.auth);
   const { totalItems, items } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -24,8 +24,8 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  const cartCount = totalItems !== undefined 
-    ? totalItems 
+  const cartCount = totalItems !== undefined
+    ? totalItems
     : (items?.reduce((sum, i) => sum + i.quantity, 0) || 0);
 
   const handleSearchSubmit = (e) => {
@@ -37,139 +37,156 @@ const Header = () => {
     }
   };
 
-  // Sync search input value with URL search parameter if present
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setSearchVal(params.get('search') || '');
   }, [location.search]);
 
   const categories = [
-    { id: 'vegetables', label: 'Vegetables', icon: 'fa-carrot' },
-    { id: 'fruits', label: 'Fruits', icon: 'fa-apple-alt' },
-    { id: 'grains', label: 'Grains', icon: 'fa-seedling' },
-    { id: 'livestock', label: 'Livestock', icon: 'fa-cow' },
-    { id: 'dairy', label: 'Dairy', icon: 'fa-cheese' },
-    { id: 'other', label: 'Other Produce', icon: 'fa-box' }
+    { id: 'vegetables', label: 'Vegetables' },
+    { id: 'fruits', label: 'Fruits' },
+    { id: 'grains', label: 'Grains & Cereals' },
+    { id: 'livestock', label: 'Livestock' },
+    { id: 'dairy', label: 'Dairy & Eggs' },
+    { id: 'herbs', label: 'Herbs & Spices' },
+    { id: 'other', label: 'Other Produce' },
+  ];
+
+  const navLinks = [
+    { to: '/products?deal=true', label: 'Flash Deals' },
+    { to: '/products?category=farm-inputs', label: 'Farm Inputs' },
+    { to: '/products?category=seeds', label: 'Seeds' },
+    { to: '/products?category=fertilizers', label: 'Fertilizers' },
+    { to: '/products?category=tools', label: 'Farm Tools' },
+    { to: '/products?category=livestock', label: 'Livestock' },
+    { to: '/products?category=dairy', label: 'Dairy' },
+    { to: '/products?deal=true', label: 'Deals' },
   ];
 
   return (
-    <header className="header-container animate-fade-in">
-      {/* Top Utility Bar */}
+    <header className="header-container">
+      {/* ── Top Utility Bar ── */}
       <div className="top-bar">
         <div className="top-bar-content container">
           <div className="top-bar-left">
-            <span><i className="fas fa-phone-alt"></i> Hotline: +254 112 219 135</span>
-            <span><i className="fas fa-shipping-fast"></i> Countrywide Delivery Available</span>
+            <a href="#" className="top-bar-link"><i className="fas fa-mobile-alt"></i> Download the App</a>
+            <Link to="/orders" className="top-bar-link"><i className="fas fa-truck"></i> Track your order</Link>
+            {user?.role === 'farmer' ? (
+              <Link to="/dashboard" className="top-bar-link top-bar-sell"><i className="fas fa-store"></i> Seller Dashboard</Link>
+            ) : (
+              <Link to="/register?role=farmer" className="top-bar-link top-bar-sell"><i className="fas fa-store"></i> Sell on AgroLink</Link>
+            )}
+            <Link to="/contact" className="top-bar-link"><i className="fas fa-question-circle"></i> Help</Link>
           </div>
           <div className="top-bar-right">
-            <Link to="/how-it-works"><i className="fas fa-question-circle"></i> How it Works</Link>
-            <Link to="/about">About Us</Link>
-            {user?.role === 'farmer' ? (
-              <Link to="/dashboard" className="sell-link"><i className="fas fa-store"></i> Seller Dashboard</Link>
-            ) : (
-              <Link to="/register?role=farmer" className="sell-link"><i className="fas fa-store"></i> Sell on AgroLink</Link>
-            )}
+            <span className="top-bar-lang"><i className="fas fa-globe"></i> EN <i className="fas fa-chevron-down"></i></span>
           </div>
         </div>
       </div>
 
-      {/* Main Header */}
+      {/* ── Main Header ── */}
       <div className="main-header">
         <div className="main-header-content container">
           {/* Logo */}
           <Link to="/" className="logo">
-            <img src={logoIcon} alt="AgroLink Logo" className="logo-icon" />
+            <img src={logoIcon} alt="AgroLink" className="logo-icon" />
             <span className="logo-text">Agro<span className="logo-highlight">Link</span></span>
           </Link>
 
-          {/* Search Form */}
-          <form className="header-search-form" onSubmit={handleSearchSubmit}>
-            <div className="search-input-wrapper">
-              <i className="fas fa-search search-icon-inside"></i>
-              <input
-                type="text"
-                placeholder="Search products, categories, farmers..."
-                value={searchVal}
-                onChange={(e) => setSearchVal(e.target.value)}
-                className="header-search-input"
-              />
-            </div>
-            <button type="submit" className="header-search-btn">Search</button>
+          {/* Search Form — Jumia/Kilimall style */}
+          <form className="search-form" onSubmit={handleSearchSubmit}>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search products, categories, farmers..."
+              value={searchVal}
+              onChange={(e) => setSearchVal(e.target.value)}
+            />
+            <button type="submit" className="search-btn">
+              <i className="fas fa-search"></i>
+            </button>
           </form>
 
-          {/* User Actions */}
+          {/* Right Actions */}
           <div className="header-actions">
-            {/* Account Menu */}
+            {/* Account */}
             {user ? (
-              <div 
-                className="header-action-item user-dropdown-container"
+              <div
+                className="action-item account-wrapper"
                 onMouseEnter={() => setIsAccountOpen(true)}
                 onMouseLeave={() => setIsAccountOpen(false)}
               >
-                <div className="user-trigger">
-                  <div className="user-avatar">
-                    <i className="fas fa-user-circle"></i>
-                  </div>
-                  <div className="user-info-text">
-                    <span className="user-welcome">Hi, {user.fullName?.split(' ')[0] || user.username}</span>
-                    <span className="user-account-label">My Account <i className="fas fa-chevron-down"></i></span>
+                <div className="account-trigger">
+                  <i className="fas fa-user"></i>
+                  <div className="account-text">
+                    <span className="account-greeting">Hello, {user.fullName?.split(' ')[0] || user.username}</span>
+                    <span className="account-label">Account <i className="fas fa-chevron-down"></i></span>
                   </div>
                 </div>
                 {isAccountOpen && (
-                  <div className="dropdown-menu account-dropdown">
-                    <Link to="/dashboard" onClick={() => setIsAccountOpen(false)}><i className="fas fa-tachometer-alt"></i> Dashboard</Link>
-                    <Link to="/profile" onClick={() => setIsAccountOpen(false)}><i className="fas fa-user-cog"></i> Profile</Link>
-                    <Link to="/orders" onClick={() => setIsAccountOpen(false)}><i className="fas fa-box-open"></i> My Orders</Link>
-                    <Link to="/chat" onClick={() => setIsAccountOpen(false)}><i className="fas fa-comments"></i> Messages</Link>
+                  <div className="dropdown-menu">
+                    <Link to="/dashboard" onClick={() => setIsAccountOpen(false)}>Dashboard</Link>
+                    <Link to="/profile" onClick={() => setIsAccountOpen(false)}>My Profile</Link>
+                    <Link to="/orders" onClick={() => setIsAccountOpen(false)}>My Orders</Link>
+                    <Link to="/chat" onClick={() => setIsAccountOpen(false)}>Messages</Link>
                     {user.role === 'farmer' && (
-                      <Link to="/dashboard" onClick={() => setIsAccountOpen(false)}><i className="fas fa-plus-circle"></i> Sell Produce</Link>
+                      <Link to="/dashboard" onClick={() => setIsAccountOpen(false)}>Sell Produce</Link>
                     )}
                     <div className="dropdown-divider"></div>
-                    <button onClick={handleLogout} className="logout-btn"><i className="fas fa-sign-out-alt"></i> Logout</button>
+                    <button onClick={handleLogout} className="logout-btn">Logout</button>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="auth-buttons-wrapper">
-                <Link to="/login" className="header-btn-login">Login</Link>
-                <Link to="/register" className="header-btn-register">Register</Link>
-              </div>
+              <Link to="/login" className="action-item account-trigger no-user">
+                <i className="fas fa-user"></i>
+                <div className="account-text">
+                  <span className="account-greeting">Hello</span>
+                  <span className="account-label">Sign In <i className="fas fa-chevron-down"></i></span>
+                </div>
+              </Link>
             )}
 
-            {/* Cart Link */}
-            <Link to="/cart" className="header-action-item cart-trigger">
-              <div className="cart-icon-wrapper">
-                <i className="fas fa-shopping-cart"></i>
-                {cartCount > 0 && <span className="cart-badge-count">{cartCount}</span>}
-              </div>
-              <span className="cart-label hide-mobile">Cart</span>
+            {/* Wishlist */}
+            <Link to="/wishlist" className="action-item wishlist-trigger">
+              <i className="fas fa-heart"></i>
+              <span className="action-label">Wishlist</span>
             </Link>
 
-            {/* Mobile Hamburger Menu Trigger */}
+            {/* Cart */}
+            <Link to="/cart" className="action-item cart-trigger">
+              <div className="cart-icon-box">
+                <i className="fas fa-shopping-cart"></i>
+                {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+              </div>
+              <span className="action-label">Cart</span>
+            </Link>
+
+            {/* Mobile hamburger */}
             <button className="mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              <i className={isMenuOpen ? "fas fa-times" : "fas fa-bars"}></i>
+              <i className={isMenuOpen ? 'fas fa-times' : 'fas fa-bars'}></i>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Categories & Navigation Bar */}
-      <div className="nav-bar">
-        <div className="nav-bar-content container">
-          <div 
-            className="categories-dropdown-wrapper"
+      {/* ── Category Nav Bar (Green) ── */}
+      <div className="cat-nav">
+        <div className="cat-nav-content container">
+          <div
+            className="cat-dropdown"
             onMouseEnter={() => setIsCategoriesOpen(true)}
             onMouseLeave={() => setIsCategoriesOpen(false)}
           >
-            <button className="categories-btn">
+            <button className="cat-dropdown-btn">
               <i className="fas fa-bars"></i> All Categories <i className="fas fa-chevron-down"></i>
             </button>
             {isCategoriesOpen && (
-              <ul className="categories-list">
+              <ul className="cat-dropdown-list">
                 {categories.map((cat) => (
                   <li key={cat.id}>
                     <Link to={`/products?category=${cat.id}`} onClick={() => setIsCategoriesOpen(false)}>
-                      <i className={`fas ${cat.icon}`}></i> {cat.label}
+                      {cat.label}
                     </Link>
                   </li>
                 ))}
@@ -177,23 +194,23 @@ const Header = () => {
             )}
           </div>
 
-          <nav className="header-navbar">
-            <Link to="/">Home</Link>
-            <Link to="/products">Marketplace</Link>
-            <Link to="/services">Services</Link>
-            <Link to="/pricing">Pricing</Link>
-            <Link to="/contact">Contact</Link>
+          <nav className="cat-nav-links">
+            {navLinks.map((link, idx) => (
+              <Link to={link.to} key={idx} className={link.label === 'Flash Deals' || link.label === 'Deals' ? 'nav-deal-link' : ''}>
+                {link.label}
+              </Link>
+            ))}
           </nav>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* ── Mobile Drawer ── */}
       <div className={`mobile-drawer ${isMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-overlay" onClick={() => setIsMenuOpen(false)}></div>
         <div className="mobile-drawer-content">
           <div className="mobile-drawer-header">
             <Link to="/" className="logo" onClick={() => setIsMenuOpen(false)}>
-              <img src={logoIcon} alt="AgroLink Logo" className="logo-icon" />
+              <img src={logoIcon} alt="AgroLink" className="logo-icon" />
               <span className="logo-text">Agro<span className="logo-highlight">Link</span></span>
             </Link>
             <button className="close-drawer-btn" onClick={() => setIsMenuOpen(false)}>
@@ -201,8 +218,8 @@ const Header = () => {
             </button>
           </div>
 
-          {/* Mobile Search */}
-          <form className="mobile-search-form" onSubmit={(e) => { handleSearchSubmit(e); setIsMenuOpen(false); }}>
+          {/* Mobile search */}
+          <form className="mobile-search" onSubmit={(e) => { handleSearchSubmit(e); setIsMenuOpen(false); }}>
             <input
               type="text"
               placeholder="Search products..."
@@ -213,29 +230,48 @@ const Header = () => {
             <button type="submit" className="mobile-search-btn"><i className="fas fa-search"></i></button>
           </form>
 
-          <ul className="mobile-nav-links">
+          {/* Mobile categories */}
+          <div className="mobile-section-title">Categories</div>
+          <ul className="mobile-cat-list">
+            {categories.map((cat) => (
+              <li key={cat.id}>
+                <Link to={`/products?category=${cat.id}`} onClick={() => setIsMenuOpen(false)}>{cat.label}</Link>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mobile-divider"></div>
+
+          {/* Mobile nav */}
+          <div className="mobile-section-title">Menu</div>
+          <ul className="mobile-nav-list">
             <li><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
-            <li><Link to="/products" onClick={() => setIsMenuOpen(false)}>Marketplace</Link></li>
-            <li><Link to="/services" onClick={() => setIsMenuOpen(false)}>Services</Link></li>
-            <li><Link to="/pricing" onClick={() => setIsMenuOpen(false)}>Pricing</Link></li>
-            <li><Link to="/contact" onClick={() => setIsMenuOpen(false)}>Contact</Link></li>
-            {user ? (
-              <>
-                <li className="mobile-nav-divider"></li>
+            <li><Link to="/products" onClick={() => setIsMenuOpen(false)}>All Products</Link></li>
+            {navLinks.map((link, idx) => (
+              <li key={idx}><Link to={link.to} onClick={() => setIsMenuOpen(false)}>{link.label}</Link></li>
+            ))}
+          </ul>
+
+          <div className="mobile-divider"></div>
+
+          {user ? (
+            <>
+              <div className="mobile-section-title">Account</div>
+              <ul className="mobile-nav-list">
                 <li><Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>Dashboard</Link></li>
-                <li><Link to="/profile" onClick={() => setIsMenuOpen(false)}>Profile</Link></li>
+                <li><Link to="/profile" onClick={() => setIsMenuOpen(false)}>My Profile</Link></li>
                 <li><Link to="/orders" onClick={() => setIsMenuOpen(false)}>My Orders</Link></li>
                 <li><Link to="/chat" onClick={() => setIsMenuOpen(false)}>Messages</Link></li>
+                <li><Link to="/cart" onClick={() => setIsMenuOpen(false)}>Cart</Link></li>
                 <li><button onClick={handleLogout} className="mobile-logout-btn">Logout</button></li>
-              </>
-            ) : (
-              <>
-                <li className="mobile-nav-divider"></li>
-                <li><Link to="/login" onClick={() => setIsMenuOpen(false)}>Login</Link></li>
-                <li><Link to="/register" onClick={() => setIsMenuOpen(false)}>Sign Up</Link></li>
-              </>
-            )}
-          </ul>
+              </ul>
+            </>
+          ) : (
+            <div className="mobile-auth">
+              <Link to="/login" className="mobile-login-btn" onClick={() => setIsMenuOpen(false)}>Login</Link>
+              <Link to="/register" className="mobile-register-btn" onClick={() => setIsMenuOpen(false)}>Sign Up</Link>
+            </div>
+          )}
         </div>
       </div>
     </header>
