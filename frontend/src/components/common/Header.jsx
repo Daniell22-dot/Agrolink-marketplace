@@ -69,7 +69,7 @@ const Header = () => {
       <div className="top-bar">
         <div className="top-bar-content container">
           <div className="top-bar-left">
-            <a href="#" className="top-bar-link"><i className="fas fa-mobile-alt"></i> Download the App</a>
+            <span className="top-bar-link"><i className="fas fa-mobile-alt"></i> Download the App</span>
             <Link to="/orders" className="top-bar-link"><i className="fas fa-truck"></i> Track your order</Link>
             {user?.role === 'farmer' ? (
               <Link to="/dashboard" className="top-bar-link top-bar-sell"><i className="fas fa-store"></i> Seller Dashboard</Link>
