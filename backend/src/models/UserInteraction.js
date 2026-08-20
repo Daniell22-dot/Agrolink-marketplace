@@ -31,10 +31,10 @@ const UserInteraction = sequelize.define('UserInteraction', {
     timestamps: true,
     updatedAt: false,
     indexes: [
-        { fields: ['userId', 'interactionType'] },
-        { fields: ['productId', 'interactionType'] },
-        { fields: ['createdAt'] },
-        { fields: ['userId', 'productId'] }
+        { fields: ['user_id', 'interaction_type'] },
+        { fields: ['product_id', 'interaction_type'] },
+        { fields: ['created_at'] },
+        { fields: ['user_id', 'product_id'] }
     ]
 });
 

@@ -136,7 +136,6 @@ const PRODUCT_IMAGES = [
       "cranberry beans"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop",
       "https://images.pexels.com/photos/13620780/pexels-photo-13620780.jpeg?auto=compress&cs=tinysrgb&w=500"
     ]
   },
@@ -166,7 +165,7 @@ const PRODUCT_IMAGES = [
       "maharage ya soya"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop"
+      "https://images.pexels.com/photos/12338945/pexels-photo-12338945.jpeg?auto=compress&cs=tinysrgb&w=500"
     ]
   },
   {
@@ -324,7 +323,7 @@ const PRODUCT_IMAGES = [
       "cane"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=500&auto=format&fit=crop"
+      "https://images.pexels.com/photos/2254097/pexels-photo-2254097.jpeg?auto=compress&cs=tinysrgb&w=500"
     ]
   },
   {
@@ -884,7 +883,7 @@ const PRODUCT_IMAGES = [
       "lamb stock"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1484557052118-f32bd25b45b5?w=500&auto=format&fit=crop"
+      "https://images.pexels.com/photos/25851592/pexels-photo-25851592.jpeg?auto=compress&cs=tinysrgb&w=500"
     ]
   },
   {

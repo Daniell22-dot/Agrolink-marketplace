@@ -96,7 +96,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Migori',
         rating: 4.6,
         reviewsCount: 23,
-        images: ['https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/2254097/pexels-photo-2254097.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Sunkuli Cane Farms', isVerified: true }
     },
     {
@@ -161,7 +161,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Bungoma',
         rating: 4.7,
         reviewsCount: 39,
-        images: ['https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/12338945/pexels-photo-12338945.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Bungoma Soya Co-op', isVerified: true }
     },
     {
@@ -187,7 +187,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kitui',
         rating: 4.8,
         reviewsCount: 61,
-        images: ['https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/13620780/pexels-photo-13620780.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Kitui Farmers Hub', isVerified: true }
     },
     {
@@ -343,7 +343,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Laikipia',
         rating: 4.9,
         reviewsCount: 36,
-        images: ['https://images.unsplash.com/photo-1484557052118-f32bd25b45b5?w=500&auto=format&fit=crop'],
+        images: ['https://images.pexels.com/photos/25851592/pexels-photo-25851592.jpeg?auto=compress&cs=tinysrgb&w=500'],
         farmer: { fullName: 'Laikipia Livestock Ranch', isVerified: true }
     },
     {

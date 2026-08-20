@@ -30,9 +30,9 @@ const PRODUCT_IMAGES = [
     { id: 'wheat-flour', label: 'Wheat Flour (All-Purpose)', category: 'grains', keywords: ['wheat flour', 'all purpose flour', 'white flour', 'baking flour', 'chapati flour', 'unga wa ngano'], images: [U('photo-1509440159596-0249088772ff')] },
     { id: 'rice', label: 'Rice', category: 'grains', keywords: ['rice', 'pishori', 'basmati', 'mchele', 'mpunga', 'brown rice'], images: [U('photo-1586201375761-83865001e31c')] },
     { id: 'rosecoco-beans', label: 'Rosecoco Beans', category: 'grains', keywords: ['rosecoco', 'red beans', 'kidney beans', 'maharage'], images: [P(13620780), U('photo-1551462147-37885acc36f1')] },
-    { id: 'nyayo-beans', label: 'Nyayo / Wairimu Beans', category: 'grains', keywords: ['nyayo', 'wairimu', 'yellow beans', 'cranberry beans'], images: [U('photo-1551462147-37885acc36f1'), P(13620780)] },
+    { id: 'nyayo-beans', label: 'Nyayo / Wairimu Beans', category: 'grains', keywords: ['nyayo', 'wairimu', 'yellow beans', 'cranberry beans'], images: [P(13620780)] },
     { id: 'black-beans', label: 'Black Beans', category: 'grains', keywords: ['black beans', 'black eyed beans', 'mbegu nyeusi'], images: [U('photo-1551462147-37885acc36f1')] },
-    { id: 'soya-beans', label: 'Soya Beans (Soybeans)', category: 'grains', keywords: ['soya', 'soy', 'soybean', 'soybean seed', 'soya bean', 'maharage ya soya'], images: [U('photo-1551462147-37885acc36f1')] },
+    { id: 'soya-beans', label: 'Soya Beans (Soybeans)', category: 'grains', keywords: ['soya', 'soy', 'soybean', 'soybean seed', 'soya bean', 'maharage ya soya'], images: [P(12338945)] },
     { id: 'green-grams', label: 'Green Grams (Mung Beans)', category: 'grains', keywords: ['green gram', 'green grams', 'ndengu', 'mung bean', 'mung beans'], images: [U('photo-1551462147-37885acc36f1')] },
     { id: 'pigeon-peas', label: 'Pigeon Peas', category: 'grains', keywords: ['pigeon pea', 'pigeon peas', 'mbaazi'], images: [U('photo-1551462147-37885acc36f1'), P(13620780)] },
     { id: 'cowpeas', label: 'Cowpeas (Kunde)', category: 'grains', keywords: ['cowpea', 'cowpeas', 'kunde'], images: [U('photo-1551462147-37885acc36f1')] },
@@ -43,7 +43,7 @@ const PRODUCT_IMAGES = [
     { id: 'coffee', label: 'Coffee (Green Beans)', category: 'grains', keywords: ['coffee', 'kahawa', 'coffee bean', 'arabica'], images: [U('photo-1559056199-641a0ac8b55e')] },
     { id: 'tea', label: 'Tea Leaves', category: 'grains', keywords: ['tea', 'chai', 'tea leaf', 'tea leaves', 'black tea'], images: [U('photo-1576092768241-dec231879fc3')] },
     { id: 'sugar', label: 'Sugar', category: 'grains', keywords: ['sugar', 'sukari', 'granulated sugar', 'cane sugar'], images: [U('photo-1581441363689-1f3c3c414635')] },
-    { id: 'sugarcane', label: 'Sugarcane', category: 'grains', keywords: ['sugarcane', 'sugar cane', 'muwa', 'cane'], images: [U('photo-1589984662646-e7b2e4962f18')] },
+    { id: 'sugarcane', label: 'Sugarcane', category: 'grains', keywords: ['sugarcane', 'sugar cane', 'muwa', 'cane'], images: [P(2254097)] },
 
     // ----------------------------- VEGETABLES -----------------------------
     { id: 'tomatoes', label: 'Tomatoes', category: 'vegetables', keywords: ['tomato', 'tomatoes', 'nyanya'], images: [U('photo-1592924357228-91a4daadcfea')] },
@@ -90,7 +90,7 @@ const PRODUCT_IMAGES = [
     // ------------------------------ MEAT & FISH ------------------------------
     { id: 'dairy-cow', label: 'Dairy Cow / Cattle', category: 'livestock', keywords: ['cow', 'cattle', 'friesian', 'holstein', 'dairy cow', 'heifer', 'ngombe', 'bull'], images: [P(422202), P(248337)] },
     { id: 'goat', label: 'Goat (Live)', category: 'livestock', keywords: ['goat', 'live goat', 'galla', 'mbuzi'], images: [U('photo-1524024973431-2ad916746881')] },
-    { id: 'sheep', label: 'Sheep / Ram', category: 'livestock', keywords: ['sheep', 'ram', 'dorper', 'ewe', 'kondoo', 'lamb stock'], images: [U('photo-1484557052118-f32bd25b45b5')] },
+    { id: 'sheep', label: 'Sheep / Ram', category: 'livestock', keywords: ['sheep', 'ram', 'dorper', 'ewe', 'kondoo', 'lamb stock'], images: [P(25851592)] },
     { id: 'chicks', label: 'Chicks / Kienyeji', category: 'livestock', keywords: ['chick', 'chicks', 'kienyeji', 'rooster', 'cock', 'day old', 'day-old', 'hatchery', 'kuku'], images: [U('photo-1548550023-2bdb3c5beed7')] },
     { id: 'beef', label: 'Beef', category: 'meat', keywords: ['beef', 'steak', 'ngombe nyama', 'nyama ngombe', 'beef meat', 'red meat'], images: [U('photo-1544025162-d76694265947'), U('photo-1603048588665-791ca8aea617'), P(20187068)] },
     { id: 'goat-meat', label: 'Goat Meat', category: 'meat', keywords: ['goat', 'goat meat', 'mbuzi', 'nyama mbuzi'], images: [U('photo-1603048588665-791ca8aea617'), P(20187068)] },
