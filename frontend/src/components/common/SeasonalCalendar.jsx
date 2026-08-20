@@ -7,7 +7,7 @@ const seasons = [
     name: 'Long Rains',
     months: 'March - May',
     crops: 'Maize, Beans, Sorghum, Millet',
-    icon: 'fas fa-cloud-rain',
+    image: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&auto=format&fit=crop',
     theme: 'long-rains',
     status: 'upcoming',
   },
@@ -16,7 +16,7 @@ const seasons = [
     name: 'Short Rains',
     months: 'October - December',
     crops: 'Maize, Beans, Sweet Potato',
-    icon: 'fas fa-cloud-showers-heavy',
+    image: 'https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=400&auto=format&fit=crop',
     theme: 'short-rains',
     status: 'upcoming',
   },
@@ -25,7 +25,7 @@ const seasons = [
     name: 'Dry Season',
     months: 'January - February',
     crops: 'Land Preparation, Irrigation Crops',
-    icon: 'fas fa-sun',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop',
     theme: 'dry-season',
     status: 'current',
   },
@@ -34,7 +34,7 @@ const seasons = [
     name: 'Harvest Season',
     months: 'June - September',
     crops: 'Marketing, Storage, Processing',
-    icon: 'fas fa-tractor',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&auto=format&fit=crop',
     theme: 'harvest',
     status: 'past',
   },
@@ -44,11 +44,6 @@ const SeasonalCalendar = () => {
   return (
     <section className="seasonal-calendar-section">
       <div className="container">
-        <div className="seasonal-calendar-header">
-          <h2>Kenya Agricultural Seasons</h2>
-          <p>Plan your farming activities around Kenya's four main agricultural seasons</p>
-        </div>
-
         <div className="seasonal-calendar-grid">
           {seasons.map((season) => (
             <div className={`season-card ${season.theme} ${season.status === 'current' ? 'current' : ''}`} key={season.id}>
@@ -56,8 +51,8 @@ const SeasonalCalendar = () => {
                 <span className="status-dot"></span>
                 {season.status === 'current' ? 'Current' : season.status === 'upcoming' ? 'Upcoming' : 'Past'}
               </div>
-              <div className="season-card-icon">
-                <i className={season.icon}></i>
+              <div className="season-card-image">
+                <img src={season.image} alt={season.name} />
               </div>
               <div className="season-card-name">{season.name}</div>
               <div className="season-card-months">{season.months}</div>

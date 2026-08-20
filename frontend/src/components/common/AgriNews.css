@@ -21,22 +21,6 @@
   color: var(--black);
 }
 
-.agri-news-view-all {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--primary-green);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: gap 0.2s ease;
-}
-
-.agri-news-view-all:hover {
-  gap: 10px;
-  color: var(--dark-green);
-}
-
 .agri-news-scroll {
   display: flex;
   gap: var(--spacing-lg);
@@ -59,6 +43,9 @@
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .agri-news-card:hover {
@@ -69,36 +56,14 @@
 .agri-news-image {
   width: 100%;
   height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  color: var(--white);
   position: relative;
+  overflow: hidden;
 }
 
-.agri-news-image.policy {
-  background: linear-gradient(135deg, #1E40AF, #3B82F6);
-}
-
-.agri-news-image.market {
-  background: linear-gradient(135deg, var(--dark-green), var(--primary-green));
-}
-
-.agri-news-image.weather {
-  background: linear-gradient(135deg, #0E7490, #22D3EE);
-}
-
-.agri-news-image.technology {
-  background: linear-gradient(135deg, #7C3AED, #A78BFA);
-}
-
-.agri-news-image.climate {
-  background: linear-gradient(135deg, #B45309, var(--primary-orange));
-}
-
-.agri-news-image.seed {
-  background: linear-gradient(135deg, #059669, #34D399);
+.agri-news-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .agri-news-category {
@@ -157,20 +122,12 @@
   color: var(--gray-600);
 }
 
-.agri-news-read-more {
-  font-size: 13px;
+.agri-news-source {
+  font-size: 12px;
   font-weight: 600;
   color: var(--primary-green);
-  text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  transition: gap 0.2s ease;
-}
-
-.agri-news-read-more:hover {
-  gap: 8px;
-  color: var(--dark-green);
 }
 
 @media (max-width: 768px) {

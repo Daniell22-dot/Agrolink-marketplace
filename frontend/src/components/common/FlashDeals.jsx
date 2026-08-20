@@ -5,7 +5,7 @@ const flashDealsData = [
   {
     id: 1,
     name: 'H614 Hybrid Maize Seeds - 2kg',
-    icon: 'fas fa-seedling',
+    image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=400&auto=format&fit=crop',
     oldPrice: 1200,
     newPrice: 799,
     discount: 33,
@@ -14,7 +14,7 @@ const flashDealsData = [
   {
     id: 2,
     name: 'NPK 50kg Fertilizer Bag',
-    icon: 'fas fa-box',
+    image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=400&auto=format&fit=crop',
     oldPrice: 3500,
     newPrice: 2499,
     discount: 29,
@@ -23,7 +23,7 @@ const flashDealsData = [
   {
     id: 3,
     name: 'Garden Hoe - Heavy Duty',
-    icon: 'fas fa-hammer',
+    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&auto=format&fit=crop',
     oldPrice: 850,
     newPrice: 549,
     discount: 35,
@@ -32,7 +32,7 @@ const flashDealsData = [
   {
     id: 4,
     name: 'Tomato Seeds - KDH1 (50g)',
-    icon: 'fas fa-apple-alt',
+    image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400&auto=format&fit=crop',
     oldPrice: 600,
     newPrice: 399,
     discount: 33,
@@ -41,7 +41,7 @@ const flashDealsData = [
   {
     id: 5,
     name: 'Drip Irrigation Starter Kit',
-    icon: 'fas fa-tint',
+    image: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=400&auto=format&fit=crop',
     oldPrice: 4500,
     newPrice: 2999,
     discount: 33,
@@ -50,7 +50,7 @@ const flashDealsData = [
   {
     id: 6,
     name: 'CAN Fertilizer - 50kg',
-    icon: 'fas fa-flask',
+    image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&auto=format&fit=crop',
     oldPrice: 3200,
     newPrice: 2299,
     discount: 28,
@@ -59,7 +59,7 @@ const flashDealsData = [
   {
     id: 7,
     name: 'Pesticide Sprayer - 16L',
-    icon: 'fas fa-spray-can',
+    image: 'https://images.unsplash.com/photo-1471193945509-9ad0617afabf?w=400&auto=format&fit=crop',
     oldPrice: 2800,
     newPrice: 1899,
     discount: 32,
@@ -68,7 +68,7 @@ const flashDealsData = [
   {
     id: 8,
     name: 'Bean Seeds - Rose Coco (2kg)',
-    icon: 'fas fa-seedling',
+    image: 'https://images.unsplash.com/photo-1509622905150-fa66d3906e09?w=400&auto=format&fit=crop',
     oldPrice: 800,
     newPrice: 499,
     discount: 38,
@@ -119,7 +119,7 @@ const FlashDeals = () => {
               <div className="flash-deal-card" key={deal.id}>
                 <div className="flash-deal-image">
                   <div className="flash-deal-discount">-{deal.discount}%</div>
-                  <i className={deal.icon}></i>
+                  <img src={deal.image} alt={deal.name} className="flash-deal-img" />
                 </div>
                 <div className="flash-deal-info">
                   <div className="flash-deal-name">{deal.name}</div>

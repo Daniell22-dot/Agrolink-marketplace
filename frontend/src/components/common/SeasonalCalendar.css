@@ -81,6 +81,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  z-index: 1;
 }
 
 .season-status.current .status-dot {
@@ -108,19 +109,18 @@
   background: rgba(255, 255, 255, 0.6);
 }
 
-.season-card-icon {
-  font-size: 28px;
+.season-card-image {
+  width: 100%;
+  height: 100px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
   margin-bottom: var(--spacing-sm);
 }
 
-.season-card.long-rains .season-card-icon,
-.season-card.short-rains .season-card-icon,
-.season-card.dry-season .season-card-icon {
-  color: var(--primary-green);
-}
-
-.season-card.harvest .season-card-icon {
-  color: var(--white);
+.season-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .season-card-name {
