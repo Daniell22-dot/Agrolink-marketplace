@@ -223,7 +223,7 @@ const HomePage = () => {
               </div>
             </Link>
             <Link to="/category/tools" className="j-foryou-banner j-foryou-banner-orange">
-              <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&auto=format&fit=crop" alt="Farm Tools" className="j-foryou-banner-bg" />
+              <img src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=400&auto=format&fit=crop" alt="Farm Tools" className="j-foryou-banner-bg" />
               <div className="j-foryou-banner-content">
                 <span className="j-foryou-banner-tag">BULK</span>
                 <h3>Farm Tools</h3>

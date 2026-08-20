@@ -597,10 +597,10 @@ const ProductsPage = () => {
 
                     <div className="sidebar-section promo-banner-box">
                         <div className="promo-inner">
-                            <i className="fas fa-truck-loading promo-icon"></i>
-                            <h4>Bulk Freight Rates</h4>
-                            <p>Get discounted logistics for orders over 500kg</p>
-                            <Link to="/services" className="promo-btn">Explore Freight</Link>
+                            <i className="fas fa-tractor promo-icon"></i>
+                            <h4>Farm Inputs & Tools</h4>
+                            <p>Browse quality equipment for every farming task</p>
+                            <Link to="/category/farm-inputs" className="promo-btn">Explore Inputs</Link>
                         </div>
                     </div>
                 </aside>
