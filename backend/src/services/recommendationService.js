@@ -11,6 +11,7 @@
 
 const { Op, Sequelize } = require('sequelize');
 const sequelize = require('../config/database');
+const ilikeOp = sequelize.dialect.name === 'postgres' ? Op.iLike : Op.like;
 const Product = require('../models/Product');
 const UserInteraction = require('../models/UserInteraction');
 const pythonApiClient = require('./pythonApiClient');
@@ -135,7 +136,7 @@ class RecommendationService {
             // Location match
             if (product.location) {
                 whereClause[Op.or].push({
-                    location: { [Op.like]: `%${product.location.split(',')[0]}%` }
+                    location: { [ilikeOp]: `%${product.location.split(',')[0]}%` }
                 });
             }
 
@@ -212,11 +213,11 @@ class RecommendationService {
                     'productId',
                     [Sequelize.literal(
                         `SUM(CASE 
-                            WHEN interactionType = 'view' THEN ${WEIGHTS.view}
-                            WHEN interactionType = 'cart_add' THEN ${WEIGHTS.cart_add}
-                            WHEN interactionType = 'purchase' THEN ${WEIGHTS.purchase}
-                            WHEN interactionType = 'wishlist' THEN ${WEIGHTS.wishlist}
-                            WHEN interactionType = 'search' THEN ${WEIGHTS.search}
+                            WHEN interaction_type = 'view' THEN ${WEIGHTS.view}
+                            WHEN interaction_type = 'cart_add' THEN ${WEIGHTS.cart_add}
+                            WHEN interaction_type = 'purchase' THEN ${WEIGHTS.purchase}
+                            WHEN interaction_type = 'wishlist' THEN ${WEIGHTS.wishlist}
+                            WHEN interaction_type = 'search' THEN ${WEIGHTS.search}
                             ELSE 0 END)`
                     ), 'trend_score']
                 ],
@@ -375,7 +376,7 @@ class RecommendationService {
             // Boost local products if user county is known
             if (userCounty) {
                 whereClause[Op.or].push({
-                    location: { [Op.like]: `%${userCounty}%` }
+                    location: { [ilikeOp]: `%${userCounty}%` }
                 });
             }
 

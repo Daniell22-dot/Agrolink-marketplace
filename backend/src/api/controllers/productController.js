@@ -2,6 +2,8 @@ const Product = require('../../models/Product');
 const cloudinary = require('../../config/cloudinary');
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize');
+const sequelize = require('../../config/database');
+const ilikeOp = sequelize.dialect.name === 'postgres' ? Op.iLike : Op.like;
 const searchService = require('../../services/searchService');
 const recommendationService = require('../../services/recommendationService');
 const { resolveImages, getCatalog } = require('../../services/productImageService');
@@ -45,8 +47,8 @@ exports.getProducts = async (req, res, next) => {
 
         if (search) {
             whereClause[Op.or] = [
-                { name: { [Op.like]: `%${search}%` } },
-                { description: { [Op.like]: `%${search}%` } }
+                { name: { [ilikeOp]: `%${search}%` } },
+                { description: { [ilikeOp]: `%${search}%` } }
             ];
         }
 
