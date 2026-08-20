@@ -1,6 +1,7 @@
 const User = require('../../models/User');
 const Product = require('../../models/Product');
 const Order = require('../../models/Order');
+const Payment = require('../../models/Payment');
 
 // @desc    Verify Admin Token & return user profile
 // @route   GET /api/admin/verify
@@ -293,4 +294,77 @@ exports.getChartData = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+// @desc    Update order status (Admin)
+// @route   PUT /api/admin/orders/:id/status
+// @access  Private/Admin
+exports.updateOrderStatus = async (req, res, next) => {
+    try {
+        const { status } = req.body;
+        const order = await Order.findByPk(req.params.id);
+
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+
+        order.status = status;
+        await order.save();
+
+        res.json({ success: true, data: order });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Cancel order (Admin)
+// @route   PUT /api/admin/orders/:id/cancel
+// @access  Private/Admin
+exports.cancelOrder = async (req, res, next) => {
+    try {
+        const { reason } = req.body;
+        const order = await Order.findByPk(req.params.id);
+
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+
+        order.status = 'cancelled';
+        await order.save();
+
+        res.json({ success: true, data: order });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Refund order (Admin)
+// @route   POST /api/admin/orders/:id/refund
+// @access  Private/Admin
+exports.refundOrder = async (req, res, next) => {
+    try {
+        const { amount, reason } = req.body;
+        const order = await Order.findByPk(req.params.id);
+
+        if (!order) {
+            return res.status(404).json({ success: false, message: 'Order not found' });
+        }
+
+        // Update payment status
+        await Payment.update(
+            { status: 'refunded' },
+            { where: { orderId: order.id, status: 'completed' } }
+        );
+
+        order.paymentStatus = 'failed';
+        await order.save();
+
+        res.json({
+            success: true,
+            message: `Refund of Ksh ${amount} processed. Reason: ${reason}`,
+            data: order
+        });
+    } catch (error) {
+        next(error);
+    }
 };

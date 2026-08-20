@@ -51,6 +51,15 @@ const ManageProducts = () => {
     }
   };
 
+  const handleView = (product) => {
+    alert(
+      `Product: ${product.name}\n` +
+      `Price: $${product.price}\n` +
+      `Status: ${product.status?.charAt(0).toUpperCase() + product.status?.slice(1)}\n` +
+      `Seller: ${product.seller?.name || 'N/A'}`
+    );
+  };
+
 
 
   return (
@@ -160,7 +169,10 @@ const ManageProducts = () => {
                           Suspend
                         </button>
                       )}
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                      <button
+                        onClick={() => handleView(product)}
+                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                      >
                         View
                       </button>
                     </td>

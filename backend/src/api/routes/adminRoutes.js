@@ -12,7 +12,10 @@ const {
     updateProductStatus,
     getAllOrders,
     getOrderDetail,
-    getChartData
+    getChartData,
+    updateOrderStatus,
+    cancelOrder,
+    refundOrder
 } = require('../controllers/adminController');
 const { protect } = require('../middleware/authMiddleware');
 const { checkRole } = require('../middleware/rbacMiddleware');
@@ -32,5 +35,8 @@ router.get('/products', getAllProducts);
 router.put('/products/:id/:action', updateProductStatus);
 router.get('/orders', getAllOrders);
 router.get('/orders/:id', getOrderDetail);
+router.put('/orders/:id/status', updateOrderStatus);
+router.put('/orders/:id/cancel', cancelOrder);
+router.post('/orders/:id/refund', refundOrder);
 
 module.exports = router;

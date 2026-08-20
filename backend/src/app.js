@@ -60,6 +60,7 @@ app.use('/api/users', require('./api/routes/userRoutes'));
 app.use('/api/products', require('./api/routes/productRoutes'));
 app.use('/api/categories', require('./api/routes/categoryRoutes'));
 app.use('/api/orders', require('./api/routes/orderRoutes'));
+app.use('/api/admin/reports', require('./api/routes/adminReportRoutes'));
 app.use('/api/admin', require('./api/routes/adminRoutes'));
 app.use('/api/cart', require('./api/routes/cartRoutes'));
 app.use('/api/chat', require('./api/routes/chatRoutes'));

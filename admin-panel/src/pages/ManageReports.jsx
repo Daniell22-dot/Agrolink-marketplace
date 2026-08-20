@@ -50,6 +50,17 @@ const ManageReports = () => {
     }
   };
 
+  const handleViewReport = (report) => {
+    alert(
+      `Report ID: #${report.id?.slice(0, 8)}\n` +
+      `Type: ${report.type?.charAt(0).toUpperCase() + report.type?.slice(1)}\n` +
+      `Reason: ${report.reason}\n` +
+      `Reporter: ${report.reporter?.name || 'N/A'}\n` +
+      `Status: ${report.status?.charAt(0).toUpperCase() + report.status?.slice(1)}\n` +
+      `Date: ${new Date(report.createdAt).toLocaleDateString()}`
+    );
+  };
+
   const getReportTypeColor = (type) => {
     switch (type) {
       case 'product': return 'bg-orange-100 text-orange-700';
@@ -170,7 +181,10 @@ const ManageReports = () => {
                           </button>
                         </>
                       )}
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
+                      <button
+                        onClick={() => handleViewReport(report)}
+                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+                      >
                         View
                       </button>
                     </td>

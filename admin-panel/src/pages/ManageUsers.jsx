@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers, updateUser, deleteUser } from '../redux/slices/usersSlice';
+import { fetchUsers, updateUser, deleteUser, setUserPage, sendNotificationToUser } from '../redux/slices/usersSlice';
 
 const ManageUsers = () => {
   const dispatch = useDispatch();
   const { users, pagination, isLoading } = useSelector(state => state.adminUsers);
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
+  const [showNotifyModal, setShowNotifyModal] = useState(false);
+  const [notifyUser, setNotifyUser] = useState(null);
+  const [notifyTitle, setNotifyTitle] = useState('');
+  const [notifyMessage, setNotifyMessage] = useState('');
 
   useEffect(() => {
     dispatch(fetchUsers({
@@ -29,6 +33,35 @@ const ManageUsers = () => {
     if (window.confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
       dispatch(deleteUser(userId));
     }
+  };
+
+  const handlePageChange = (newPage) => {
+    const totalPages = Math.ceil(pagination.total / pagination.limit);
+    if (newPage < 1 || newPage > totalPages) return;
+    dispatch(setUserPage(newPage));
+    dispatch(fetchUsers({
+      page: newPage,
+      limit: pagination.limit,
+      role: roleFilter,
+      search: searchTerm
+    }));
+  };
+
+  const handleOpenNotify = (user) => {
+    setNotifyUser(user);
+    setNotifyTitle('');
+    setNotifyMessage('');
+    setShowNotifyModal(true);
+  };
+
+  const handleSendNotification = () => {
+    if (!notifyTitle.trim() || !notifyMessage.trim()) return;
+    dispatch(sendNotificationToUser({
+      userId: notifyUser.id,
+      title: notifyTitle,
+      message: notifyMessage
+    }));
+    setShowNotifyModal(false);
   };
 
   return (
@@ -137,6 +170,12 @@ const ManageUsers = () => {
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4 text-sm space-x-2">
+                      <button
+                        onClick={() => handleOpenNotify(user)}
+                        className="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+                      >
+                        Notify
+                      </button>
                       <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
                         View
                       </button>
@@ -160,15 +199,67 @@ const ManageUsers = () => {
             Page {pagination.page} of {Math.ceil(pagination.total / pagination.limit)} ({pagination.total} total)
           </span>
           <div className="space-x-2">
-            <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors">
+            <button
+              onClick={() => handlePageChange(pagination.page - 1)}
+              disabled={pagination.page <= 1}
+              className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               Previous
             </button>
-            <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors">
+            <button
+              onClick={() => handlePageChange(pagination.page + 1)}
+              disabled={pagination.page >= Math.ceil(pagination.total / pagination.limit)}
+              className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               Next
             </button>
           </div>
         </div>
       </div>
+
+      {/* Notification Modal */}
+      {showNotifyModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Send Notification</h2>
+            <p className="text-gray-600 mb-4">To: {notifyUser?.fullName}</p>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+              <input
+                type="text"
+                value={notifyTitle}
+                onChange={(e) => setNotifyTitle(e.target.value)}
+                placeholder="Notification title..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
+              <textarea
+                value={notifyMessage}
+                onChange={(e) => setNotifyMessage(e.target.value)}
+                placeholder="Enter message..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                rows="3"
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={() => setShowNotifyModal(false)}
+                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSendNotification}
+                className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

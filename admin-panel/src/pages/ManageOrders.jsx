@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAdminOrders, updateOrderStatus, refundOrder } from '../redux/slices/ordersSlice';
+import { fetchAdminOrders, updateOrderStatus, refundOrder, cancelOrder, setOrderPage } from '../redux/slices/ordersSlice';
 import toast from 'react-hot-toast';
 
 const ManageOrders = () => {
@@ -47,6 +47,25 @@ const ManageOrders = () => {
     setShowRefundModal(false);
     setRefundAmount('');
     setRefundReason('');
+  };
+
+  const handlePageChange = (newPage) => {
+    const totalPages = Math.ceil(pagination.total / pagination.limit);
+    if (newPage < 1 || newPage > totalPages) return;
+    dispatch(setOrderPage(newPage));
+    dispatch(fetchAdminOrders({
+      page: newPage,
+      limit: pagination.limit,
+      status: statusFilter,
+      search: searchTerm
+    }));
+  };
+
+  const handleCancelOrder = (orderId) => {
+    const reason = window.prompt('Enter cancellation reason:');
+    if (reason !== null && reason.trim()) {
+      dispatch(cancelOrder({ orderId, reason }));
+    }
   };
 
   const getStatusColor = (status) => {
@@ -160,6 +179,14 @@ const ManageOrders = () => {
                       <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
                         View
                       </button>
+                      {order.status === 'pending' && (
+                        <button
+                          onClick={() => handleCancelOrder(order.id)}
+                          className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                        >
+                          Cancel
+                        </button>
+                      )}
                       {order.status === 'completed' && (
                         <button
                           onClick={() => handleRefund(order)}
@@ -182,10 +209,18 @@ const ManageOrders = () => {
             Page {pagination.page} of {Math.ceil(pagination.total / pagination.limit)} ({pagination.total} total)
           </span>
           <div className="space-x-2">
-            <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors">
+            <button
+              onClick={() => handlePageChange(pagination.page - 1)}
+              disabled={pagination.page <= 1}
+              className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               Previous
             </button>
-            <button className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors">
+            <button
+              onClick={() => handlePageChange(pagination.page + 1)}
+              disabled={pagination.page >= Math.ceil(pagination.total / pagination.limit)}
+              className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               Next
             </button>
           </div>
