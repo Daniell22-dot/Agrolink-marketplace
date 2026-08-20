@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './GovServices.css';
 
 const services = [
@@ -57,9 +58,9 @@ const GovServices = () => {
               </div>
               <div className="gov-service-title">{service.title}</div>
               <div className="gov-service-desc">{service.description}</div>
-              <a href="#" className="gov-service-link">
+              <Link to="/about" className="gov-service-link">
                 Learn More <i className="fas fa-arrow-right"></i>
-              </a>
+              </Link>
             </div>
           ))}
         </div>

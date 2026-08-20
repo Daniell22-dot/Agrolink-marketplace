@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './AgriNews.css';
 
 const newsData = [
@@ -70,9 +71,9 @@ const AgriNews = () => {
       <div className="container">
         <div className="agri-news-header">
           <h2>Agriculture News & Insights</h2>
-          <a href="#" className="agri-news-view-all">
+          <Link to="/about" className="agri-news-view-all">
             View All <i className="fas fa-arrow-right"></i>
-          </a>
+          </Link>
         </div>
 
         <div className="agri-news-scroll">
@@ -95,9 +96,9 @@ const AgriNews = () => {
                     {news.readTime}
                   </span>
                 </div>
-                <a href="#" className="agri-news-read-more">
+                <Link to="/about" className="agri-news-read-more">
                   Read More <i className="fas fa-arrow-right"></i>
-                </a>
+                </Link>
               </div>
             </div>
           ))}
