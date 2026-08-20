@@ -92,7 +92,6 @@
     // Check periodically
     setInterval(checkDevTools, 1000);
 
-    // Debugger detection
     // Run debugger detection periodically (disabled by default as it's aggressive)
     // setInterval(() => {
     //     const start = new Date();
