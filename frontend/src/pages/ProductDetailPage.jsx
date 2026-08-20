@@ -21,6 +21,15 @@ const ProductDetailPage = () => {
     const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
     const [submittingReview, setSubmittingReview] = useState(false);
 
+    const fetchReviews = React.useCallback(async () => {
+        try {
+            const response = await api.get(`/reviews/product/${id}`);
+            setReviews(response.data.data || []);
+        } catch (error) {
+            // Reviews may not exist yet
+        }
+    }, [id]);
+
     const fetchSimilar = React.useCallback(() => recommendationService.getSimilar(id, 8), [id]);
 
     useEffect(() => {
@@ -33,16 +42,7 @@ const ProductDetailPage = () => {
                 interactionType: 'view'
             }).catch(() => { });
         }
-    }, [dispatch, id, user]);
-
-    const fetchReviews = async () => {
-        try {
-            const response = await api.get(`/reviews/product/${id}`);
-            setReviews(response.data.data || []);
-        } catch (error) {
-            // Reviews may not exist yet
-        }
-    };
+    }, [dispatch, id, user, fetchReviews]);
 
     const handleAddToCart = () => {
         if (!user) {

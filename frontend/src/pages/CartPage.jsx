@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../hooks/useCart';
 import CartItem from '../components/cart/CartItem';
 import './CartPage.css';
 

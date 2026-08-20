@@ -159,4 +159,5 @@ class GeolocationService {
     }
 }
 
-export default new GeolocationService();
+const geolocationService = new GeolocationService();
+export default geolocationService;

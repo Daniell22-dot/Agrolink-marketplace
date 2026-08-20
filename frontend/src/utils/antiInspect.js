@@ -3,7 +3,6 @@
 // Users can still access DevTools through browser menu
 
 (function () {
-    'use strict';
 
     // Disable right-click
     document.addEventListener('contextmenu', function (e) {
@@ -94,17 +93,15 @@
     setInterval(checkDevTools, 1000);
 
     // Debugger detection
-    const detectDebugger = () => {
-        const start = new Date();
-        debugger;
-        const end = new Date();
-        if (end - start > 100) {
-            window.location.reload();
-        }
-    };
-
     // Run debugger detection periodically (disabled by default as it's aggressive)
-    // setInterval(detectDebugger, 1000);
+    // setInterval(() => {
+    //     const start = new Date();
+    //     debugger;
+    //     const end = new Date();
+    //     if (end - start > 100) {
+    //         window.location.reload();
+    //     }
+    // }, 1000);
 
     // Disable console functions in production
     if (process.env.NODE_ENV === 'production') {
@@ -136,7 +133,7 @@
 
             let node;
             const commentsToRemove = [];
-            while (node = walker.nextNode()) {
+            while ((node = walker.nextNode())) {
                 commentsToRemove.push(node);
             }
 

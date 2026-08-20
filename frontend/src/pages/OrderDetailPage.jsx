@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrderById, cancelOrder } from '../redux/slices/orderSlice';
 import toast from 'react-hot-toast';
@@ -10,7 +10,6 @@ const ORDER_STEPS = ['pending', 'approved', 'shipped', 'delivered'];
 const OrderDetailPage = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { selectedOrder: order, isLoading } = useSelector((state) => state.order);
 
     useEffect(() => {

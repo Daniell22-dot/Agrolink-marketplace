@@ -79,7 +79,7 @@ export const deleteProduct = createAsyncThunk(
   'products/deleteProduct',
   async (productId, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${API_URL}/products/${productId}`, {
+      await axios.delete(`${API_URL}/products/${productId}`, {
         headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       toast.success('Product deleted successfully!');

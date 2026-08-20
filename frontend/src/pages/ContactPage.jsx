@@ -165,10 +165,10 @@ const ContactPage = () => {
                         <div className="social-section">
                             <h4>Follow Us</h4>
                             <div className="social-links">
-                                <a href="#" className="social-link"><i className="fab fa-facebook-f"></i></a>
-                                <a href="#" className="social-link"><i className="fab fa-twitter"></i></a>
-                                <a href="#" className="social-link"><i className="fab fa-instagram"></i></a>
-                                <a href="#" className="social-link"><i className="fab fa-linkedin-in"></i></a>
+                                <button type="button" className="social-link" onClick={(e) => e.preventDefault()}><i className="fab fa-facebook-f"></i></button>
+                                <button type="button" className="social-link" onClick={(e) => e.preventDefault()}><i className="fab fa-twitter"></i></button>
+                                <button type="button" className="social-link" onClick={(e) => e.preventDefault()}><i className="fab fa-instagram"></i></button>
+                                <button type="button" className="social-link" onClick={(e) => e.preventDefault()}><i className="fab fa-linkedin-in"></i></button>
                             </div>
                         </div>
                     </div>

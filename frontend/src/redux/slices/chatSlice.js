@@ -68,7 +68,7 @@ export const deleteChat = createAsyncThunk(
   'chat/deleteChat',
   async (chatId, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(`${API_URL}/chat/${chatId}`, {
+      await axios.delete(`${API_URL}/chat/${chatId}`, {
         headers: { authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       toast.success('Chat deleted');
