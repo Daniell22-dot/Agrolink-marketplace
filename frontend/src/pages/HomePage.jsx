@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import FlashDeals from '../components/common/FlashDeals';
 import ProductCard from '../components/products/ProductCard';
 import api from '../services/api';
@@ -40,9 +39,6 @@ const FLASH_DEALS = [
 ];
 
 const HomePage = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-
   const [guestProducts, setGuestProducts] = useState([]);
   const [guestLoading, setGuestLoading] = useState(true);
   const [heroBannerIndex, setHeroBannerIndex] = useState(0);
