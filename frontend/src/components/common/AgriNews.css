@@ -130,6 +130,25 @@
   align-items: center;
 }
 
+.agri-news-loading {
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.agri-news-loading .spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--gray-200);
+  border-top-color: var(--primary-green);
+  border-radius: 50%;
+  animation: agriSpin 0.8s linear infinite;
+}
+
+@keyframes agriSpin {
+  to { transform: rotate(360deg); }
+}
+
 @media (max-width: 768px) {
   .agri-news-header {
     flex-direction: column;
