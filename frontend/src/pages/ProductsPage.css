@@ -42,8 +42,8 @@
 
 /* Premium Hero header on search directory */
 .premium-hero {
-  background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
-  padding: 24px 0;
+  background: linear-gradient(135deg, #14532D 0%, #166534 40%, #15803D 100%);
+  padding: 28px 0;
   margin-bottom: 24px;
   box-shadow: var(--shadow-md);
 }
@@ -449,7 +449,7 @@
 
 /* Promo Banner Box */
 .promo-banner-box {
-  background: linear-gradient(135deg, var(--dark-green) 0%, var(--primary-green) 100%);
+  background: linear-gradient(135deg, #14532D 0%, #166534 40%, #15803D 100%);
   color: var(--white);
   border-radius: var(--radius-md);
   text-align: center;
