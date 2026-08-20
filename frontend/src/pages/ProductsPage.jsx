@@ -389,16 +389,16 @@ const ProductsPage = () => {
     }), [searchParams]);
 
     const categories = [
-        { id: 'vegetables', label: 'Vegetables', icon: 'fa-carrot' },
-        { id: 'fruits', label: 'Fruits', icon: 'fa-apple-alt' },
-        { id: 'grains', label: 'Grains & Cereals', icon: 'fa-seedling' },
-        { id: 'livestock', label: 'Livestock', icon: 'fa-cow' },
-        { id: 'dairy', label: 'Dairy & Eggs', icon: 'fa-cheese' },
-        { id: 'farm-inputs', label: 'Farm Inputs', icon: 'fa-tractor' },
-        { id: 'seeds', label: 'Seeds', icon: 'fa-seedling' },
-        { id: 'fertilizers', label: 'Fertilizers', icon: 'fa-flask' },
-        { id: 'tools', label: 'Farm Tools', icon: 'fa-tools' },
-        { id: 'other', label: 'Other Produce', icon: 'fa-box' },
+        { id: 'vegetables', label: 'Vegetables' },
+        { id: 'fruits', label: 'Fruits' },
+        { id: 'grains', label: 'Grains & Cereals' },
+        { id: 'livestock', label: 'Livestock' },
+        { id: 'dairy', label: 'Dairy & Eggs' },
+        { id: 'farm-inputs', label: 'Farm Inputs' },
+        { id: 'seeds', label: 'Seeds' },
+        { id: 'fertilizers', label: 'Fertilizers' },
+        { id: 'tools', label: 'Farm Tools' },
+        { id: 'other', label: 'Other Produce' },
     ];
 
     const [debouncedFilters, setDebouncedFilters] = useState(filters);
@@ -442,11 +442,11 @@ const ProductsPage = () => {
             <div className="breadcrumb-bar">
                 <div className="container">
                     <Link to="/">Home</Link>
-                    <span> <i className="fas fa-chevron-right"></i> </span>
+                    <span> / </span>
                     <Link to="/products">Marketplace</Link>
                     {filters.category && (
                         <>
-                            <span> <i className="fas fa-chevron-right"></i> </span>
+                            <span> / </span>
                             <span className="current">{currentCategoryLabel}</span>
                         </>
                     )}
@@ -475,7 +475,7 @@ const ProductsPage = () => {
                     className="mobile-filter-toggle"
                     onClick={() => setIsMobileFiltersOpen(!isMobileFiltersOpen)}
                 >
-                    <i className="fas fa-filter"></i> Filters &amp; Categories
+                    Filters &amp; Categories
                 </button>
 
                 {/* Left Sidebar: Filters */}
@@ -495,7 +495,7 @@ const ProductsPage = () => {
                                     className={filters.category === cat.id ? 'active' : ''}
                                     onClick={() => handleFilterChange('category', cat.id)}
                                 >
-                                    <i className={`fas ${cat.icon}`}></i> {cat.label}
+                                    {cat.label}
                                 </li>
                             ))}
                         </ul>
@@ -523,7 +523,6 @@ const ProductsPage = () => {
                     <div className="sidebar-section">
                         <h3>Buyer Protection</h3>
                         <div className="protection-badge">
-                            <i className="fas fa-shield-alt"></i>
                             <div>
                                 <strong>Escrow Guarantee</strong>
                                 <p>Funds released upon verified delivery</p>
@@ -567,9 +566,6 @@ const ProductsPage = () => {
                             </div>
                         ) : (
                             <div className="jumia-empty">
-                                <div className="empty-icon-wrap">
-                                    <i className="fas fa-search"></i>
-                                </div>
                                 <h3>No products match your criteria</h3>
                                 <p>Try clearing your price filters or searching for another term</p>
                             </div>
@@ -580,7 +576,7 @@ const ProductsPage = () => {
                 {/* Right Sidebar: Featured & Trending Highlights */}
                 <aside className="jumia-sidebar right-sidebar">
                     <div className="sidebar-section">
-                        <h3><i className="fas fa-fire" style={{ color: 'var(--primary-orange)' }}></i> Fast Selling Produce</h3>
+                        <h3>Fast Selling Produce</h3>
                         <div className="mini-product-list">
                             {SAMPLE_PRODUCTS.slice(0, 3).map(p => (
                                 <Link key={p.id} to={`/product/${p.id}`} className="mini-product-item">
@@ -588,7 +584,7 @@ const ProductsPage = () => {
                                     <div className="mini-product-info">
                                         <span className="mini-product-title">{p.title}</span>
                                         <span className="mini-product-price">KES {p.price.toLocaleString()}</span>
-                                        <span className="mini-product-county"><i className="fas fa-map-marker-alt"></i> {p.county}</span>
+                                        <span className="mini-product-county">{p.county}</span>
                                     </div>
                                 </Link>
                             ))}
@@ -597,7 +593,6 @@ const ProductsPage = () => {
 
                     <div className="sidebar-section promo-banner-box">
                         <div className="promo-inner">
-                            <i className="fas fa-tractor promo-icon"></i>
                             <h4>Farm Inputs & Tools</h4>
                             <p>Browse quality equipment for every farming task</p>
                             <Link to="/category/farm-inputs" className="promo-btn">Explore Inputs</Link>

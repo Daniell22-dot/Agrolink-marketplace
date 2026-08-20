@@ -98,7 +98,7 @@
 
 /* Sidebar filter container */
 .jumia-sidebar {
-  width: 260px;
+  width: 100%;
   flex-shrink: 0;
   background-color: var(--white);
   border-radius: var(--radius-md);
@@ -330,7 +330,7 @@
 /* Dual Sidebar Grid Layout */
 .dual-sidebar-layout {
   display: grid;
-  grid-template-columns: 240px 1fr 240px;
+  grid-template-columns: 220px 1fr 220px;
   gap: 20px;
   align-items: flex-start;
 }
@@ -347,16 +347,11 @@
   grid-column: 2;
 }
 
-/* Category Icons */
-.category-list-jumia li i {
-  margin-right: 8px;
-  width: 16px;
-  text-align: center;
+/* Category list items */
+.category-list-jumia li.active {
+  background-color: var(--light-green);
   color: var(--primary-green);
-}
-
-.category-list-jumia li.active i {
-  color: var(--primary-green);
+  font-weight: 700;
 }
 
 /* Protection Badge */
@@ -457,12 +452,6 @@
 
 .promo-inner {
   padding: 16px 12px;
-}
-
-.promo-icon {
-  font-size: 28px;
-  color: var(--primary-orange);
-  margin-bottom: 8px;
 }
 
 .promo-inner h4 {
