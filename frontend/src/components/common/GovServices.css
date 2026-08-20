@@ -1,0 +1,114 @@
+/* =============================================
+   Government Services & Irrigation
+   ============================================= */
+
+.gov-services-section {
+  padding: var(--spacing-2xl) 0;
+  background: var(--gray-50);
+}
+
+.gov-services-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.gov-services-header h2 {
+  font-family: var(--font-title);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+
+.gov-services-header p {
+  font-size: 14px;
+  color: var(--gray-600);
+}
+
+.gov-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.gov-service-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-100);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.gov-service-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
+  border-color: var(--primary-green);
+}
+
+.gov-service-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(21, 128, 61, 0.2);
+}
+
+.gov-service-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--black);
+  font-family: var(--font-title);
+}
+
+.gov-service-desc {
+  font-size: 13px;
+  color: var(--gray-600);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.gov-service-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary-green);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s ease;
+}
+
+.gov-service-link:hover {
+  gap: 8px;
+  color: var(--dark-green);
+}
+
+@media (max-width: 1024px) {
+  .gov-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .gov-services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gov-services-section {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .gov-services-header {
+    text-align: left;
+  }
+}

@@ -92,6 +92,20 @@
   max-width: 600px;
 }
 
+.hp-hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin-bottom: 16px;
+  backdrop-filter: blur(4px);
+}
+
 .hp-hero-text h1 {
   font-size: clamp(28px, 4vw, 48px);
   font-weight: 900;
@@ -148,6 +162,155 @@
 }
 .hp-pill i { color: var(--light-green); }
 .hp-pill:hover { background: rgba(255,255,255,0.2); }
+
+/* ── CATEGORIES BAR (Jumia-style) ────────────────────────── */
+.hp-categories-bar {
+  background: #fff;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.hp-categories-scroll {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px 0;
+}
+.hp-categories-scroll::-webkit-scrollbar { display: none; }
+
+.hp-cat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--gray-800);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  min-width: 90px;
+}
+
+.hp-cat-item:hover {
+  background: var(--light-green);
+  color: var(--primary-green);
+}
+
+.hp-cat-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--gray-100);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--primary-green);
+  transition: all 0.2s;
+}
+.hp-cat-item:hover .hp-cat-icon {
+  background: var(--primary-green);
+  color: #fff;
+}
+
+.hp-cat-name {
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.hp-cat-count {
+  font-size: 10px;
+  color: var(--gray-600);
+}
+
+/* ── PROMO CARDS (Sidebar) ──────────────────────────────── */
+.hp-promo-card {
+  color: #fff !important;
+  border: none !important;
+  padding: 20px !important;
+}
+
+.hp-promo-tag {
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  background: rgba(255,255,255,0.25);
+  padding: 3px 8px;
+  border-radius: 9999px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.hp-promo-big-icon {
+  font-size: 28px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.hp-promo-card h4 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  font-family: var(--font-title);
+  color: #fff;
+}
+
+.hp-promo-card p {
+  font-size: 12px;
+  opacity: 0.9;
+  line-height: 1.4;
+  margin-bottom: 14px;
+  color: rgba(255,255,255,0.9);
+}
+
+.hp-promo-orange { background: linear-gradient(135deg, #EA580C 0%, #F97316 100%); }
+.hp-promo-green  { background: linear-gradient(135deg, #166534 0%, #15803D 100%); }
+.hp-promo-dark   { background: linear-gradient(135deg, #0F172A 0%, #334155 100%); }
+
+/* ── GUEST CTA ──────────────────────────────────────────── */
+.hp-guest-cta {
+  text-align: center;
+  margin-top: 36px;
+  padding: 40px 24px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-radius: 16px;
+  border: 1px solid #bbf7d0;
+}
+
+.hp-guest-cta-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--primary-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.hp-guest-cta-icon i { font-size: 28px; color: #fff; }
+
+.hp-guest-cta h3 {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.hp-guest-cta p {
+  color: var(--gray-600);
+  font-size: 15px;
+  margin-bottom: 20px;
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* ── PRODUCT GRID (Guest preview) ─────────────────────────── */
 .hp-product-grid {
