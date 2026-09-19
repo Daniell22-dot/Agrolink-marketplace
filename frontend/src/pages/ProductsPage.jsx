@@ -3,7 +3,6 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/slices/productSlice';
 import ProductCard from '../components/products/ProductCard';
-import SearchBar from '../components/common/SearchBar';
 import './ProductsPage.css';
 
 // Sample fallback products to ensure cards always render even if backend is empty
@@ -458,13 +457,6 @@ const ProductsPage = () => {
                 <div className="container">
                     <div className="hero-content">
                         <h1>Fresh From The Farm</h1>
-                        <div className="hero-search">
-                            <SearchBar
-                                onSearch={(value) => handleFilterChange('search', value)}
-                                placeholder="Search products, categories, farmers..."
-                                initialValue={filters.search}
-                            />
-                        </div>
                     </div>
                 </div>
             </div>

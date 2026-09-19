@@ -3,33 +3,17 @@
 // URLs so they always render, even when the API is unavailable or slow.
 // The backend remains the single source of truth (GET /api/images/catalog).
 
-const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop";
+const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=500&auto=format&fit=crop";
 
 const CATEGORY_DEFAULTS = {
-  "grains": [
-    "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&auto=format&fit=crop"
-  ],
-  "vegetables": [
-    "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500&auto=format&fit=crop"
-  ],
-  "fruits": [
-    "https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&auto=format&fit=crop"
-  ],
-  "dairy": [
-    "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop"
-  ],
-  "meat": [
-    "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop"
-  ],
-  "livestock": [
-    "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop"
-  ],
-  "herbs": [
-    "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&auto=format&fit=crop"
-  ],
-  "other": [
-    "https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&auto=format&fit=crop"
-  ]
+  "grains": ["/images/Maize1.jpg"],
+  "vegetables": ["/images/Carrots.jpg"],
+  "fruits": ["/images/Bananas.jpg"],
+  "dairy": ["https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&auto=format&fit=crop"],
+  "meat": ["/images/Pigs.jpg"],
+  "livestock": ["/images/Goat.jpg"],
+  "herbs": ["https://images.unsplash.com/photo-1508747703725-719777637510?w=500&auto=format&fit=crop"],
+  "other": ["https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=500&auto=format&fit=crop"]
 };
 
 const PRODUCT_IMAGES = [
@@ -44,8 +28,7 @@ const PRODUCT_IMAGES = [
       "corns"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&auto=format&fit=crop",
-      "https://images.pexels.com/photos/12921034/pexels-photo-12921034.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -62,7 +45,7 @@ const PRODUCT_IMAGES = [
       "posho"
     ],
     "images": [
-      "https://images.pexels.com/photos/6086003/pexels-photo-6086003.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -91,7 +74,7 @@ const PRODUCT_IMAGES = [
       "unga wa ngano"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop"
     ]
   },
   {
@@ -107,7 +90,7 @@ const PRODUCT_IMAGES = [
       "brown rice"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&auto=format&fit=crop"
+      "/images/Rice planting.jpg"
     ]
   },
   {
@@ -121,8 +104,7 @@ const PRODUCT_IMAGES = [
       "maharage"
     ],
     "images": [
-      "https://images.pexels.com/photos/13620780/pexels-photo-13620780.jpeg?auto=compress&cs=tinysrgb&w=500",
-      "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -136,7 +118,7 @@ const PRODUCT_IMAGES = [
       "cranberry beans"
     ],
     "images": [
-      "https://images.pexels.com/photos/13620780/pexels-photo-13620780.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -149,7 +131,7 @@ const PRODUCT_IMAGES = [
       "mbegu nyeusi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -165,7 +147,7 @@ const PRODUCT_IMAGES = [
       "maharage ya soya"
     ],
     "images": [
-      "https://images.pexels.com/photos/12338945/pexels-photo-12338945.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -180,7 +162,7 @@ const PRODUCT_IMAGES = [
       "mung beans"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -193,8 +175,7 @@ const PRODUCT_IMAGES = [
       "mbaazi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop",
-      "https://images.pexels.com/photos/13620780/pexels-photo-13620780.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -207,7 +188,7 @@ const PRODUCT_IMAGES = [
       "kunde"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -220,8 +201,7 @@ const PRODUCT_IMAGES = [
       "sorghum grain"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -235,7 +215,7 @@ const PRODUCT_IMAGES = [
       "wimbi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -252,7 +232,7 @@ const PRODUCT_IMAGES = [
       "achaari"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1546587348-d12660c30c50?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -266,7 +246,7 @@ const PRODUCT_IMAGES = [
       "seed"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1546587348-d12660c30c50?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -280,7 +260,7 @@ const PRODUCT_IMAGES = [
       "arabica"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&auto=format&fit=crop"
+      "/images/Coffee.jpg"
     ]
   },
   {
@@ -295,7 +275,7 @@ const PRODUCT_IMAGES = [
       "black tea"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop"
     ]
   },
   {
@@ -323,7 +303,7 @@ const PRODUCT_IMAGES = [
       "cane"
     ],
     "images": [
-      "https://images.pexels.com/photos/2254097/pexels-photo-2254097.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -350,7 +330,7 @@ const PRODUCT_IMAGES = [
       "red onion"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?w=500&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&auto=format&fit=crop"
     ]
   },
   {
@@ -365,7 +345,7 @@ const PRODUCT_IMAGES = [
       "collard greens"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -377,7 +357,7 @@ const PRODUCT_IMAGES = [
       "kales"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -391,8 +371,7 @@ const PRODUCT_IMAGES = [
       "leafy greens"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -563,7 +542,7 @@ const PRODUCT_IMAGES = [
       "aubergine"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -576,7 +555,7 @@ const PRODUCT_IMAGES = [
       "cucumbers"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -590,7 +569,7 @@ const PRODUCT_IMAGES = [
       "butternut squash"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -603,7 +582,7 @@ const PRODUCT_IMAGES = [
       "uyoga"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?w=500&auto=format&fit=crop"
+      "/images/Potatoes.jpg"
     ]
   },
   {
@@ -616,7 +595,7 @@ const PRODUCT_IMAGES = [
       "ndizi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&auto=format&fit=crop"
+      "/images/Bananas.jpg"
     ]
   },
   {
@@ -630,7 +609,7 @@ const PRODUCT_IMAGES = [
       "avocado pear"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop"
+      "/images/Avocado.jpg"
     ]
   },
   {
@@ -643,7 +622,7 @@ const PRODUCT_IMAGES = [
       "embe"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&auto=format&fit=crop"
+      "/images/Maembe(Mangoes).jpg"
     ]
   },
   {
@@ -656,7 +635,7 @@ const PRODUCT_IMAGES = [
       "mbibo"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&auto=format&fit=crop"
+      "/images/Pawpaw.jpg"
     ]
   },
   {
@@ -669,7 +648,7 @@ const PRODUCT_IMAGES = [
       "nanasi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=500&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&auto=format&fit=crop"
     ]
   },
   {

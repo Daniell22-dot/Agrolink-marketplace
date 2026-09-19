@@ -133,7 +133,14 @@
   border-radius: 4px;
   overflow: hidden;
   height: 42px;
-  background: #fff;
+  background: #f0fdf4;
+  box-shadow: 0 1px 3px rgba(76, 175, 80, 0.15);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-form:focus-within {
+  border-color: #388e3c;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2), 0 1px 3px rgba(76, 175, 80, 0.15);
 }
 
 .search-input {
@@ -143,13 +150,13 @@
   padding: 0 14px;
   font-size: 14px;
   font-family: var(--font-sans, 'Inter', sans-serif);
-  color: #333;
+  color: #1a2e1a;
   background: transparent;
   min-width: 0;
 }
 
 .search-input::placeholder {
-  color: #999;
+  color: #6b8f6b;
 }
 
 .search-btn {
@@ -547,18 +554,24 @@
 
 .mobile-search-input {
   flex: 1;
-  border: 1px solid #ccc;
+  border: 2px solid #4caf50;
   border-right: none;
   border-radius: 4px 0 0 4px;
   padding: 10px 12px;
   font-size: 14px;
   outline: none;
+  background: #f0fdf4;
+  color: #1a2e1a;
+}
+
+.mobile-search-input::placeholder {
+  color: #6b8f6b;
 }
 
 .mobile-search-btn {
   background: #4caf50;
   color: #fff;
-  border: none;
+  border: 2px solid #4caf50;
   padding: 0 16px;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
@@ -567,6 +580,7 @@
 
 .mobile-search-btn:hover {
   background: #388e3c;
+  border-color: #388e3c;
 }
 
 /* Mobile section titles & dividers */
