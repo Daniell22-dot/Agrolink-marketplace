@@ -41,7 +41,7 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 
 import './App.css';
 
-const SITE_URL = 'https://agrolink.biz';
+const SITE_URL = 'https://agrolink.co.ke';
 const SITE_NAME = 'AgroLink';
 
 const PageHelmet = ({ title, description, path }) => (

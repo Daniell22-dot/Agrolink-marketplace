@@ -15,10 +15,7 @@ const allowedOrigins = [
     process.env.FRONTEND_URL || 'http://localhost:3000',
     process.env.ADMIN_URL || 'http://localhost:3001',
     'http://localhost:4000',
-    'http://localhost:5000',
-    'https://agrolink.biz',
-    'https://www.agrolink.biz',
-    'https://admin.agrolink.biz'
+    'http://localhost:5000'
 ];
 
 // Dynamically add Vercel preview/production URLs

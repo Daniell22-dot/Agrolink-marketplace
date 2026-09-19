@@ -10,5 +10,5 @@ Disallow: /orders/
 Disallow: /chat/
 Disallow: /profile/
 
-Sitemap: https://agrolink.biz/sitemap.xml
-Host: https://agrolink.biz
+Sitemap: https://agrolink.co.ke/sitemap.xml
+Host: https://agrolink.co.ke

@@ -15,23 +15,27 @@ const DEFAULT_DEALS = [
 
 const pad = (n) => String(n).padStart(2, '0');
 
+const getTimeUntilMidnight = () => {
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+  const diff = midnight - now;
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  return { hours, minutes, seconds };
+};
+
 const FlashDeals = ({ deals }) => {
   const scrollRef = useRef(null);
-  const [countdown, setCountdown] = useState({ hours: 5, minutes: 23, seconds: 47 });
+  const [countdown, setCountdown] = useState(getTimeUntilMidnight);
   const [autoScrollDir, setAutoScrollDir] = useState('right');
   const displayData = (deals && deals.length > 0) ? deals : DEFAULT_DEALS;
 
-  // Countdown timer
+  // Countdown timer resets at midnight
   useEffect(() => {
     const timer = setInterval(() => {
-      setCountdown((prev) => {
-        let { hours, minutes, seconds } = prev;
-        seconds -= 1;
-        if (seconds < 0) { seconds = 59; minutes -= 1; }
-        if (minutes < 0) { minutes = 59; hours -= 1; }
-        if (hours < 0) { hours = 23; minutes = 59; seconds = 59; }
-        return { hours, minutes, seconds };
-      });
+      setCountdown(getTimeUntilMidnight());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
