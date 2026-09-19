@@ -2,8 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FlashDeals from '../components/common/FlashDeals';
 import ProductCard from '../components/products/ProductCard';
+import ReviewMarquee from '../components/reviews/ReviewMarquee';
 import api from '../services/api';
 import './HomePage.css';
+
+const getTimeUntilMidnight = () => {
+  const now = new Date();
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+  const diff = midnight - now;
+  const hours = Math.floor(diff / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+  return { hours, minutes, seconds };
+};
+
+const pad = (n) => String(n).padStart(2, '0');
 
 const HERO_CATEGORIES = [
   { icon: 'fas fa-carrot', name: 'Vegetables', slug: 'vegetables', image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=80&auto=format&fit=crop' },
@@ -42,7 +56,7 @@ const HomePage = () => {
   const [guestProducts, setGuestProducts] = useState([]);
   const [guestLoading, setGuestLoading] = useState(true);
   const [heroBannerIndex, setHeroBannerIndex] = useState(0);
-  const [countdown, setCountdown] = useState({ hours: 5, minutes: 23, seconds: 47 });
+  const [countdown, setCountdown] = useState(getTimeUntilMidnight);
 
   useEffect(() => {
     api.get('/products?limit=12&sort=newest')
@@ -53,14 +67,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCountdown(prev => {
-        let { hours, minutes, seconds } = prev;
-        seconds -= 1;
-        if (seconds < 0) { seconds = 59; minutes -= 1; }
-        if (minutes < 0) { minutes = 59; hours -= 1; }
-        if (hours < 0) { hours = 23; minutes = 59; seconds = 59; }
-        return { hours, minutes, seconds };
-      });
+      setCountdown(getTimeUntilMidnight());
     }, 1000);
     return () => clearInterval(timer);
   }, []);
@@ -202,7 +209,10 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── 5. JUST FOR YOU ──────────────────────────────── */}
+      {/* ── 5. REVIEW MARQUEE ─────────────────────────────── */}
+      <ReviewMarquee />
+
+      {/* ── 6. JUST FOR YOU ──────────────────────────────── */}
       <section className="j-foryou-section">
         <div className="j-foryou-inner">
           <div className="j-foryou-banners">
@@ -253,6 +263,20 @@ const HomePage = () => {
                 ))}
               </div>
             )}
+          </div>
+          <div className="j-foryou-banners j-foryou-banners-right">
+            <div className="j-ad-card">
+              <span className="j-ad-tag">Ad</span>
+              <h4>AgriLink Shop</h4>
+              <p>Best prices for farm inputs</p>
+              <Link to="/products" className="j-ad-link">Shop Now</Link>
+            </div>
+            <div className="j-ad-card j-ad-card-alt">
+              <span className="j-ad-tag">Ad</span>
+              <h4>AgriLink Services</h4>
+              <p>Logistics & Advisory</p>
+              <Link to="/services" className="j-ad-link">Learn More</Link>
+            </div>
           </div>
         </div>
       </section>

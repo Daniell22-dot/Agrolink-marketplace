@@ -490,6 +490,81 @@
   }
 }
 
+/* Right ad sidebar */
+.j-foryou-banners-right {
+  width: 200px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.j-ad-card {
+  background: linear-gradient(135deg, #15803D 0%, #166534 100%);
+  color: #fff;
+  border-radius: 8px;
+  padding: 20px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.j-ad-card-alt {
+  background: linear-gradient(135deg, #C89B3C 0%, #B88A2F 100%);
+}
+
+.j-ad-tag {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.j-ad-card h4 {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.j-ad-card p {
+  font-size: 13px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.j-ad-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+  padding-bottom: 2px;
+}
+
+.j-ad-link:hover {
+  border-bottom-color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .j-foryou-banners-right {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .j-categories-grid {
     grid-template-columns: repeat(3, 1fr);
