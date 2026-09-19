@@ -19,17 +19,17 @@ const AdminDashboard = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+      <div className="flex items-center justify-center h-[calc(100vh-64px)]">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#C89B3C]"></div>
       </div>
     );
   }
 
   return (
-    <div className="dashboard">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Dashboard</h1>
-        <p className="text-gray-600 mt-2">Welcome back! Here's what's happening with your business today.</p>
+    <div className="dashboard space-y-6">
+      <div className="mb-2">
+        <h1 className="text-2xl font-bold text-[#16191F]">Dashboard</h1>
+        <p className="text-sm text-[#6B7280] mt-1">Welcome back! Here's what's happening with your marketplace today.</p>
       </div>
 
       <StatsCards stats={stats} />

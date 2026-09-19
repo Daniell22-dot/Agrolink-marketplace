@@ -80,75 +80,82 @@ const ManageOrders = () => {
   };
 
   return (
-    <div className="manage-orders">
+    <div className="manage-orders space-y-6">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">Manage Orders</h1>
+        <h1 className="text-2xl font-bold text-[#16191F] mb-4">Orders</h1>
 
         {/* Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded-lg shadow-md mb-6">
-          <input
-            type="text"
-            placeholder="Search orders..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            <option value="">All Status</option>
-            <option value="pending">Pending</option>
-            <option value="processing">Processing</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-          <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
-            Apply Filters
-          </button>
+        <div className="card p-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search orders..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 border border-[#D5D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89B3C] focus:border-transparent text-sm bg-[#F4F4F4]"
+              />
+              <svg className="w-4 h-4 text-[#6B7280] absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-4 py-2 border border-[#D5D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89B3C] focus:border-transparent text-sm bg-[#F4F4F4]"
+            >
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="processing">Processing</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <button className="btn btn-primary w-full md:w-auto">
+              Apply Filters
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Orders Table */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-100 border-b border-gray-200">
+      <div className="card overflow-hidden">
+        <div className="table-container border-0 rounded-none">
+          <table className="table">
+            <thead>
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Order ID</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Customer</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Amount</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Date</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Location</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Order ID</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Customer</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Amount</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Status</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Date</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Location</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-[#D5D9D9]">
               {isLoading ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan="7" className="px-5 py-8 text-center text-[#6B7280]">
                     Loading orders...
                   </td>
                 </tr>
               ) : orders.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan="7" className="px-5 py-8 text-center text-[#6B7280]">
                     No orders found
                   </td>
                 </tr>
               ) : (
                 orders.map((order) => (
-                  <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800">#{order.id?.slice(0, 8)}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{order.customer?.name || 'N/A'}</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-gray-800">Ksh {order.totalAmount?.toLocaleString() || '0'}</td>
-                    <td className="px-6 py-4 text-sm">
+                  <tr key={order.id} className="transition-colors">
+                    <td className="px-5 py-3.5 text-sm font-medium text-[#16191F]">#{order.id?.slice(0, 8)}</td>
+                    <td className="px-5 py-3.5 text-sm text-[#6B7280]">{order.customer?.name || 'N/A'}</td>
+                    <td className="px-5 py-3.5 text-sm font-semibold text-[#16191F]">KES {order.totalAmount?.toLocaleString() || '0'}</td>
+                    <td className="px-5 py-3.5 text-sm">
                       <select
                         value={order.status || 'pending'}
                         onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                        className={`px-3 py-1 rounded text-xs font-semibold ${getStatusColor(order.status)}`}
+                        className={`badge ${getStatusColor(order.status)}`}
                       >
                         <option value="pending">Pending</option>
                         <option value="processing">Processing</option>
@@ -156,45 +163,47 @@ const ManageOrders = () => {
                         <option value="cancelled">Cancelled</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-5 py-3.5 text-sm text-[#6B7280]">
                       {new Date(order.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-5 py-3.5 text-sm text-[#6B7280]">
                       <div className="flex flex-col">
-                        <span className="font-medium text-gray-800">{order.User?.county || 'N/A'}</span>
+                        <span className="font-medium text-[#16191F]">{order.User?.county || 'N/A'}</span>
                         <span className="text-xs">{order.User?.location || 'No location data'}</span>
                         {order.User?.latitude && (
                           <a 
                             href={`https://www.google.com/maps?q=${order.User.latitude},${order.User.longitude}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-xs text-blue-500 hover:underline mt-1"
+                            className="text-xs text-amber hover:underline mt-1"
                           >
                             View on Map
                           </a>
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm space-x-2">
-                      <button className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
-                        View
-                      </button>
-                      {order.status === 'pending' && (
-                        <button
-                          onClick={() => handleCancelOrder(order.id)}
-                          className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
-                        >
-                          Cancel
+                    <td className="px-5 py-3.5 text-sm">
+                      <div className="flex items-center gap-2">
+                        <button className="btn btn-sm btn-outline">
+                          View
                         </button>
-                      )}
-                      {order.status === 'completed' && (
-                        <button
-                          onClick={() => handleRefund(order)}
-                          className="px-3 py-1 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors"
-                        >
-                          Refund
-                        </button>
-                      )}
+                        {order.status === 'pending' && (
+                          <button
+                            onClick={() => handleCancelOrder(order.id)}
+                            className="btn btn-sm btn-danger"
+                          >
+                            Cancel
+                          </button>
+                        )}
+                        {order.status === 'completed' && (
+                          <button
+                            onClick={() => handleRefund(order)}
+                            className="btn btn-sm btn-outline"
+                          >
+                            Refund
+                          </button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -204,22 +213,22 @@ const ManageOrders = () => {
         </div>
 
         {/* Pagination */}
-        <div className="flex items-center justify-between px-6 py-4 bg-gray-50 border-t border-gray-200">
-          <span className="text-sm text-gray-600">
+        <div className="flex items-center justify-between px-5 py-3 bg-[#F4F4F4] border-t border-[#D5D9D9]">
+          <span className="text-sm text-[#6B7280]">
             Page {pagination.page} of {Math.ceil(pagination.total / pagination.limit)} ({pagination.total} total)
           </span>
-          <div className="space-x-2">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => handlePageChange(pagination.page - 1)}
               disabled={pagination.page <= 1}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-sm btn-outline disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Previous
             </button>
             <button
               onClick={() => handlePageChange(pagination.page + 1)}
               disabled={pagination.page >= Math.ceil(pagination.total / pagination.limit)}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn btn-sm btn-outline disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next
             </button>
@@ -229,41 +238,41 @@ const ManageOrders = () => {
 
       {/* Refund Modal */}
       {showRefundModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Process Refund</h2>
-            <p className="text-gray-600 mb-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="card p-6 max-w-sm w-full mx-4">
+            <h2 className="text-lg font-bold text-[#16191F] mb-4">Process Refund</h2>
+            <p className="text-sm text-[#6B7280] mb-4">
               Order #{selectedOrder?.id?.slice(0, 8)}
             </p>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Refund Amount</label>
+              <label className="block text-sm font-medium text-[#16191F] mb-2">Refund Amount</label>
               <input
                 type="number"
                 value={refundAmount}
                 onChange={(e) => setRefundAmount(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-2 border border-[#D5D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89B3C] focus:border-transparent text-sm"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Reason</label>
+              <label className="block text-sm font-medium text-[#16191F] mb-2">Reason</label>
               <textarea
                 value={refundReason}
                 onChange={(e) => setRefundReason(e.target.value)}
                 placeholder="Enter refund reason..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full px-4 py-2 border border-[#D5D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89B3C] focus:border-transparent text-sm"
                 rows="3"
               />
             </div>
-            <div className="flex justify-end space-x-2">
+            <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowRefundModal(false)}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
+                className="btn btn-outline"
               >
                 Cancel
               </button>
               <button
                 onClick={submitRefund}
-                className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors"
+                className="btn btn-primary"
               >
                 Process Refund
               </button>

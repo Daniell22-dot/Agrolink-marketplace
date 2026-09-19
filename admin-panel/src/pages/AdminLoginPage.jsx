@@ -34,37 +34,37 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="admin-login min-h-screen flex bg-gray-50">
+    <div className="admin-login min-h-screen flex bg-background">
       {/* Left Column: Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-24 relative z-10 bg-white shadow-2xl">
         <div className="w-full max-w-md">
           {/* Logo Section */}
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-12 h-12 bg-gradient-to-br from-agrolink-green to-agrolink-lightGreen rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 bg-navy rounded-xl flex items-center justify-center shadow-lg">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
               </svg>
             </div>
             <div>
-              <h1 className="text-3xl font-black text-gray-900 tracking-tighter">
-                Agri<span className="text-agrolink-lightGreen">Link</span>
+              <h1 className="text-3xl font-black text-ink tracking-tighter">
+                Agri<span className="text-amber">Link</span>
               </h1>
-              <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Admin Portal</span>
+              <span className="text-xs font-bold text-muted uppercase tracking-widest">Admin Portal</span>
             </div>
           </div>
 
           <div className="mb-10">
-            <h2 className="text-4xl font-black text-gray-900 mb-3 tracking-tight">
+            <h2 className="text-4xl font-black text-ink mb-3 tracking-tight">
               Welcome Back
             </h2>
-            <p className="text-gray-500 font-medium text-sm">Sign in to manage the agriculture marketplace.</p>
+            <p className="text-muted font-medium text-sm">Sign in to manage the agriculture marketplace.</p>
           </div>
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-xs font-bold text-gray-400 uppercase mb-2 tracking-widest">
+              <label htmlFor="email" className="block text-xs font-bold text-muted uppercase mb-2 tracking-widest">
                 Email Address
               </label>
               <input
@@ -73,7 +73,7 @@ const AdminLoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@agrolink.com"
-                className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-agrolink-green focus:bg-white focus:ring-2 focus:ring-agrolink-green/20 transition-all duration-300 text-gray-800 font-medium"
+                className="w-full px-5 py-4 bg-surface border border-border rounded-xl focus:outline-none focus:border-navy focus:bg-white focus:ring-2 focus:ring-navy/20 transition-all duration-300 text-ink font-medium"
                 disabled={isLoading}
               />
             </div>
@@ -81,17 +81,17 @@ const AdminLoginPage = () => {
             {/* Password Field */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                 <label htmlFor="password" className="block text-xs font-bold text-gray-400 uppercase tracking-widest">
+                 <label htmlFor="password" className="block text-xs font-bold text-muted uppercase tracking-widest">
                    Password
                  </label>
-              </div>
+               </div>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-agrolink-green focus:bg-white focus:ring-2 focus:ring-agrolink-green/20 transition-all duration-300 text-gray-800 font-medium"
+                className="w-full px-5 py-4 bg-surface border border-border rounded-xl focus:outline-none focus:border-navy focus:bg-white focus:ring-2 focus:ring-navy/20 transition-all duration-300 text-ink font-medium"
                 disabled={isLoading}
               />
             </div>
@@ -103,7 +103,7 @@ const AdminLoginPage = () => {
               className={`w-full py-4 px-6 mt-4 rounded-xl font-bold text-white transition-all duration-300 transform active:scale-[0.98] shadow-lg flex items-center justify-center gap-3 ${
                 isLoading
                   ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-agrolink-green hover:bg-agrolink-darkGreen hover:shadow-agrolink-green/30'
+                  : 'bg-navy hover:bg-navy-light hover:shadow-navy/30'
               }`}
             >
               {isLoading ? (
@@ -124,7 +124,7 @@ const AdminLoginPage = () => {
 
           {/* Security Notice */}
           <div className="mt-12 text-center">
-            <p className="text-gray-400 text-xs font-medium">
+            <p className="text-muted text-xs font-medium">
               &copy; {new Date().getFullYear()} AgriLink Enterprise. Secure connection.
             </p>
           </div>

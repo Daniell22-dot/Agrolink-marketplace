@@ -63,118 +63,127 @@ const ManageProducts = () => {
 
 
   return (
-    <div className="manage-products">
+    <div className="manage-products space-y-6">
       <div className="mb-6 flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-gray-800">Manage Products</h1>
+        <h1 className="text-2xl font-bold text-[#16191F]">Products</h1>
         <Link 
           to="/admin/products/add"
-          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center shadow-lg"
+          className="btn btn-primary"
         >
-          <span className="mr-2 text-xl">+</span> Add Product
+          <span>+</span> Add Product
         </Link>
       </div>
 
         {/* Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-4 rounded-lg shadow-md mb-6">
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-          >
-            <option value="">All Status</option>
-            <option value="pending">Pending</option>
-            <option value="approved">Approved</option>
-            <option value="rejected">Rejected</option>
-            <option value="suspended">Suspended</option>
-          </select>
-          <button className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
-            Apply Filters
-          </button>
+        <div className="card p-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 border border-[#D5D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89B3C] focus:border-transparent text-sm bg-[#F4F4F4]"
+              />
+              <svg className="w-4 h-4 text-[#6B7280] absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="px-4 py-2 border border-[#D5D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C89B3C] focus:border-transparent text-sm bg-[#F4F4F4]"
+            >
+              <option value="">All Status</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+              <option value="suspended">Suspended</option>
+            </select>
+            <button className="btn btn-primary w-full md:w-auto">
+              Apply Filters
+            </button>
+          </div>
         </div>
 
       {/* Products Table */}
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-100 border-b border-gray-200">
+      <div className="card overflow-hidden">
+        <div className="table-container border-0 rounded-none">
+          <table className="table">
+            <thead>
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Product</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Seller</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Price</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Created</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Product</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Seller</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Price</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Status</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Created</th>
+                <th className="px-5 py-3 text-left text-xs font-semibold text-[#6B7280] uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-[#D5D9D9]">
               {isLoading ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan="6" className="px-5 py-8 text-center text-[#6B7280]">
                     Loading products...
                   </td>
                 </tr>
               ) : products.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-4 text-center text-gray-500">
+                  <td colSpan="6" className="px-5 py-8 text-center text-[#6B7280]">
                     No products found
                   </td>
                 </tr>
               ) : (
                 products.map((product) => (
-                  <tr key={product.id} className="border-b border-gray-200 hover:bg-gray-50">
-                    <td className="px-6 py-4 text-sm font-medium text-gray-800">{product.name}</td>
-                    <td className="px-6 py-4 text-sm text-gray-600">{product.seller?.name || 'N/A'}</td>
-                    <td className="px-6 py-4 text-sm font-semibold text-gray-800">${product.price}</td>
-                    <td className="px-6 py-4 text-sm">
-                      <span className={`px-3 py-1 rounded-full text-xs font-semibold ${product.status === 'approved' ? 'bg-green-100 text-green-700' :
-                          product.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
-                            product.status === 'rejected' ? 'bg-red-100 text-red-700' :
-                              'bg-gray-100 text-gray-700'
+                  <tr key={product.id} className="transition-colors">
+                    <td className="px-5 py-3.5 text-sm font-medium text-[#16191F]">{product.name}</td>
+                    <td className="px-5 py-3.5 text-sm text-[#6B7280]">{product.seller?.name || 'N/A'}</td>
+                    <td className="px-5 py-3.5 text-sm font-semibold text-[#16191F]">KES {Number(product.price).toLocaleString()}</td>
+                    <td className="px-5 py-3.5 text-sm">
+                      <span className={`badge ${product.status === 'approved' ? 'badge-success' :
+                          product.status === 'pending' ? 'badge-warning' :
+                            product.status === 'rejected' ? 'badge-danger' :
+                              'badge-info'
                         }`}>
                         {product.status?.charAt(0).toUpperCase() + product.status?.slice(1)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-sm text-gray-600">
+                    <td className="px-5 py-3.5 text-sm text-[#6B7280]">
                       {new Date(product.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 text-sm space-x-2">
-                      {product.status === 'pending' && (
-                        <>
+                    <td className="px-5 py-3.5 text-sm">
+                      <div className="flex items-center gap-2">
+                        {product.status === 'pending' && (
+                          <>
+                            <button
+                              onClick={() => handleApprove(product.id)}
+                              className="btn btn-sm btn-navy"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => handleReject(product)}
+                              className="btn btn-sm btn-danger"
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )}
+                        {product.status === 'approved' && (
                           <button
-                            onClick={() => handleApprove(product.id)}
-                            className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
+                            onClick={() => handleSuspend(product)}
+                            className="btn btn-sm btn-outline"
                           >
-                            Approve
+                            Suspend
                           </button>
-                          <button
-                            onClick={() => handleReject(product)}
-                            className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
-                          >
-                            Reject
-                          </button>
-                        </>
-                      )}
-                      {product.status === 'approved' && (
+                        )}
                         <button
-                          onClick={() => handleSuspend(product)}
-                          className="px-3 py-1 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
+                          onClick={() => handleView(product)}
+                          className="btn btn-sm btn-outline"
                         >
-                          Suspend
+                          View
                         </button>
-                      )}
-                      <button
-                        onClick={() => handleView(product)}
-                        className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-                      >
-                        View
-                      </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -186,29 +195,29 @@ const ManageProducts = () => {
 
       {/* Reject Modal */}
       {showRejectModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Reject Product</h2>
-            <p className="text-gray-600 mb-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="card p-6 max-w-sm w-full mx-4">
+            <h2 className="text-lg font-bold text-[#16191F] mb-4">Reject Product</h2>
+            <p className="text-sm text-[#6B7280] mb-4">
               Are you sure you want to reject "{selectedProduct?.name}"? Please provide a reason.
             </p>
             <textarea
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="Enter rejection reason..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 mb-4"
+              className="w-full px-4 py-2 border border-[#D5D9D9] rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 mb-4 text-sm"
               rows="3"
             />
-            <div className="flex justify-end space-x-2">
+            <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowRejectModal(false)}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
+                className="btn btn-outline"
               >
                 Cancel
               </button>
               <button
                 onClick={submitReject}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+                className="btn btn-danger"
               >
                 Reject
               </button>

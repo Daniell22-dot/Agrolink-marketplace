@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /orders/
+Disallow: /chat/
+Disallow: /profile/
+
+Sitemap: https://agrolink.biz/sitemap.xml
+Host: https://agrolink.biz

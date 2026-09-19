@@ -5,7 +5,7 @@ import AdminFooter from './AdminFooter';
 
 const AdminLayout = ({ children }) => {
   return (
-    <div className="admin-layout flex h-screen bg-gray-50">
+    <div className="admin-layout flex h-screen bg-[#F4F4F4]">
       <AdminSidebar />
       <div className="flex flex-col flex-1 overflow-hidden">
         <AdminHeader />
