@@ -33,6 +33,7 @@ import PricingPage from './pages/PricingPage';
 import StatusPage from './pages/StatusPage';
 import FaqPage from './pages/FaqPage';
 import TermsPage from './pages/TermsPage';
+import NotFoundPage from './pages/NotFoundPage';
 import WishlistPage from './pages/WishlistPage';
 import CategoryPage from './pages/CategoryPage';
 

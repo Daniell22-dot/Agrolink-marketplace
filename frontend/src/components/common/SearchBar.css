@@ -1,33 +1,32 @@
 .search-bar {
     display: flex;
-    align-items: center;
-    background: var(--white);
-    border: 2px solid var(--primary-green);
-    border-radius: var(--radius-full);
+    align-items: stretch;
+    border: 2px solid #4caf50;
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(21, 128, 61, 0.05);
     max-width: 600px;
     margin: 0 auto;
     width: 100%;
-    position: relative;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: #f0fdf4;
+    box-shadow: 0 1px 3px rgba(76, 175, 80, 0.15);
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .search-bar:focus-within {
-    border-color: var(--primary-orange, #F97316);
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.1);
+    border-color: #388e3c;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2), 0 1px 3px rgba(76, 175, 80, 0.15);
 }
 
 .search-input-wrapper {
     flex: 1;
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    padding: 0 14px;
     position: relative;
 }
 
 .search-icon-inside {
-    color: var(--gray-600);
+    color: #6b8f6b;
     font-size: 15px;
     margin-right: 10px;
 }
@@ -35,21 +34,21 @@
 .search-input {
     width: 100%;
     border: none;
-    padding: 10px 0;
+    padding: 12px 0;
     font-size: 14px;
     outline: none;
-    color: var(--black);
+    color: #1a2e1a;
     font-family: var(--font-sans);
     background: transparent;
 }
 
 .search-input::placeholder {
-    color: var(--gray-600);
+    color: #6b8f6b;
 }
 
 .search-button {
-    background-color: var(--primary-green);
-    color: var(--white);
+    background-color: #4caf50;
+    color: #fff;
     border: none;
     padding: 12px 24px;
     font-size: 14px;
@@ -62,22 +61,22 @@
 }
 
 .search-bar:focus-within .search-button {
-    background-color: var(--primary-orange, #F97316);
+    background-color: #388e3c;
 }
 
 .search-button:hover {
-    background-color: var(--dark-green);
+    background-color: #388e3c;
 }
 
 /* Adjust sizes for smaller screens */
 @media (max-width: 768px) {
     .search-input {
-        padding: 8px 0;
+        padding: 10px 0;
         font-size: 13px;
     }
 
     .search-button {
-        padding: 8px 16px;
+        padding: 10px 16px;
         font-size: 13px;
     }
 }
