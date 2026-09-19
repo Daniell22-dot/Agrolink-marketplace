@@ -11,9 +11,12 @@ const CATEGORY_ALIASES = {
     vegetables: ['vegetables', 'vegetable', 'greens', 'tubers'],
     fruits: ['fruits', 'fruit'],
     dairy: ['dairy', 'eggs', 'dairy & eggs', 'dairy and eggs'],
-    meat: ['meat', 'poultry', 'fish', 'livestock', 'meat & poultry', 'meat and poultry'],
+    meat: ['meat', 'poultry', 'fish', 'meat & poultry', 'meat and poultry'],
+    livestock: ['livestock', 'livestock & animals', 'animals'],
     herbs: ['herbs', 'spices', 'herbs & spices', 'herbs and spices', 'seasoning'],
-    other: ['other', 'services', 'inputs', 'inputs & services', 'seeds', 'fertilizer']
+    'farm-inputs': ['farm-inputs', 'farm inputs', 'inputs', 'inputs & services', 'seeds', 'fertilizer', 'soil amendment', 'pesticides', 'herbicides', 'fungicides'],
+    tools: ['tools', 'farm tools', 'equipment', 'machinery', 'irrigation', 'drip irrigation', 'knapsack', 'sprayer', 'greenhouse', 'polythene'],
+    other: ['other', 'services']
 };
 
 const normalize = (value) => String(value || '').toLowerCase().trim();

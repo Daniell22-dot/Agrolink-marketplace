@@ -19,6 +19,8 @@ const CATEGORY_DEFAULTS = {
     meat: [U('photo-1544025162-d76694265947')],
     livestock: [U('photo-1628009368231-7bb7cfcb0def')],
     herbs: [U('photo-1540420773420-3366772f4999')],
+    'farm-inputs': [U('photo-1586771107445-d3ca888129ff')],
+    tools: [U('photo-1416879595882-3373a0480b5b')],
     other: [DEFAULT_IMAGE]
 };
 
@@ -117,7 +119,14 @@ const PRODUCT_IMAGES = [
 
     // ------------------------------- SERVICES -------------------------------
     { id: 'veterinary', label: 'Veterinary Services', category: 'other', keywords: ['vet', 'veterinary', 'vaccination', 'livestock advisory', 'dairy', 'poultry advisory'], images: [U('photo-1628009368231-7bb7cfcb0def')] },
-    { id: 'hay', label: 'Hay / Fodder', category: 'other', keywords: ['hay', 'fodder', 'nyasi', 'silage', 'animal feed'], images: [U('photo-1628009368231-7bb7cfcb0def')] }
+    { id: 'hay', label: 'Hay / Fodder', category: 'other', keywords: ['hay', 'fodder', 'nyasi', 'silage', 'animal feed'], images: [U('photo-1628009368231-7bb7cfcb0def')] },
+
+    // ------------------------------- FARM INPUTS -------------------------------
+    { id: 'fertilizer', label: 'Fertilizer', category: 'farm-inputs', keywords: ['fertilizer', 'can', 'dap', 'urea', 'npk', 'compost', 'manure', 'soil amendment', 'nutrient'], images: [U('photo-1464226184884-fa280b87c399')] },
+    { id: 'seeds', label: 'Seeds', category: 'farm-inputs', keywords: ['seeds', 'seed', 'planting', 'vegetable seeds', 'herb seeds', 'legume seeds', 'grain seeds'], images: [U('photo-1416879595882-3373a0480b5b')] },
+    { id: 'irrigation', label: 'Irrigation Systems', category: 'tools', keywords: ['irrigation', 'drip irrigation', 'sprinkler', 'knapsack', 'sprayer', 'water pump', 'hose', 'piping'], images: [U('photo-1530836369250-ef72a3f5cda8')] },
+    { id: 'greenhouse', label: 'Greenhouse / Polythene', category: 'tools', keywords: ['greenhouse', 'polythene', 'plastic film', 'cover', 'tunnel', 'shade net'], images: [U('photo-1530836369250-ef72a3f5cda8')] },
+    { id: 'farm-tools', label: 'Farm Tools & Equipment', category: 'tools', keywords: ['tools', 'farm tools', 'equipment', 'hoe', 'machete', 'spade', 'shovel', 'wheelbarrow', 'gloves', 'gumboots', 'boots'], images: [U('photo-1416879595882-3373a0480b5b')] }
 ];
 
 const getCatalog = () => ({
