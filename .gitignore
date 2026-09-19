@@ -84,7 +84,7 @@ dist
 
 # Gatsby files
 .cache/
-public
+# Note: frontend/public is NOT ignored - it contains images, robots.txt, sitemap.xml
 
 # Storybook build outputs
 .out

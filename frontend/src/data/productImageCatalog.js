@@ -9,11 +9,13 @@ const CATEGORY_DEFAULTS = {
   "grains": ["/images/Maize1.jpg"],
   "vegetables": ["/images/Carrots.jpg"],
   "fruits": ["/images/Bananas.jpg"],
-  "dairy": ["https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&auto=format&fit=crop"],
-  "meat": ["/images/Pigs.jpg"],
+  "dairy": ["/images/Milk.jpg"],
+  "meat": ["/images/Pork.jpg"],
   "livestock": ["/images/Goat.jpg"],
-  "herbs": ["https://images.unsplash.com/photo-1508747703725-719777637510?w=500&auto=format&fit=crop"],
-  "other": ["https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=500&auto=format&fit=crop"]
+  "herbs": ["/images/Chillie(Pilipili).jpg"],
+  "farm-inputs": ["/images/Fertilizer.jpg"],
+  "tools": ["/images/Farm tools.jpg"],
+  "other": ["/images/Water.jpg"]
 };
 
 const PRODUCT_IMAGES = [
@@ -45,7 +47,7 @@ const PRODUCT_IMAGES = [
       "posho"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -104,7 +106,7 @@ const PRODUCT_IMAGES = [
       "maharage"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -118,7 +120,7 @@ const PRODUCT_IMAGES = [
       "cranberry beans"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -131,7 +133,7 @@ const PRODUCT_IMAGES = [
       "mbegu nyeusi"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -147,7 +149,7 @@ const PRODUCT_IMAGES = [
       "maharage ya soya"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -162,7 +164,7 @@ const PRODUCT_IMAGES = [
       "mung beans"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -175,7 +177,7 @@ const PRODUCT_IMAGES = [
       "mbaazi"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -188,7 +190,7 @@ const PRODUCT_IMAGES = [
       "kunde"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -201,7 +203,7 @@ const PRODUCT_IMAGES = [
       "sorghum grain"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -215,7 +217,7 @@ const PRODUCT_IMAGES = [
       "wimbi"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -232,7 +234,7 @@ const PRODUCT_IMAGES = [
       "achaari"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -246,7 +248,7 @@ const PRODUCT_IMAGES = [
       "seed"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -303,7 +305,7 @@ const PRODUCT_IMAGES = [
       "cane"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -542,7 +544,7 @@ const PRODUCT_IMAGES = [
       "aubergine"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -555,7 +557,7 @@ const PRODUCT_IMAGES = [
       "cucumbers"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -569,7 +571,7 @@ const PRODUCT_IMAGES = [
       "butternut squash"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -582,7 +584,7 @@ const PRODUCT_IMAGES = [
       "uyoga"
     ],
     "images": [
-      "/images/Potatoes.jpg"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -1173,6 +1175,103 @@ const PRODUCT_IMAGES = [
     ],
     "images": [
       "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "fertilizer",
+    "label": "Fertilizer",
+    "category": "farm-inputs",
+    "keywords": [
+      "fertilizer",
+      "can",
+      "dap",
+      "urea",
+      "npk",
+      " compost",
+      "manure",
+      "soil amendment",
+      "nutrient"
+    ],
+    "images": [
+      "/images/CAN fertilizer.jpeg",
+      "/images/DAP fertilizer.jpg"
+    ]
+  },
+  {
+    "id": "seeds",
+    "label": "Seeds",
+    "category": "farm-inputs",
+    "keywords": [
+      "seeds",
+      "seed",
+      "planting",
+      "vegetable seeds",
+      "herb seeds",
+      "legume seeds",
+      "grain seeds",
+      "fruit seeds"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "irrigation",
+    "label": "Irrigation Systems",
+    "category": "tools",
+    "keywords": [
+      "irrigation",
+      "drip irrigation",
+      "sprinkler",
+      "knapsack",
+      "sprayer",
+      "water pump",
+      "hose",
+      "piping"
+    ],
+    "images": [
+      "/images/Drip Irrigation.jpg",
+      "/images/knapsack sprayer.jpeg",
+      "/images/Sprinkler.jpg"
+    ]
+  },
+  {
+    "id": "greenhouse",
+    "label": "Greenhouse / Polythene",
+    "category": "tools",
+    "keywords": [
+      "greenhouse",
+      "polythene",
+      "plastic film",
+      "cover",
+      "tunnel",
+      "shade net"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=500&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "farm-tools",
+    "label": "Farm Tools & Equipment",
+    "category": "tools",
+    "keywords": [
+      "tools",
+      "farm tools",
+      "equipment",
+      "hoe",
+      "machete",
+      "spade",
+      "shovel",
+      "wheelbarrow",
+      "gloves",
+      "gumboots",
+      "boots"
+    ],
+    "images": [
+      "/images/Farm tools.jpg",
+      "/images/Gloves.jpg",
+      "/images/Grren Gum boots.jpg"
     ]
   }
 ];
