@@ -11,6 +11,7 @@ import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import AnnouncementBar from './components/common/AnnouncementBar';
 import CookieBanner from './components/common/CookieBanner';
+import SupportChat from './components/common/SupportChat';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -219,6 +220,7 @@ function App() {
             </main>
             <Footer />
             <CookieBanner />
+            <SupportChat />
             <Toaster
               position="top-right"
               toastOptions={{
