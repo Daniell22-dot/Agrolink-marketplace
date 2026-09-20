@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import FlashDeals from '../components/common/FlashDeals';
 import ProductCard from '../components/products/ProductCard';
 import ReviewMarquee from '../components/reviews/ReviewMarquee';
+import FarmAdvisory from '../components/common/FarmAdvisory';
+import AgriNews from '../components/common/AgriNews';
 import api from '../services/api';
 import './HomePage.css';
 
@@ -211,6 +213,12 @@ const HomePage = () => {
 
       {/* ── 5. REVIEW MARQUEE ─────────────────────────────── */}
       <ReviewMarquee />
+
+      {/* ── 5.5. FARM ADVISORY ───────────────────────────── */}
+      <FarmAdvisory />
+
+      {/* ── 5.6. AGRI NEWS ───────────────────────────────── */}
+      <AgriNews />
 
       {/* ── 6. JUST FOR YOU ──────────────────────────────── */}
       <section className="j-foryou-section">

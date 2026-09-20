@@ -3,8 +3,9 @@ require('dotenv').config();
 
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
 const OPENWEATHER_URL = 'https://api.openweathermap.org/data/2.5/forecast';
+const OPENWEATHER_GEO_URL = 'https://api.openweathermap.org/geo/1.0/reverse';
 
-const buildAdvisory = (data) => {
+const buildAdvisory = (data, locationName) => {
   const now = new Date();
   const threeDaysLater = new Date(now);
   threeDaysLater.setDate(threeDaysLater.getDate() + 3);
@@ -16,7 +17,7 @@ const buildAdvisory = (data) => {
 
   if (upcoming.length === 0) {
     return {
-      location: data.city?.name || 'your area',
+      location: locationName || 'your area',
       alert: 'Weather data unavailable for the next 3 days. Monitor local forecasts for farming decisions.',
       type: 'info',
       tempMin: null,
@@ -56,7 +57,7 @@ const buildAdvisory = (data) => {
   const uniqueConditions = [...new Set(upcoming.map((item) => item.weather[0].main))];
   const tempMin = Math.round(minTemp);
   const tempMax = Math.round(maxTemp);
-  const location = data.city?.name || 'your area';
+  const location = locationName || 'your area';
 
   let alert = '';
   let type = 'info';
@@ -116,6 +117,29 @@ exports.getWeatherAdvisory = async (req, res) => {
       });
     }
 
+    let locationName = city || null;
+
+    if (lat && lon) {
+      try {
+        const geoResponse = await axios.get(OPENWEATHER_GEO_URL, {
+          params: {
+            lat,
+            lon,
+            limit: 1,
+            appid: OPENWEATHER_API_KEY
+          },
+          timeout: 10000
+        });
+        const geoData = geoResponse.data;
+        if (geoData && geoData.length > 0) {
+          const place = geoData[0];
+          locationName = place.name || place.local_names?.en || place.city || locationName;
+        }
+      } catch (geoError) {
+        console.warn('[weatherController] Reverse geocoding failed:', geoError.message);
+      }
+    }
+
     let url = `${OPENWEATHER_URL}?units=metric&appid=${OPENWEATHER_API_KEY}`;
     if (lat && lon) {
       url += `&lat=${lat}&lon=${lon}`;
@@ -124,7 +148,7 @@ exports.getWeatherAdvisory = async (req, res) => {
     }
 
     const response = await axios.get(url, { timeout: 10000 });
-    const advisory = buildAdvisory(response.data);
+    const advisory = buildAdvisory(response.data, locationName);
 
     res.json({
       success: true,
