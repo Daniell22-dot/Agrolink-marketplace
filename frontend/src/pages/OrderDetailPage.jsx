@@ -177,6 +177,26 @@ const OrderDetailPage = () => {
                                     <span>Phone</span>
                                     <span className="info-value">{order.contact_phone || '—'}</span>
                                 </div>
+                                {order.delivery && (
+                                    <>
+                                        <div className="info-row">
+                                            <span>Status</span>
+                                            <span className={`info-value delivery-status-${order.delivery.status}`}>{order.delivery.status?.replace('_', ' ')}</span>
+                                        </div>
+                                        {order.delivery.estimated_delivery_time && (
+                                            <div className="info-row">
+                                                <span>Est. Delivery</span>
+                                                <span className="info-value">{new Date(order.delivery.estimated_delivery_time).toLocaleString()}</span>
+                                            </div>
+                                        )}
+                                        {order.delivery.recipient_name && (
+                                            <div className="info-row">
+                                                <span>Recipient</span>
+                                                <span className="info-value">{order.delivery.recipient_name}</span>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
                                 {order.delivery_notes && (
                                     <div className="info-row">
                                         <span>Notes</span>

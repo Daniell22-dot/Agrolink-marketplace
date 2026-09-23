@@ -1,0 +1,270 @@
+.agent-page {
+    padding: 2rem 0;
+    min-height: 80vh;
+}
+
+.agent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.agent-header h1 {
+    font-size: 1.75rem;
+    color: #0E3D2B;
+}
+
+.agent-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    min-width: 120px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0E3D2B;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.agent-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.agent-tab {
+    padding: 0.75rem 1.25rem;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #6b7280;
+    transition: all 0.2s;
+}
+
+.agent-tab.active {
+    color: #0E3D2B;
+    border-bottom-color: #0E3D2B;
+}
+
+.agent-tab:hover {
+    color: #0E3D2B;
+}
+
+.delivery-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.delivery-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.delivery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.delivery-id {
+    font-weight: 700;
+    color: #0E3D2B;
+}
+
+.delivery-fee {
+    font-weight: 700;
+    color: #16a34a;
+}
+
+.delivery-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-assigned {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-picked_up {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.status-in_transit {
+    background: #f3e8ff;
+    color: #6b21a8;
+}
+
+.status-delivered {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-failed {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.delivery-body {
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+.delivery-body p {
+    margin-bottom: 0.4rem;
+}
+
+.delivery-body i {
+    width: 20px;
+    color: #6b7280;
+}
+
+.delivery-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #6b7280;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    color: #0E3D2B;
+}
+
+.agent-job-header {
+    margin-bottom: 1.5rem;
+}
+
+.agent-job-header h1 {
+    font-size: 1.5rem;
+    color: #0E3D2B;
+    margin: 0.5rem 0 0;
+}
+
+.job-content {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.job-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.job-card h3 {
+    margin-top: 0;
+    color: #0E3D2B;
+}
+
+.proof-form {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.proof-form h3 {
+    margin-top: 0;
+    color: #0E3D2B;
+}
+
+.completed-banner {
+    background: #d1fae5;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    color: #065f46;
+}
+
+.completed-banner i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.earnings-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.earnings-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.earnings-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.earnings-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0E3D2B;
+}
