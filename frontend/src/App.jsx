@@ -122,6 +122,23 @@ function App() {
                 </ProtectedRoute>
               } />
 
+              {/* Agent Routes */}
+              <Route path="/agent" element={
+                <AgentRoute>
+                  <AgentDashboardPage />
+                </AgentRoute>
+              } />
+              <Route path="/agent/job/:id" element={
+                <AgentRoute>
+                  <AgentJobPage />
+                </AgentRoute>
+              } />
+              <Route path="/agent/earnings" element={
+                <AgentRoute>
+                  <AgentEarningsPage />
+                </AgentRoute>
+              } />
+
               {/* 404 Route */}
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
