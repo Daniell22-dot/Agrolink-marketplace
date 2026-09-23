@@ -24,6 +24,9 @@ const ProductDetailPage = () => {
     const [reviews, setReviews] = useState([]);
     const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
     const [submittingReview, setSubmittingReview] = useState(false);
+    const [variants, setVariants] = useState([]);
+    const [selectedVariant, setSelectedVariant] = useState(null);
+    const [displayPrice, setDisplayPrice] = useState(parseFloat(product?.price || 0));
 
     const expectedSlug = product ? slugify(product.name) : null;
 
@@ -50,7 +53,6 @@ const ProductDetailPage = () => {
     useEffect(() => {
         dispatch(fetchProductById(id));
         fetchReviews();
-        // Track view for recommendations
         if (user) {
             api.post('/recommendations/track', {
                 productId: parseInt(id),
@@ -59,13 +61,37 @@ const ProductDetailPage = () => {
         }
     }, [dispatch, id, user, fetchReviews]);
 
+    useEffect(() => {
+        if (product && product.id) {
+            api.get(`/products/${product.id}/variants`)
+                .then(res => {
+                    const vars = res.data.data || [];
+                    setVariants(vars);
+                })
+                .catch(() => setVariants([]));
+        }
+    }, [product]);
+
+    useEffect(() => {
+        const base = parseFloat(product?.price || 0);
+        if (selectedVariant) {
+            setDisplayPrice(base + parseFloat(selectedVariant.priceDelta || 0));
+        } else {
+            setDisplayPrice(base);
+        }
+    }, [selectedVariant, product?.price]);
+
     const handleAddToCart = () => {
         if (!user) {
             toast.error('Please log in to add items to cart');
             navigate('/login');
             return;
         }
-        dispatch(addToCart({ productId: parseInt(id), quantity }));
+        dispatch(addToCart({
+            productId: parseInt(id),
+            quantity,
+            variantId: selectedVariant ? parseInt(selectedVariant.id) : undefined
+        }));
     };
 
     const handleReviewSubmit = async (e) => {
@@ -181,7 +207,12 @@ const ProductDetailPage = () => {
                         )}
 
                         <div className="price-section">
-                            <span className="price">KES {parseFloat(product.price || 0).toLocaleString()}</span>
+                            <span className="price">KES {displayPrice.toLocaleString()}</span>
+                            {selectedVariant && parseFloat(selectedVariant.priceDelta) !== 0 && (
+                                <span className="base-price-note">
+                                    Base: KES {parseFloat(product.price || 0).toLocaleString()}
+                                </span>
+                            )}
                             <span className="unit">per {product.unit || 'kg'}</span>
                         </div>
 
@@ -207,6 +238,30 @@ const ProductDetailPage = () => {
                                 <span>{product.views || 0} views</span>
                             </div>
                         </div>
+
+                        {/* Variant Selector */}
+                        {variants.length > 0 && (
+                            <div className="variant-selector">
+                                <label className="variant-label">Select Option</label>
+                                <div className="variant-options">
+                                    {variants.map(variant => (
+                                        <button
+                                            key={variant.id}
+                                            className={`variant-btn ${selectedVariant?.id === variant.id ? 'selected' : ''}`}
+                                            onClick={() => setSelectedVariant(variant)}
+                                        >
+                                            <span className="variant-value">{variant.value}</span>
+                                            {parseFloat(variant.priceDelta) !== 0 && (
+                                                <span className="variant-delta">
+                                                    {parseFloat(variant.priceDelta) > 0 ? '+' : ''}
+                                                    KES {parseFloat(variant.priceDelta).toLocaleString()}
+                                                </span>
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Add to Cart */}
                         <div className="cart-actions">

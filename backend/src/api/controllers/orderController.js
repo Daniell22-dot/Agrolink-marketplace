@@ -40,6 +40,7 @@ exports.createOrder = async (req, res, next) => {
         const orderItems = cart.items.map(item => ({
             orderId: order.id,
             productId: item.productId,
+            variant_id: item.variantId || null,
             quantity: item.quantity,
             price: item.price,
             subtotal: item.price * item.quantity
