@@ -4,11 +4,11 @@ import ProductCard from '../components/products/ProductCard';
 import './WishlistPage.css';
 
 const SAMPLE_WISHLIST = [
-  { id: 'w1', title: 'Certified Hybrid Maize Seed (2kg)', price: 450, originalPrice: 650, category: 'seeds', county: 'Uasin Gishu', rating: 4.8, images: ['https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop'], farmer: { fullName: 'Eldoret Seed Co-op' } },
-  { id: 'w2', title: 'NPK 50kg Fertilizer Bag', price: 3200, originalPrice: 4500, category: 'fertilizers', county: 'Nakuru', rating: 4.7, images: ['https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=500&auto=format&fit=crop'], farmer: { fullName: 'Rift Valley Agro Inputs' } },
-  { id: 'w3', title: 'Drip Irrigation Kit (50m)', price: 2800, originalPrice: 3800, category: 'farm-inputs', county: 'Kisumu', rating: 4.9, images: ['https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=500&auto=format&fit=crop'], farmer: { fullName: 'Lake Irrigation Systems' } },
-  { id: 'w4', title: 'Garden Hand Tools Set (8pc)', price: 1500, originalPrice: 2200, category: 'tools', county: 'Nairobi', rating: 4.6, images: ['https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&auto=format&fit=crop'], farmer: { fullName: 'Nairobi Agri Mart' } },
-  { id: 'w5', title: 'Fresh Hass Avocados (10kg Box)', price: 1800, originalPrice: 2200, category: 'fruits', county: "Murang'a", rating: 5.0, images: ['https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop'], farmer: { fullName: 'Highland Avocado Orchards' } },
+  { id: 'w1', title: 'Certified Hybrid Maize Seed (2kg)', price: 450, originalPrice: 650, category: 'seeds', county: 'Uasin Gishu', rating: 4.8, images: ['/images/Maize1.jpg'], farmer: { fullName: 'Eldoret Seed Co-op' } },
+  { id: 'w2', title: 'NPK 50kg Fertilizer Bag', price: 3200, originalPrice: 4500, category: 'fertilizers', county: 'Nakuru', rating: 4.7, images: ['/images/DAP fertilizer.jpg'], farmer: { fullName: 'Rift Valley Agro Inputs' } },
+  { id: 'w3', title: 'Drip Irrigation Kit (50m)', price: 2800, originalPrice: 3800, category: 'farm-inputs', county: 'Kisumu', rating: 4.9, images: ['/images/Drip Irrigation.jpg'], farmer: { fullName: 'Lake Irrigation Systems' } },
+  { id: 'w4', title: 'Garden Hand Tools Set (8pc)', price: 1500, originalPrice: 2200, category: 'tools', county: 'Nairobi', rating: 4.6, images: ['/images/Farm tools.jpg'], farmer: { fullName: 'Nairobi Agri Mart' } },
+  { id: 'w5', title: 'Fresh Hass Avocados (10kg Box)', price: 1800, originalPrice: 2200, category: 'fruits', county: "Murang'a", rating: 5.0, images: ['/images/Avocado.jpg'], farmer: { fullName: 'Highland Avocado Orchards' } },
 ];
 
 const WishlistPage = () => {
@@ -67,7 +67,7 @@ const WishlistPage = () => {
         {/* Content */}
         {wishlist.length === 0 ? (
           <div className="wishlist-empty">
-            <img src="https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=300&auto=format&fit=crop" alt="Empty Wishlist" className="wishlist-empty-img" />
+             <img src="/images/Water.jpg" alt="Empty Wishlist" className="wishlist-empty-img" />
             <h2>Your Wishlist is Empty</h2>
             <p>Save items you love to your wishlist and come back anytime.</p>
             <Link to="/products" className="wishlist-shop-btn">

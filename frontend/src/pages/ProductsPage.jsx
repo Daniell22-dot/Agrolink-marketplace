@@ -19,7 +19,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kirinyaga',
         rating: 4.9,
         reviewsCount: 88,
-        images: ['https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&auto=format&fit=crop'],
+        images: ['/images/Rice planting.jpg'],
         farmer: { fullName: 'Mwea Rice Millers Co.', isVerified: true }
     },
     {
@@ -32,7 +32,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Busia',
         rating: 4.7,
         reviewsCount: 32,
-        images: ['https://images.pexels.com/photos/7543161/pexels-photo-7543161.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Chillie(Pilipili).jpg'],
         farmer: { fullName: 'Western Roots Farm', isVerified: true }
     },
     {
@@ -45,7 +45,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Meru',
         rating: 4.8,
         reviewsCount: 45,
-        images: ['https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=500&auto=format&fit=crop'],
+        images: ['/images/Irish Potatoes.jpg'],
         farmer: { fullName: 'Meru Highland Tubers', isVerified: true }
     },
     {
@@ -58,7 +58,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nyeri',
         rating: 5.0,
         reviewsCount: 94,
-        images: ['https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&auto=format&fit=crop'],
+        images: ['/images/Coffee.jpg'],
         farmer: { fullName: 'Nyeri Hill Coffee Estate', isVerified: true }
     },
     {
@@ -71,7 +71,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kericho',
         rating: 4.9,
         reviewsCount: 67,
-        images: ['https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500&auto=format&fit=crop'],
+        images: ['/images/Coffee berriess.jpg'],
         farmer: { fullName: 'Kericho Tea Plantations', isVerified: true }
     },
     {
@@ -84,7 +84,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kakamega',
         rating: 4.8,
         reviewsCount: 112,
-        images: ['https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=500&auto=format&fit=crop'],
+        images: ['/images/Sugar Cane.jpg'],
         farmer: { fullName: 'Mumias Sugar Outgrowers', isVerified: true }
     },
     {
@@ -97,7 +97,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Migori',
         rating: 4.6,
         reviewsCount: 23,
-        images: ['https://images.pexels.com/photos/2254097/pexels-photo-2254097.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Sugar Cane 1.jpg'],
         farmer: { fullName: 'Sunkuli Cane Farms', isVerified: true }
     },
     {
@@ -110,7 +110,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Uasin Gishu',
         rating: 4.9,
         reviewsCount: 145,
-        images: ['https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&auto=format&fit=crop'],
+        images: ['/images/Maize.jpg'],
         farmer: { fullName: 'Eldoret Granary Ltd', isVerified: true }
     },
     {
@@ -123,7 +123,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nairobi',
         rating: 4.9,
         reviewsCount: 210,
-        images: ['https://images.pexels.com/photos/6086003/pexels-photo-6086003.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Maize.jpg'],
         farmer: { fullName: 'Grain Millers Kenya', isVerified: true }
     },
     {
@@ -136,7 +136,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Narok',
         rating: 4.8,
         reviewsCount: 56,
-        images: ['https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop'],
+        images: ['/images/Maize1.jpg'],
         farmer: { fullName: 'WheatFields Narok', isVerified: true }
     },
     {
@@ -149,7 +149,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nakuru',
         rating: 4.8,
         reviewsCount: 78,
-        images: ['https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop'],
+        images: ['/images/Maize.jpg'],
         farmer: { fullName: 'Rift Valley Millers', isVerified: true }
     },
     {
@@ -162,7 +162,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Bungoma',
         rating: 4.7,
         reviewsCount: 39,
-        images: ['https://images.pexels.com/photos/12338945/pexels-photo-12338945.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Soya beans yellow.jpg'],
         farmer: { fullName: 'Bungoma Soya Co-op', isVerified: true }
     },
     {
@@ -175,7 +175,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Machakos',
         rating: 4.9,
         reviewsCount: 92,
-        images: ['https://images.pexels.com/photos/13620780/pexels-photo-13620780.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Red Beans.jpg'],
         farmer: { fullName: 'Eastern Pulse Growers', isVerified: true }
     },
     {
@@ -188,7 +188,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kitui',
         rating: 4.8,
         reviewsCount: 61,
-        images: ['https://images.pexels.com/photos/13620780/pexels-photo-13620780.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Beans.jpg'],
         farmer: { fullName: 'Kitui Farmers Hub', isVerified: true }
     },
     {
@@ -201,7 +201,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kiambu',
         rating: 4.8,
         reviewsCount: 114,
-        images: ['https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&auto=format&fit=crop'],
+        images: ['/images/Carrots.jpg'],
         farmer: { fullName: 'Limuru Green Greens', isVerified: true }
     },
     {
@@ -214,7 +214,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nyandarua',
         rating: 4.7,
         reviewsCount: 73,
-        images: ['https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500&auto=format&fit=crop'],
+        images: ['/images/Carrots.jpg'],
         farmer: { fullName: 'Kinangop Veggie Farms', isVerified: true }
     },
     {
@@ -227,7 +227,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nyeri',
         rating: 4.9,
         reviewsCount: 54,
-        images: ['https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=500&auto=format&fit=crop'],
+        images: ['/images/Carrots.jpg'],
         farmer: { fullName: 'Highland Organic Greens', isVerified: true }
     },
     {
@@ -240,7 +240,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kisumu',
         rating: 4.9,
         reviewsCount: 130,
-        images: ['https://images.pexels.com/photos/229789/pexels-photo-229789.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Tilapia.jpg'],
         farmer: { fullName: 'Lake Victoria Fisheries', isVerified: true }
     },
     {
@@ -253,7 +253,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kajiado',
         rating: 4.9,
         reviewsCount: 165,
-        images: ['https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop'],
+        images: ['/images/Cow.jpg'],
         farmer: { fullName: 'Maasai Mara Meats', isVerified: true }
     },
     {
@@ -266,7 +266,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nyandarua',
         rating: 4.8,
         reviewsCount: 180,
-        images: ['https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop'],
+        images: ['/images/Irish Potatoes.jpg'],
         farmer: { fullName: 'Kinangop Potato Co-op', isVerified: true }
     },
     {
@@ -279,7 +279,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Bomet',
         rating: 4.8,
         reviewsCount: 42,
-        images: ['https://images.pexels.com/photos/7999009/pexels-photo-7999009.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Sweat Potatoes.jpg'],
         farmer: { fullName: 'Bomet Potato Growers', isVerified: true }
     },
     {
@@ -292,7 +292,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kiambu',
         rating: 4.7,
         reviewsCount: 58,
-        images: ['https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=500&auto=format&fit=crop'],
+        images: ['/images/Pork.jpg'],
         farmer: { fullName: 'Thika Piggeries Ltd', isVerified: true }
     },
     {
@@ -305,7 +305,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nakuru',
         rating: 4.9,
         reviewsCount: 110,
-        images: ['https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&auto=format&fit=crop'],
+        images: ['/images/Chicks.jpg'],
         farmer: { fullName: 'Naivasha Hatcheries', isVerified: true }
     },
     {
@@ -318,7 +318,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nakuru',
         rating: 5.0,
         reviewsCount: 29,
-        images: ['https://images.pexels.com/photos/422202/pexels-photo-422202.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Cow1.jpg'],
         farmer: { fullName: 'Rift Valley Breeders', isVerified: true }
     },
     {
@@ -331,7 +331,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Machakos',
         rating: 4.9,
         reviewsCount: 47,
-        images: ['https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&auto=format&fit=crop'],
+        images: ['/images/Chicks1.jpg'],
         farmer: { fullName: 'Ukambani Poultry Farm', isVerified: true }
     },
     {
@@ -344,7 +344,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Laikipia',
         rating: 4.9,
         reviewsCount: 36,
-        images: ['https://images.pexels.com/photos/25851592/pexels-photo-25851592.jpeg?auto=compress&cs=tinysrgb&w=500'],
+        images: ['/images/Sheep.jpg'],
         farmer: { fullName: 'Laikipia Livestock Ranch', isVerified: true }
     },
     {
@@ -357,7 +357,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Garissa',
         rating: 4.8,
         reviewsCount: 52,
-        images: ['https://images.unsplash.com/photo-1524024973431-2ad916746881?w=500&auto=format&fit=crop'],
+        images: ['/images/Goat.jpg'],
         farmer: { fullName: 'Garissa Goat Breeders', isVerified: true }
     },
     {
@@ -370,7 +370,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Kiambu',
         rating: 4.8,
         reviewsCount: 34,
-        images: ['https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop'],
+        images: ['/images/Chillie(Pilipili).jpg'],
         farmer: { fullName: 'Mwangi Fresh Farm', isVerified: true }
     }
 ];

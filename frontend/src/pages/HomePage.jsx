@@ -24,25 +24,25 @@ const getTimeUntilMidnight = () => {
 const pad = (n) => String(n).padStart(2, '0');
 
 const HERO_CATEGORIES = [
-  { icon: 'fas fa-carrot', name: 'Vegetables', slug: 'vegetables', image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-apple-alt', name: 'Fruits', slug: 'fruits', image: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-seedling', name: 'Seeds', slug: 'seeds', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-cow', name: 'Livestock', slug: 'livestock', image: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-cheese', name: 'Dairy', slug: 'dairy', image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-seedling', name: 'Farm Inputs', slug: 'farm-inputs', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-flask', name: 'Fertilizers', slug: 'fertilizers', image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=80&auto=format&fit=crop' },
-  { icon: 'fas fa-tools', name: 'Farm Tools', slug: 'tools', image: 'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=80&auto=format&fit=crop' },
+  { icon: 'fas fa-carrot', name: 'Vegetables', slug: 'vegetables', image: '/images/Carrots.jpg' },
+  { icon: 'fas fa-apple-alt', name: 'Fruits', slug: 'fruits', image: '/images/Bananas.jpg' },
+  { icon: 'fas fa-seedling', name: 'Seeds', slug: 'seeds', image: '/images/Variant of seeds.jpg' },
+  { icon: 'fas fa-cow', name: 'Livestock', slug: 'livestock', image: '/images/Cow.jpg' },
+  { icon: 'fas fa-cheese', name: 'Dairy', slug: 'dairy', image: '/images/Milk.jpg' },
+  { icon: 'fas fa-seedling', name: 'Farm Inputs', slug: 'farm-inputs', image: '/images/Drip Irrigation.jpg' },
+  { icon: 'fas fa-flask', name: 'Fertilizers', slug: 'fertilizers', image: '/images/Fertilizer.jpg' },
+  { icon: 'fas fa-tools', name: 'Farm Tools', slug: 'tools', image: '/images/Farm tools.jpg' },
 ];
 
 const GRID_CATEGORIES = [
-  { name: 'Vegetables', slug: 'vegetables', image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=300&auto=format&fit=crop' },
-  { name: 'Fruits', slug: 'fruits', image: 'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=300&auto=format&fit=crop' },
-  { name: 'Grains & Cereals', slug: 'grains', image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&auto=format&fit=crop' },
-  { name: 'Livestock', slug: 'livestock', image: 'https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=300&auto=format&fit=crop' },
-  { name: 'Farm Inputs', slug: 'farm-inputs', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=300&auto=format&fit=crop' },
-  { name: 'Seeds', slug: 'seeds', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&auto=format&fit=crop' },
-  { name: 'Farm Tools', slug: 'tools', image: 'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=300&auto=format&fit=crop' },
-  { name: 'Fertilizers', slug: 'fertilizers', image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop' },
+  { name: 'Vegetables', slug: 'vegetables', image: '/images/Carrots.jpg' },
+  { name: 'Fruits', slug: 'fruits', image: '/images/Bananas.jpg' },
+  { name: 'Grains & Cereals', slug: 'grains', image: '/images/Maize1.jpg' },
+  { name: 'Livestock', slug: 'livestock', image: '/images/Cow.jpg' },
+  { name: 'Farm Inputs', slug: 'farm-inputs', image: '/images/Drip Irrigation.jpg' },
+  { name: 'Seeds', slug: 'seeds', image: '/images/Variant of seeds.jpg' },
+  { name: 'Farm Tools', slug: 'tools', image: '/images/Farm tools.jpg' },
+  { name: 'Fertilizers', slug: 'fertilizers', image: '/images/Fertilizer.jpg' },
 ];
 
 const HomePage = () => {
@@ -139,14 +139,14 @@ const HomePage = () => {
   }, []);
 
   const displayProducts = guestProducts.length > 0 ? guestProducts : [
-    { id: 's1', title: 'Fresh Grade A Tomatoes (50kg Crate)', price: 3200, originalPrice: 3800, unit: 'crate', category: 'vegetables', county: 'Kiambu', rating: 4.8, images: ['https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop'], farmer: { fullName: 'Mwangi Fresh Farm' } },
-    { id: 's2', title: 'Organic White Maize (90kg Bag)', price: 2800, originalPrice: 3200, unit: 'bag', category: 'grains', county: 'Uasin Gishu', rating: 4.9, images: ['https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=500&auto=format&fit=crop'], farmer: { fullName: 'Eldoret Granary Ltd' } },
-    { id: 's3', title: 'Fresh Farm Milk (10L)', price: 750, originalPrice: 850, unit: 'liter', category: 'dairy', county: 'Nakuru', rating: 4.7, images: ['https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&auto=format&fit=crop'], farmer: { fullName: 'Rift Valley Dairies' } },
-    { id: 's4', title: 'Hass Avocados (10kg Box)', price: 1800, originalPrice: 2200, unit: 'kg', category: 'fruits', county: "Murang'a", rating: 5.0, images: ['https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop'], farmer: { fullName: 'Highland Avocado Orchards' } },
-    { id: 's5', title: 'Fresh Sukuma Wiki Bundle (24 heads)', price: 180, originalPrice: 240, unit: 'bundle', category: 'vegetables', county: 'Kisii', rating: 4.6, images: ['https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&auto=format&fit=crop'], farmer: { fullName: 'Kisii Green Farms' } },
-    { id: 's6', title: 'Rice Paddy (50kg Bag)', price: 4500, originalPrice: 5200, unit: 'bag', category: 'grains', county: 'Mwea', rating: 4.8, images: ['https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500&auto=format&fit=crop'], farmer: { fullName: 'Mwea Irrigation Scheme' } },
-    { id: 's7', title: 'Fresh Passion Fruit (5kg)', price: 600, originalPrice: 750, unit: 'kg', category: 'fruits', county: 'Machakos', rating: 4.5, images: ['https://images.unsplash.com/photo-1527004013197-933c4bb611b3?w=500&auto=format&fit=crop'], farmer: { fullName: 'Machakos Tropical Farm' } },
-    { id: 's8', title: 'Farm Fresh Eggs (Tray of 30)', price: 550, originalPrice: 650, unit: 'tray', category: 'dairy', county: 'Nyeri', rating: 4.9, images: ['https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=500&auto=format&fit=crop'], farmer: { fullName: 'Nyeri Poultry Farm' } },
+    { id: 's1', title: 'Fresh Grade A Tomatoes (50kg Crate)', price: 3200, originalPrice: 3800, unit: 'crate', category: 'vegetables', county: 'Kiambu', rating: 4.8, images: ['/images/Chillie(Pilipili).jpg'], farmer: { fullName: 'Mwangi Fresh Farm' } },
+    { id: 's2', title: 'Organic White Maize (90kg Bag)', price: 2800, originalPrice: 3200, unit: 'bag', category: 'grains', county: 'Uasin Gishu', rating: 4.9, images: ['/images/Maize.jpg'], farmer: { fullName: 'Eldoret Granary Ltd' } },
+    { id: 's3', title: 'Fresh Farm Milk (10L)', price: 750, originalPrice: 850, unit: 'liter', category: 'dairy', county: 'Nakuru', rating: 4.7, images: ['/images/Milk.jpg'], farmer: { fullName: 'Rift Valley Dairies' } },
+    { id: 's4', title: 'Hass Avocados (10kg Box)', price: 1800, originalPrice: 2200, unit: 'kg', category: 'fruits', county: "Murang'a", rating: 5.0, images: ['/images/Avocado.jpg'], farmer: { fullName: 'Highland Avocado Orchards' } },
+    { id: 's5', title: 'Fresh Sukuma Wiki Bundle (24 heads)', price: 180, originalPrice: 240, unit: 'bundle', category: 'vegetables', county: 'Kisii', rating: 4.6, images: ['/images/Carrots.jpg'], farmer: { fullName: 'Kisii Green Farms' } },
+    { id: 's6', title: 'Rice Paddy (50kg Bag)', price: 4500, originalPrice: 5200, unit: 'bag', category: 'grains', county: 'Mwea', rating: 4.8, images: ['/images/Rice planting.jpg'], farmer: { fullName: 'Mwea Irrigation Scheme' } },
+    { id: 's7', title: 'Fresh Passion Fruit (5kg)', price: 600, originalPrice: 750, unit: 'kg', category: 'fruits', county: 'Machakos', rating: 4.5, images: ['/images/Bananas.jpg'], farmer: { fullName: 'Machakos Tropical Farm' } },
+    { id: 's8', title: 'Farm Fresh Eggs (Tray of 30)', price: 550, originalPrice: 650, unit: 'tray', category: 'dairy', county: 'Nyeri', rating: 4.9, images: ['/images/Chicks.jpg'], farmer: { fullName: 'Nyeri Poultry Farm' } },
   ];
 
   const pad = (n) => String(n).padStart(2, '0');

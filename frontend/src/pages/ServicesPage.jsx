@@ -62,7 +62,7 @@ const ServicesPage = () => {
             county: 'Nyeri',
             rating: 5.0,
             reviewsCount: 24,
-            images: ['https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop'],
+            images: ['/images/Chicks.jpg'],
             farmer: { fullName: 'Mt Kenya Vet Services', isVerified: true }
         },
         {
@@ -75,7 +75,7 @@ const ServicesPage = () => {
             county: 'Kiambu',
             rating: 4.9,
             reviewsCount: 38,
-            images: ['https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=500&auto=format&fit=crop'],
+            images: ['/images/Wheelbarrows.jpeg'],
             farmer: { fullName: 'Highland Cold Freight Ltd', isVerified: true }
         },
         {
@@ -88,7 +88,7 @@ const ServicesPage = () => {
             county: 'Uasin Gishu',
             rating: 4.8,
             reviewsCount: 16,
-            images: ['https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop'],
+            images: ['/images/Fertilizer 1.jpg'],
             farmer: { fullName: 'CropCare Labs Kenya', isVerified: true }
         },
         {
@@ -101,7 +101,7 @@ const ServicesPage = () => {
             county: 'Nakuru',
             rating: 4.9,
             reviewsCount: 45,
-            images: ['https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=500&auto=format&fit=crop'],
+            images: ['/images/Fertilizer 12.jpg'],
             farmer: { fullName: 'Rift Valley Agrovet Distributors', isVerified: true }
         }
     ];

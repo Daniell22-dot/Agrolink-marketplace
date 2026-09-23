@@ -3,7 +3,7 @@
 // URLs so they always render, even when the API is unavailable or slow.
 // The backend remains the single source of truth (GET /api/images/catalog).
 
-const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=500&auto=format&fit=crop";
+const DEFAULT_IMAGE = "/images/Water.jpg";
 
 const CATEGORY_DEFAULTS = {
   "grains": ["/images/Maize1.jpg"],
@@ -60,7 +60,7 @@ const PRODUCT_IMAGES = [
       "wheat grain"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -76,7 +76,7 @@ const PRODUCT_IMAGES = [
       "unga wa ngano"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=500&auto=format&fit=crop"
+      "/images/Maize1.jpg"
     ]
   },
   {
@@ -277,7 +277,7 @@ const PRODUCT_IMAGES = [
       "black tea"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop"
+      "/images/Coffee berriess.jpg"
     ]
   },
   {
@@ -291,7 +291,7 @@ const PRODUCT_IMAGES = [
       "cane sugar"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1581441363689-1f3c3c414635?w=500&auto=format&fit=crop"
+      "/images/Sugar Cane.jpg"
     ]
   },
   {
@@ -318,7 +318,7 @@ const PRODUCT_IMAGES = [
       "nyanya"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500&auto=format&fit=crop"
+      "/images/Chillie(Pilipili).jpg"
     ]
   },
   {
@@ -332,7 +332,7 @@ const PRODUCT_IMAGES = [
       "red onion"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -385,7 +385,7 @@ const PRODUCT_IMAGES = [
       "kabichi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -398,7 +398,7 @@ const PRODUCT_IMAGES = [
       "karoti"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -415,7 +415,7 @@ const PRODUCT_IMAGES = [
       "white potato"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop"
+      "/images/Irish Potatoes.jpg"
     ]
   },
   {
@@ -431,7 +431,7 @@ const PRODUCT_IMAGES = [
       "orange sweet potato"
     ],
     "images": [
-      "https://images.pexels.com/photos/7999009/pexels-photo-7999009.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Sweat Potatoes.jpg"
     ]
   },
   {
@@ -445,7 +445,7 @@ const PRODUCT_IMAGES = [
       "yucca"
     ],
     "images": [
-      "https://images.pexels.com/photos/7543161/pexels-photo-7543161.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Maize.jpg"
     ]
   },
   {
@@ -459,7 +459,7 @@ const PRODUCT_IMAGES = [
       "true yam"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=500&auto=format&fit=crop"
+      "/images/Nduma(Arrow root).jpg"
     ]
   },
   {
@@ -474,7 +474,7 @@ const PRODUCT_IMAGES = [
       "snap bean"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1551462147-37885acc36f1?w=500&auto=format&fit=crop"
+      "/images/Beans.jpg"
     ]
   },
   {
@@ -490,7 +490,7 @@ const PRODUCT_IMAGES = [
       "pilipili hoho"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=500&auto=format&fit=crop"
+      "/images/Chillie(Pilipili).jpg"
     ]
   },
   {
@@ -506,7 +506,7 @@ const PRODUCT_IMAGES = [
       "bird eye chilli"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1597362925123-77861d3fbac7?w=500&auto=format&fit=crop"
+      "/images/Chillie(Pilipili).jpg"
     ]
   },
   {
@@ -518,7 +518,7 @@ const PRODUCT_IMAGES = [
       "kitunguu saumu"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1508747703725-719777637510?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -530,8 +530,7 @@ const PRODUCT_IMAGES = [
       "tangawizi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&auto=format&fit=crop",
-      "https://images.pexels.com/photos/7543161/pexels-photo-7543161.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -650,7 +649,7 @@ const PRODUCT_IMAGES = [
       "nanasi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&auto=format&fit=crop"
+      "/images/Bananas.jpg"
     ]
   },
   {
@@ -663,7 +662,7 @@ const PRODUCT_IMAGES = [
       "machungwa"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1547514701-42782101795e?w=500&auto=format&fit=crop"
+      "/images/Oranges.jpg"
     ]
   },
   {
@@ -676,7 +675,7 @@ const PRODUCT_IMAGES = [
       "ndimu"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1590502593747-42a996133562?w=500&auto=format&fit=crop"
+      "/images/Bananas.jpg"
     ]
   },
   {
@@ -688,7 +687,7 @@ const PRODUCT_IMAGES = [
       "limes"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1590502593747-42a996133562?w=500&auto=format&fit=crop"
+      "/images/Bananas.jpg"
     ]
   },
   {
@@ -701,7 +700,7 @@ const PRODUCT_IMAGES = [
       "tufaha"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop"
+      "/images/Apples.jpg"
     ]
   },
   {
@@ -715,7 +714,7 @@ const PRODUCT_IMAGES = [
       "matikiti"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&auto=format&fit=crop"
+      "/images/Bananas.jpg"
     ]
   },
   {
@@ -728,7 +727,7 @@ const PRODUCT_IMAGES = [
       "karakara"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&auto=format&fit=crop"
+      "/images/Bananas.jpg"
     ]
   },
   {
@@ -741,7 +740,7 @@ const PRODUCT_IMAGES = [
       "zabibu"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=500&auto=format&fit=crop"
+      "/images/Bananas.jpg"
     ]
   },
   {
@@ -754,7 +753,7 @@ const PRODUCT_IMAGES = [
       "stroberi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&auto=format&fit=crop"
+      "/images/Berries.jpg"
     ]
   },
   {
@@ -766,7 +765,7 @@ const PRODUCT_IMAGES = [
       "peaches"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop"
+      "/images/Apples.jpg"
     ]
   },
   {
@@ -778,7 +777,7 @@ const PRODUCT_IMAGES = [
       "plums"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop"
+      "/images/Apples.jpg"
     ]
   },
   {
@@ -791,7 +790,7 @@ const PRODUCT_IMAGES = [
       "nazi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&auto=format&fit=crop"
+      "/images/Bananas.jpg"
     ]
   },
   {
@@ -803,7 +802,7 @@ const PRODUCT_IMAGES = [
       "mapera"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1553279768-865429fa0078?w=500&auto=format&fit=crop"
+      "/images/White Guavas.jpg"
     ]
   },
   {
@@ -815,7 +814,7 @@ const PRODUCT_IMAGES = [
       "oil"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop"
+      "/images/Avocado.jpg"
     ]
   },
   {
@@ -833,8 +832,8 @@ const PRODUCT_IMAGES = [
       "bull"
     ],
     "images": [
-      "https://images.pexels.com/photos/422202/pexels-photo-422202.jpeg?auto=compress&cs=tinysrgb&w=500",
-      "https://images.pexels.com/photos/248337/pexels-photo-248337.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Cow.jpg",
+      "/images/Cow1.jpg"
     ]
   },
   {
@@ -848,7 +847,7 @@ const PRODUCT_IMAGES = [
       "mbuzi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1524024973431-2ad916746881?w=500&auto=format&fit=crop"
+      "/images/Goat.jpg"
     ]
   },
   {
@@ -864,7 +863,7 @@ const PRODUCT_IMAGES = [
       "lamb stock"
     ],
     "images": [
-      "https://images.pexels.com/photos/25851592/pexels-photo-25851592.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Irish Potatoes.jpg"
     ]
   },
   {
@@ -883,7 +882,7 @@ const PRODUCT_IMAGES = [
       "kuku"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&auto=format&fit=crop"
+      "/images/Chicks.jpg"
     ]
   },
   {
@@ -899,9 +898,9 @@ const PRODUCT_IMAGES = [
       "red meat"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&auto=format&fit=crop",
-      "https://images.pexels.com/photos/20187068/pexels-photo-20187068.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Mutton meat.jpg",
+      "/images/Cow.jpg",
+      "/images/Tilapia.jpg"
     ]
   },
   {
@@ -915,8 +914,8 @@ const PRODUCT_IMAGES = [
       "nyama mbuzi"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&auto=format&fit=crop",
-      "https://images.pexels.com/photos/20187068/pexels-photo-20187068.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Mutton meat.jpg",
+      "/images/Tilapia.jpg"
     ]
   },
   {
@@ -930,7 +929,7 @@ const PRODUCT_IMAGES = [
       "ram"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&auto=format&fit=crop"
+      "/images/Mutton meat.jpg"
     ]
   },
   {
@@ -943,8 +942,8 @@ const PRODUCT_IMAGES = [
       "pork meat"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=500&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=500&auto=format&fit=crop"
+      "/images/Pork.jpg",
+      "/images/Mutton meat.jpg"
     ]
   },
   {
@@ -976,8 +975,8 @@ const PRODUCT_IMAGES = [
       "live chicken"
     ],
     "images": [
-      "https://images.pexels.com/photos/106343/pexels-photo-106343.jpeg?auto=compress&cs=tinysrgb&w=500",
-      "https://images.pexels.com/photos/24182617/pexels-photo-24182617.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Chicks.jpg",
+      "/images/Chicks1.jpg"
     ]
   },
   {
@@ -1003,8 +1002,8 @@ const PRODUCT_IMAGES = [
       "tray of eggs"
     ],
     "images": [
-      "https://images.pexels.com/photos/6827029/pexels-photo-6827029.jpeg?auto=compress&cs=tinysrgb&w=500",
-      "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=500&auto=format&fit=crop"
+      "/images/Chicks.jpg",
+      "/images/Chicks1.jpg"
     ]
   },
   {
@@ -1037,8 +1036,8 @@ const PRODUCT_IMAGES = [
       "omena fish"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=500&auto=format&fit=crop",
-      "https://images.pexels.com/photos/229789/pexels-photo-229789.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Tilapia.jpg",
+      "/images/Fish.jpg"
     ]
   },
   {
@@ -1051,7 +1050,7 @@ const PRODUCT_IMAGES = [
       "raw honey"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1587049352851-8d4e89133924?w=500&auto=format&fit=crop"
+      "/images/Guava.jpg"
     ]
   },
   {
@@ -1065,7 +1064,7 @@ const PRODUCT_IMAGES = [
       "fresh milk"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop"
+      "/images/Milk.jpg"
     ]
   },
   {
@@ -1077,7 +1076,7 @@ const PRODUCT_IMAGES = [
       "jibini"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=500&auto=format&fit=crop"
+      "/images/Milk.jpg"
     ]
   },
   {
@@ -1090,7 +1089,7 @@ const PRODUCT_IMAGES = [
       "ghee"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=500&auto=format&fit=crop"
+      "/images/Milk.jpg"
     ]
   },
   {
@@ -1118,7 +1117,7 @@ const PRODUCT_IMAGES = [
       "coriander leaves"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -1143,7 +1142,7 @@ const PRODUCT_IMAGES = [
       "pilipili manga"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&auto=format&fit=crop"
+      "/images/Coffee.jpg"
     ]
   },
   {
@@ -1159,7 +1158,7 @@ const PRODUCT_IMAGES = [
       "poultry advisory"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop"
+      "/images/Cow.jpg"
     ]
   },
   {
@@ -1212,7 +1211,7 @@ const PRODUCT_IMAGES = [
       "fruit seeds"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&auto=format&fit=crop"
+      "/images/Variant of seeds.jpg"
     ]
   },
   {
@@ -1248,7 +1247,7 @@ const PRODUCT_IMAGES = [
       "shade net"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=500&auto=format&fit=crop"
+      "/images/Fabric grow bag.jpeg"
     ]
   },
   {
