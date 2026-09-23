@@ -32,7 +32,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Busia',
         rating: 4.7,
         reviewsCount: 32,
-        images: ['/images/Chillie(Pilipili).jpg'],
+        images: ['/images/Irish Potatoes.jpg'],
         farmer: { fullName: 'Western Roots Farm', isVerified: true }
     },
     {
@@ -214,7 +214,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nyandarua',
         rating: 4.7,
         reviewsCount: 73,
-        images: ['/images/Carrots.jpg'],
+        images: ['/images/Jute mallow(Mrenda).jpeg'],
         farmer: { fullName: 'Kinangop Veggie Farms', isVerified: true }
     },
     {
@@ -227,7 +227,7 @@ const SAMPLE_PRODUCTS = [
         county: 'Nyeri',
         rating: 4.9,
         reviewsCount: 54,
-        images: ['/images/Carrots.jpg'],
+        images: ['/images/Jute mallow(Mrenda).jpeg'],
         farmer: { fullName: 'Highland Organic Greens', isVerified: true }
     },
     {
