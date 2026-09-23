@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/slices/cartSlice';
 import { resolveProductImage } from '../../utils/productImages';
+import { slugify } from '../../utils/slugify';
 import toast from 'react-hot-toast';
 import ChatButton from '../chat/ChatButton';
 import './ProductCard.css';
@@ -59,7 +60,7 @@ const ProductCard = ({ product }) => {
   };
 
   return (
-    <Link to={`/product/${product.id}`} className="jk-card">
+    <Link to={`/product/${product.id}/${slugify(title)}`} className="jk-card">
       <div className="jk-image-wrap">
         {displayImage ? (
           <img

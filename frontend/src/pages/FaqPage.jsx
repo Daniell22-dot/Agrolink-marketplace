@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/seo/SEO';
 import './FaqPage.css';
 
 const FAQ_ITEMS = [
@@ -34,6 +35,15 @@ const FaqPage = () => {
 
     return (
         <div className="faq-page">
+            <SEO
+                title="FAQ - AgroLink Kenya"
+                description="Frequently asked questions about AgroLink Kenya. Learn about trading, M-Pesa payments, escrow, delivery, and how to buy or sell farm products."
+                canonical="https://agrolink.co.ke/faq"
+                breadcrumbs={[
+                    { label: 'Home', url: 'https://agrolink.co.ke/' },
+                    { label: 'FAQ', url: 'https://agrolink.co.ke/faq' },
+                ]}
+            />
             <div className="faq-hero">
                 <div className="container">
                     <h1>Frequently Asked Questions</h1>

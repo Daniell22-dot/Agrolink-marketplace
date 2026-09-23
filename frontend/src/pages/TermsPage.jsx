@@ -1,10 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/seo/SEO';
 import './TermsPage.css';
 
 const TermsPage = () => {
     return (
         <div className="terms-page">
+            <SEO
+                title="Terms of Service - AgroLink Kenya"
+                description="Read AgroLink Kenya's terms of service, buyer protection, escrow policy, and returns policy. Your safety and satisfaction are our priority."
+                canonical="https://agrolink.co.ke/terms"
+                breadcrumbs={[
+                    { label: 'Home', url: 'https://agrolink.co.ke/' },
+                    { label: 'Terms of Service', url: 'https://agrolink.co.ke/terms' },
+                ]}
+            />
             <div className="terms-hero">
                 <div className="container">
                     <h1>Terms of Service &amp; Returns Policy</h1>

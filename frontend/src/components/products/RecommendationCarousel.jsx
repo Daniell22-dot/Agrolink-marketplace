@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { slugify } from '../../utils/slugify';
 import './RecommendationCarousel.css';
 
 const RecommendationCarousel = ({ title, icon, fetchFn, emptyMessage }) => {
@@ -41,7 +42,7 @@ const RecommendationCarousel = ({ title, icon, fetchFn, emptyMessage }) => {
             </div>
             <div className="rec-scroll">
                 {products.map((product) => (
-                    <Link to={`/product/${product.id}`} key={product.id} className="rec-card">
+                    <Link to={`/product/${product.id}/${slugify(product.name)}`} key={product.id} className="rec-card">
                         <div className="rec-image">
                             {product.images && product.images.length > 0 ? (
                                 <img src={typeof product.images === 'string' ? JSON.parse(product.images)[0] : product.images[0]} alt={product.name} />

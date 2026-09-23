@@ -2,8 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
+import { HelmetProvider } from 'react-helmet-async';
 import { store } from './redux/store';
 import { fetchImageCatalog } from './redux/slices/productSlice';
+import { organizationStructuredData, websiteStructuredData } from './components/seo/SEO';
 
 // Layout Components
 import Header from './components/common/Header';
@@ -53,31 +55,34 @@ function AppInit() {
 }
 
 function App() {
+  const helmetContext = {};
+
   return (
     <Provider store={store}>
-      <AppInit />
-      <Router>
-        <div className="App">
-          <AnnouncementBar />
-          <Header />
-          <main className="main-content">
-            <Routes>
-              {/* Public Routes */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/products" element={<ProductsPage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/product/:id" element={<ProductDetailPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/how-it-works" element={<HowItWorksPage />} />
-              <Route path="/pricing" element={<PricingPage />} />
-              <Route path="/status" element={<StatusPage />} />
-              <Route path="/faq" element={<FaqPage />} />
-              <Route path="/terms" element={<TermsPage />} />
-              <Route path="/wishlist" element={<WishlistPage />} />
-              <Route path="/category/:slug" element={<CategoryPage />} />
+      <HelmetProvider context={helmetContext}>
+        <AppInit />
+        <Router>
+          <div className="App">
+            <AnnouncementBar />
+            <Header />
+            <main className="main-content">
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/product/:id/:slug?" element={<ProductDetailPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/how-it-works" element={<HowItWorksPage />} />
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/status" element={<StatusPage />} />
+                <Route path="/faq" element={<FaqPage />} />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/wishlist" element={<WishlistPage />} />
+                <Route path="/category/:slug" element={<CategoryPage />} />
 
               {/* Protected Routes */}
               <Route path="/dashboard" element={
@@ -147,6 +152,7 @@ function App() {
           />
         </div>
       </Router>
+      </HelmetProvider>
     </Provider>
   );
 }

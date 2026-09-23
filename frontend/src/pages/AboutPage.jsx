@@ -1,10 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/seo/SEO';
 import './AboutPage.css';
 
 const AboutPage = () => {
     return (
         <div className="about-page">
+            <SEO
+                title="About AgroLink Kenya - Connecting Farmers and Buyers"
+                description="Learn about AgroLink Kenya's mission to transform agriculture by connecting smallholder farmers directly with buyers across all 47 counties through technology and transparency."
+                canonical="https://agrolink.co.ke/about"
+                breadcrumbs={[
+                    { label: 'Home', url: 'https://agrolink.co.ke/' },
+                    { label: 'About Us', url: 'https://agrolink.co.ke/about' },
+                ]}
+            />
             {/* Hero Banner */}
             <section className="about-hero">
                 <div className="container about-hero-inner">

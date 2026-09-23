@@ -1,9 +1,19 @@
 import React from 'react';
+import SEO from '../components/seo/SEO';
 import './HowItWorksPage.css';
 
 const HowItWorksPage = () => {
     return (
         <div className="how-it-works-page">
+            <SEO
+                title="How It Works - AgroLink Kenya"
+                description="Learn how AgroLink Kenya connects farmers and buyers. Simple steps to buy and sell farm products online with secure payments and delivery."
+                canonical="https://agrolink.co.ke/how-it-works"
+                breadcrumbs={[
+                    { label: 'Home', url: 'https://agrolink.co.ke/' },
+                    { label: 'How It Works', url: 'https://agrolink.co.ke/how-it-works' },
+                ]}
+            />
             <div className="page-header">
                 <div className="container">
                     <h1>How AgroLink Works</h1>

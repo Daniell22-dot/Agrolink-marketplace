@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
+import SEO from '../components/seo/SEO';
 import './ContactPage.css';
 
 const ContactPage = () => {
@@ -53,6 +54,15 @@ const ContactPage = () => {
 
     return (
         <div className="contact-page">
+            <SEO
+                title="Contact AgroLink Kenya - Get in Touch"
+                description="Contact AgroLink Kenya for support, partnerships, or inquiries. We're here to help with all your agricultural marketplace needs across Kenya."
+                canonical="https://agrolink.co.ke/contact"
+                breadcrumbs={[
+                    { label: 'Home', url: 'https://agrolink.co.ke/' },
+                    { label: 'Contact Us', url: 'https://agrolink.co.ke/contact' },
+                ]}
+            />
             {/* Header */}
             <section className="contact-hero">
                 <h1>Get in Touch</h1>

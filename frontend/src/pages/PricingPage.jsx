@@ -1,9 +1,19 @@
 import React from 'react';
+import SEO from '../components/seo/SEO';
 import './PricingPage.css';
 
 const PricingPage = () => {
     return (
         <div className="pricing-page">
+            <SEO
+                title="Pricing - AgroLink Kenya"
+                description="AgroLink Kenya pricing: free for buyers, small commission for farmers. Transparent fees with no hidden costs for agricultural marketplace transactions."
+                canonical="https://agrolink.co.ke/pricing"
+                breadcrumbs={[
+                    { label: 'Home', url: 'https://agrolink.co.ke/' },
+                    { label: 'Pricing', url: 'https://agrolink.co.ke/pricing' },
+                ]}
+            />
             <div className="page-header">
                 <div className="container">
                     <h1>Simple, Transparent Pricing</h1>

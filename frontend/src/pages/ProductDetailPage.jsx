@@ -8,10 +8,13 @@ import api from '../services/api';
 import recommendationService from '../services/recommendationService';
 import RecommendationCarousel from '../components/products/RecommendationCarousel';
 import ChatButton from '../components/chat/ChatButton';
+import SEO from '../components/seo/SEO';
+import getProductStructuredData from '../components/seo/ProductStructuredData';
+import { slugify } from '../utils/slugify';
 import './ProductDetailPage.css';
 
 const ProductDetailPage = () => {
-    const { id } = useParams();
+    const { id, slug } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { selectedProduct: product, isLoading } = useSelector((state) => state.products);
@@ -21,6 +24,14 @@ const ProductDetailPage = () => {
     const [reviews, setReviews] = useState([]);
     const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
     const [submittingReview, setSubmittingReview] = useState(false);
+
+    const expectedSlug = product ? slugify(product.name) : null;
+
+    useEffect(() => {
+        if (product && slug && expectedSlug && slug !== expectedSlug) {
+            navigate(`/product/${id}/${expectedSlug}`, { replace: true });
+        }
+    }, [product, slug, expectedSlug, id, navigate]);
 
     const fetchReviews = React.useCallback(async () => {
         try {
@@ -106,6 +117,19 @@ const ProductDetailPage = () => {
 
     return (
         <div className="product-detail-page">
+            {product && (
+                <SEO
+                    title={`${product.name} | AgroLink Kenya`}
+                    description={product.description ? product.description.substring(0, 160) : `Buy ${product.name} directly from farmers on AgroLink Kenya. Fresh, quality ${product.category || 'products'} at competitive prices.`}
+                    canonical={`https://agrolink.co.ke/product/${id}/${slugify(product.name)}`}
+                    structuredData={getProductStructuredData(product)}
+                    breadcrumbs={[
+                        { label: 'Home', url: 'https://agrolink.co.ke/' },
+                        { label: 'Products', url: 'https://agrolink.co.ke/products' },
+                        { label: product.name, url: `https://agrolink.co.ke/product/${id}/${slugify(product.name)}` },
+                    ]}
+                />
+            )}
             <div className="container">
                 <div className="breadcrumb">
                     <Link to="/products">← Back to Products</Link>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ProductCard from '../components/products/ProductCard';
 import api from '../services/api';
+import SEO from '../components/seo/SEO';
 import './CategoryPage.css';
 
 const CATEGORY_DATA = {
@@ -160,6 +161,17 @@ const CategoryPage = () => {
 
   return (
     <div className="category-page">
+      {categoryData && (
+        <SEO
+          title={`${categoryData.name} - AgroLink Kenya`}
+          description={categoryData.description}
+          canonical={`https://agrolink.co.ke/category/${slug}`}
+          breadcrumbs={[
+            { label: 'Home', url: 'https://agrolink.co.ke/' },
+            { label: categoryData.name, url: `https://agrolink.co.ke/category/${slug}` },
+          ]}
+        />
+      )}
       {/* Hero Banner */}
       <div className="category-hero" style={{ '--cat-color': categoryData.color }}>
         <img src={categoryData.heroImage} alt={categoryData.name} className="category-hero-img" />

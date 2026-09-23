@@ -6,6 +6,7 @@ import FarmAdvisory from '../components/common/FarmAdvisory';
 import AgriNews from '../components/common/AgriNews';
 import recommendationService from '../services/recommendationService';
 import api from '../services/api';
+import SEO, { organizationStructuredData, websiteStructuredData } from '../components/seo/SEO';
 import './HomePage.css';
 
 const getTimeUntilMidnight = () => {
@@ -158,6 +159,15 @@ const HomePage = () => {
 
   return (
     <div className="jumia-homepage">
+      <SEO
+        title="AgroLink Kenya - Fresh Farm Products Direct from Farmers"
+        description="Buy fresh farm products directly from Kenyan farmers. Vegetables, fruits, grains, dairy, livestock, farm inputs, seeds, and tools delivered to your door."
+        canonical="https://agrolink.co.ke/"
+        structuredData={organizationStructuredData}
+        breadcrumbs={[
+          { label: 'Home', url: 'https://agrolink.co.ke/' },
+        ]}
+      />
 
       {/* ── 1. HERO SECTION ──────────────────────────────── */}
       <section className="j-hero">

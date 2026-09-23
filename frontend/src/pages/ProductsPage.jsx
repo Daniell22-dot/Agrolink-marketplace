@@ -3,6 +3,8 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/slices/productSlice';
 import ProductCard from '../components/products/ProductCard';
+import SEO from '../components/seo/SEO';
+import { slugify } from '../utils/slugify';
 import './ProductsPage.css';
 
 // Sample fallback products to ensure cards always render even if backend is empty
@@ -437,6 +439,12 @@ const ProductsPage = () => {
 
     return (
         <div className="jumia-products-page">
+            <SEO
+                title={currentCategoryLabel ? `${currentCategoryLabel} - AgroLink Kenya` : 'All Products - AgroLink Kenya'}
+                description={currentCategoryLabel ? `Shop fresh ${currentCategoryLabel.toLowerCase()} directly from Kenyan farmers on AgroLink. Quality produce at fair prices with delivery across Kenya.` : 'Browse all fresh farm products on AgroLink Kenya. Vegetables, fruits, grains, dairy, livestock, farm inputs, seeds, and tools from verified farmers.'}
+                canonical={`https://agrolink.co.ke/products${filters.category ? `?category=${encodeURIComponent(filters.category)}` : ''}`}
+                noindex={false}
+            />
             {/* Breadcrumb Bar */}
             <div className="breadcrumb-bar">
                 <div className="container">
@@ -571,7 +579,7 @@ const ProductsPage = () => {
                         <h3>Fast Selling Produce</h3>
                         <div className="mini-product-list">
                             {SAMPLE_PRODUCTS.slice(0, 3).map(p => (
-                                <Link key={p.id} to={`/product/${p.id}`} className="mini-product-item">
+                                <Link key={p.id} to={`/product/${p.id}/${slugify(p.title)}`} className="mini-product-item">
                                     <img src={p.images[0]} alt={p.title} />
                                     <div className="mini-product-info">
                                         <span className="mini-product-title">{p.title}</span>
