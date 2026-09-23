@@ -41,6 +41,7 @@ import CategoryPage from './pages/CategoryPage';
 
 // Protected Route Component
 import ProtectedRoute from './components/common/ProtectedRoute';
+import AgentRoute from './components/common/AgentRoute';
 
 import './App.css';
 
