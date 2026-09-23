@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: agrolink-python-ml
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./python-services/dockerfile
+    dockerContext: ./python-services
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql+psycopg2://neondb_owner:npg_U1I8ivoSFwGM@ep-rapid-glitter-aeyjgkw4-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: 5000
+      - key: LOG_LEVEL
+        value: INFO
