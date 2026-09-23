@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const ProductVariant = require('./ProductVariant');
 
 const Product = sequelize.define('Product', {
   id: {
@@ -70,5 +71,8 @@ const Product = sequelize.define('Product', {
   underscored: true,
   timestamps: true
 });
+
+Product.hasMany(ProductVariant, { foreignKey: 'productId', as: 'variants', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+ProductVariant.belongsTo(Product, { foreignKey: 'productId', onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 
 module.exports = Product;

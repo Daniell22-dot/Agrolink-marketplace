@@ -52,6 +52,8 @@ const DashboardPage = () => {
 
     const isFarmer = user?.role === 'farmer';
     const fetchRecentlyViewed = React.useCallback(() => recommendationService.getRecentlyViewed(10), []);
+    const fetchForYou = React.useCallback(() => recommendationService.getForYou(10).then(data => ({ data })), []);
+    const fetchTrending = React.useCallback(() => recommendationService.getTrending(10).then(data => ({ data })), []);
 
     return (
         <div className="dashboard-page">
@@ -208,6 +210,26 @@ const DashboardPage = () => {
                         title="Recently Viewed"
                         icon="fas fa-history"
                         fetchFn={fetchRecentlyViewed}
+                    />
+                </div>
+
+                {/* Recommended For You (ML Engine) */}
+                <div style={{ marginTop: '32px' }}>
+                    <RecommendationCarousel
+                        title="Recommended For You"
+                        icon="fas fa-magic"
+                        fetchFn={fetchForYou}
+                        emptyMessage="Browse products to get personalized recommendations"
+                    />
+                </div>
+
+                {/* Trending Products (ML Engine) */}
+                <div style={{ marginTop: '32px' }}>
+                    <RecommendationCarousel
+                        title="Trending Now"
+                        icon="fas fa-fire"
+                        fetchFn={fetchTrending}
+                        emptyMessage="No trending products yet"
                     />
                 </div>
             </div>

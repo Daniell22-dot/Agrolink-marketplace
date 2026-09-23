@@ -19,6 +19,7 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
     image_url: '',
     county: '',
   });
+  const [variants, setVariants] = useState([]);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -34,6 +35,14 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
         image_url: product.image_url || '',
         county: product.county || '',
       });
+      setVariants((product.variants || []).map(v => ({
+        id: v.id,
+        name: v.name || '',
+        value: v.value || '',
+        priceDelta: v.priceDelta || '',
+        stockQty: v.stockQty || '',
+        sku: v.sku || ''
+      })));
     }
   }, [product]);
 
@@ -54,23 +63,28 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validate()) return;
-    setIsSubmitting(true);
-    try {
-      const data = { ...form, price: parseFloat(form.price), stock_quantity: parseInt(form.stock_quantity) };
-      if (isEdit) {
-        await dispatch(updateProduct({ productId: product.id, productData: data })).unwrap();
-      } else {
-        await dispatch(createProduct(data)).unwrap();
+      e.preventDefault();
+      if (!validate()) return;
+      setIsSubmitting(true);
+      try {
+        const data = {
+          ...form,
+          price: parseFloat(form.price),
+          stock_quantity: parseInt(form.stock_quantity),
+          variants: variants.filter(v => v.name && v.value)
+        };
+        if (isEdit) {
+          await dispatch(updateProduct({ productId: product.id, productData: data })).unwrap();
+        } else {
+          await dispatch(createProduct(data)).unwrap();
+        }
+        if (onSuccess) onSuccess();
+      } catch (err) {
+        // toast handled in slice
+      } finally {
+        setIsSubmitting(false);
       }
-      if (onSuccess) onSuccess();
-    } catch (err) {
-      // toast handled in slice
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+    };
 
   const inputStyle = (err) => ({
     width: '100%', padding: '10px 12px', borderRadius: '8px', fontSize: '14px',
@@ -152,6 +166,46 @@ const ProductForm = ({ product, onSuccess, onCancel }) => {
       <div>
         <Label text="County / Location" />
         <input style={inputStyle(false)} value={form.county} onChange={e => setField('county', e.target.value)} placeholder="e.g. Nakuru County" />
+      </div>
+
+      {/* Variants */}
+      <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+          <Label text="Variants (optional)" />
+          <button type="button" onClick={() => setVariants(prev => [...prev, { id: Date.now().toString(), name: '', value: '', priceDelta: '', stockQty: '', sku: '' }])} style={{ fontSize: '12px', color: '#1C4B2D', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 600 }}>
+            + Add Variant
+          </button>
+        </div>
+        {variants.length === 0 && <p style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>No variants added.</p>}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {variants.map((variant, idx) => (
+            <div key={variant.id} style={{ display: 'grid', gridTemplateColumns: '2fr 2fr 1fr 1fr 1fr auto', gap: '8px', alignItems: 'end', background: '#f9fafb', padding: '8px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+              <div>
+                <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', marginBottom: '2px', display: 'block' }}>Name</label>
+                <input style={{ ...inputStyle(false), padding: '6px 8px', fontSize: '13px' }} value={variant.name} onChange={e => setVariants(prev => prev.map((v, i) => i === idx ? { ...v, name: e.target.value } : v))} placeholder="e.g. Size" />
+              </div>
+              <div>
+                <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', marginBottom: '2px', display: 'block' }}>Value</label>
+                <input style={{ ...inputStyle(false), padding: '6px 8px', fontSize: '13px' }} value={variant.value} onChange={e => setVariants(prev => prev.map((v, i) => i === idx ? { ...v, value: e.target.value } : v))} placeholder="e.g. 1kg" />
+              </div>
+              <div>
+                <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', marginBottom: '2px', display: 'block' }}>Price +</label>
+                <input type="number" min="0" step="0.01" style={{ ...inputStyle(false), padding: '6px 8px', fontSize: '13px' }} value={variant.priceDelta} onChange={e => setVariants(prev => prev.map((v, i) => i === idx ? { ...v, priceDelta: e.target.value } : v))} placeholder="0" />
+              </div>
+              <div>
+                <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', marginBottom: '2px', display: 'block' }}>Stock</label>
+                <input type="number" min="0" style={{ ...inputStyle(false), padding: '6px 8px', fontSize: '13px' }} value={variant.stockQty} onChange={e => setVariants(prev => prev.map((v, i) => i === idx ? { ...v, stockQty: e.target.value } : v))} placeholder="0" />
+              </div>
+              <div>
+                <label style={{ fontSize: '11px', fontWeight: 600, color: '#374151', marginBottom: '2px', display: 'block' }}>SKU</label>
+                <input style={{ ...inputStyle(false), padding: '6px 8px', fontSize: '13px' }} value={variant.sku} onChange={e => setVariants(prev => prev.map((v, i) => i === idx ? { ...v, sku: e.target.value } : v))} placeholder="optional" />
+              </div>
+              <button type="button" onClick={() => setVariants(prev => prev.filter((_, i) => i !== idx))} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #fee2e2', background: '#fef2f2', color: '#dc2626', cursor: 'pointer', fontSize: '12px' }}>
+                <i className="fas fa-trash-alt" />
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Actions */}

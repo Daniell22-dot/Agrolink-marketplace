@@ -5,7 +5,7 @@ import ProductCard from '../components/products/ProductCard';
 import ReviewMarquee from '../components/reviews/ReviewMarquee';
 import FarmAdvisory from '../components/common/FarmAdvisory';
 import AgriNews from '../components/common/AgriNews';
-import api from '../services/api';
+import recommendationService from '../services/recommendationService';
 import './HomePage.css';
 
 const getTimeUntilMidnight = () => {
@@ -61,10 +61,35 @@ const HomePage = () => {
   const [countdown, setCountdown] = useState(getTimeUntilMidnight);
 
   useEffect(() => {
-    api.get('/products?limit=12&sort=newest')
-      .then(res => setGuestProducts(res.data?.data?.rows || res.data?.data || []))
-      .catch(() => {})
-      .finally(() => setGuestLoading(false));
+    let cancelled = false;
+    setGuestLoading(true);
+    recommendationService.getTrending(12)
+      .then(products => {
+        if (!cancelled) {
+          const normalized = (products || []).map(p => ({
+            id: p.id,
+            title: p.name,
+            price: parseFloat(p.price),
+            originalPrice: undefined,
+            unit: p.unit || 'kg',
+            category: p.category,
+            county: p.location || p.county || 'Kenya',
+            rating: p.rating || 0,
+            images: p.image_url || p.images || [],
+            farmer: p.farmer ? { fullName: p.farmer.fullName || p.farmer.name || 'Farmer' } : (p.farmer_name ? { fullName: p.farmer_name } : { fullName: 'Farmer' })
+          }));
+          setGuestProducts(normalized);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setGuestProducts([]);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setGuestLoading(false);
+      });
+    return () => { cancelled = true; };
   }, []);
 
   useEffect(() => {

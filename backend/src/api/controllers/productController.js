@@ -1,4 +1,5 @@
 const Product = require('../../models/Product');
+const ProductVariant = require('../../models/ProductVariant');
 const cloudinary = require('../../config/cloudinary');
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize');
@@ -97,13 +98,15 @@ exports.getProducts = async (req, res, next) => {
 // @access  Public
 exports.getProduct = async (req, res, next) => {
     try {
-        const product = await Product.findByPk(req.params.id);
+        const product = await Product.findByPk(req.params.id, {
+            include: [{ model: ProductVariant, as: 'variants' }]
+        });
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        // Auto-resolve image for products with no images
+        // Auto-resolve image for products with no images (legacy data)
         if (!product.images || product.images.length === 0) {
             product.images = resolveImages(product);
         }
@@ -139,7 +142,7 @@ exports.createProduct = async (req, res, next) => {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { name, description, category, price, quantity, unit, location } = req.body;
+        const { name, description, category, price, quantity, unit, location, variants } = req.body;
 
         // Handle Image Upload (optional - auto-resolve from catalog when no files uploaded)
         let imageUrls = [];
@@ -173,6 +176,21 @@ exports.createProduct = async (req, res, next) => {
             images: imageUrls,
             isAvailable: true
         });
+
+        if (variants && Array.isArray(variants)) {
+            for (const v of variants) {
+                if (v.name && v.value) {
+                    await ProductVariant.create({
+                        productId: product.id,
+                        name: v.name,
+                        value: v.value,
+                        priceDelta: parseFloat(v.priceDelta || 0),
+                        stockQty: parseInt(v.stockQty || 0, 10),
+                        sku: v.sku || null
+                    });
+                }
+            }
+        }
 
         // Index to Elasticsearch
         await searchService.indexProduct(product);
@@ -235,6 +253,33 @@ exports.updateProduct = async (req, res, next) => {
             isAvailable: status === 'available' ? true : product.isAvailable,
             images: updatedImages
         });
+
+        if (req.body.variants && Array.isArray(req.body.variants)) {
+            const existingIds = req.body.variants.filter(v => v.id).map(v => parseInt(v.id));
+            await ProductVariant.destroy({ where: { productId: product.id, id: { [require('sequelize').Op.notIn]: existingIds } } });
+
+            for (const v of req.body.variants) {
+                if (!v.name || !v.value) continue;
+                if (v.id) {
+                    await ProductVariant.update({
+                        name: v.name,
+                        value: v.value,
+                        priceDelta: parseFloat(v.priceDelta || 0),
+                        stockQty: parseInt(v.stockQty || 0, 10),
+                        sku: v.sku || null
+                    }, { where: { id: v.id, productId: product.id } });
+                } else {
+                    await ProductVariant.create({
+                        productId: product.id,
+                        name: v.name,
+                        value: v.value,
+                        priceDelta: parseFloat(v.priceDelta || 0),
+                        stockQty: parseInt(v.stockQty || 0, 10),
+                        sku: v.sku || null
+                    });
+                }
+            }
+        }
 
         // Update in Elasticsearch
         await searchService.indexProduct(product);
