@@ -6,6 +6,7 @@ import ReviewMarquee from '../components/reviews/ReviewMarquee';
 import FarmAdvisory from '../components/common/FarmAdvisory';
 import AgriNews from '../components/common/AgriNews';
 import recommendationService from '../services/recommendationService';
+import api from '../services/api';
 import './HomePage.css';
 
 const getTimeUntilMidnight = () => {
@@ -57,6 +58,8 @@ const FLASH_DEALS = [
 const HomePage = () => {
   const [guestProducts, setGuestProducts] = useState([]);
   const [guestLoading, setGuestLoading] = useState(true);
+  const [productsByCategory, setProductsByCategory] = useState({});
+  const [categoryLoading, setCategoryLoading] = useState(true);
   const [heroBannerIndex, setHeroBannerIndex] = useState(0);
   const [countdown, setCountdown] = useState(getTimeUntilMidnight);
 
@@ -89,6 +92,45 @@ const HomePage = () => {
       .finally(() => {
         if (!cancelled) setGuestLoading(false);
       });
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    setCategoryLoading(true);
+    const categoriesToFetch = [
+      { slug: 'vegetables', name: 'Vegetables' },
+      { slug: 'fruits', name: 'Fruits' },
+      { slug: 'grains', name: 'Grains & Cereals' },
+      { slug: 'dairy', name: 'Dairy' },
+      { slug: 'livestock', name: 'Livestock' },
+      { slug: 'farm-inputs', name: 'Farm Inputs' },
+      { slug: 'seeds', name: 'Seeds' },
+      { slug: 'tools', name: 'Farm Tools' },
+      { slug: 'fertilizers', name: 'Fertilizers' },
+    ];
+
+    Promise.all(
+      categoriesToFetch.map(cat =>
+        api.get(`/products?category=${cat.slug}&limit=8&sort=newest`)
+          .then(res => ({ slug: cat.slug, name: cat.name, products: res.data?.data?.rows || res.data?.data || [] }))
+          .catch(() => ({ slug: cat.slug, name: cat.name, products: [] }))
+      )
+    ).then(results => {
+      if (!cancelled) {
+        const grouped = {};
+        results.forEach(r => {
+          if (r.products.length > 0) {
+            grouped[r.slug] = { name: r.name, products: r.products };
+          }
+        });
+        setProductsByCategory(grouped);
+      }
+    })
+    .finally(() => {
+      if (!cancelled) setCategoryLoading(false);
+    });
+
     return () => { cancelled = true; };
   }, []);
 
@@ -216,12 +258,14 @@ const HomePage = () => {
       <section className="j-categories-section">
         <div className="j-section-container">
           <h2 className="j-section-title">Categories</h2>
+          <p className="j-section-subtitle">Shop by category and discover fresh farm products</p>
           <div className="j-categories-grid">
             {GRID_CATEGORIES.map((cat) => {
-              const hasLandingPage = ['farm-inputs', 'seeds', 'tools', 'fertilizers'].includes(cat.slug);
+              const categorySlug = cat.slug;
+              const hasProducts = productsByCategory[categorySlug];
               return (
                 <Link
-                  to={hasLandingPage ? `/category/${cat.slug}` : `/products?category=${cat.slug}`}
+                  to={hasProducts ? `#category-${categorySlug}` : (categorySlug === 'farm-inputs' || categorySlug === 'seeds' || categorySlug === 'tools' || categorySlug === 'fertilizers' ? `/category/${categorySlug}` : `/products?category=${categorySlug}`)}
                   key={cat.slug}
                   className="j-category-tile"
                 >
@@ -229,6 +273,9 @@ const HomePage = () => {
                     <img src={cat.image} alt={cat.name} />
                   </div>
                   <span className="j-category-tile-name">{cat.name}</span>
+                  {hasProducts && (
+                    <span className="j-category-tile-count">{productsByCategory[categorySlug].products.length} products</span>
+                  )}
                 </Link>
               );
             })}
@@ -245,43 +292,52 @@ const HomePage = () => {
       {/* ── 5.6. AGRI NEWS ───────────────────────────────── */}
       <AgriNews />
 
-      {/* ── 6. JUST FOR YOU ──────────────────────────────── */}
+      {/* ── 6. SHOP BY CATEGORY ──────────────────────────── */}
+      <section className="j-category-section">
+        <div className="j-section-container">
+          <h2 className="j-section-title">Shop by Category</h2>
+          <p className="j-section-subtitle">Browse our wide selection of farm-fresh products by category</p>
+        </div>
+        {categoryLoading ? (
+          <div className="j-section-container"><div className="spinner" /></div>
+        ) : (
+          <div className="j-category-list">
+            {Object.entries(productsByCategory).map(([slug, data]) => (
+              <div key={slug} id={`category-${slug}`} className="j-category-group">
+                <div className="j-category-group-header">
+                  <div>
+                    <h3 className="j-category-group-title">{data.name}</h3>
+                    <p className="j-category-group-count">{data.products.length} product{data.products.length !== 1 ? 's' : ''}</p>
+                  </div>
+                  <Link to={slug === 'farm-inputs' || slug === 'seeds' || slug === 'tools' || slug === 'fertilizers' ? `/category/${slug}` : `/products?category=${slug}`} className="j-category-group-link">
+                    View All <i className="fas fa-arrow-right" />
+                  </Link>
+                </div>
+                <div className="j-category-grid">
+                  {data.products.slice(0, 8).map((product) => (
+                    <ProductCard key={product.id} product={{
+                      id: product.id,
+                      title: product.name,
+                      price: parseFloat(product.price),
+                      originalPrice: undefined,
+                      unit: product.unit || 'kg',
+                      category: product.category || slug,
+                      county: product.location || product.county || 'Kenya',
+                      rating: product.rating || 0,
+                      images: product.images || product.image_url || [],
+                      farmer: product.farmer || { fullName: 'Farmer' }
+                    }} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* ── 7. JUST FOR YOU ──────────────────────────────── */}
       <section className="j-foryou-section">
         <div className="j-foryou-inner">
-          <div className="j-foryou-banners">
-            <Link to="/category/farm-inputs" className="j-foryou-banner j-foryou-banner-green">
-              <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&auto=format&fit=crop" alt="Farm Inputs" className="j-foryou-banner-bg" />
-              <div className="j-foryou-banner-content">
-                <span className="j-foryou-banner-tag">SALE</span>
-                <h3>Farm Inputs</h3>
-                <p>Up to 30% Off</p>
-              </div>
-            </Link>
-            <Link to="/category/seeds" className="j-foryou-banner j-foryou-banner-dark">
-              <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&auto=format&fit=crop" alt="Seeds" className="j-foryou-banner-bg" />
-              <div className="j-foryou-banner-content">
-                <span className="j-foryou-banner-tag">NEW</span>
-                <h3>Quality Seeds</h3>
-                <p>Fresh This Season</p>
-              </div>
-            </Link>
-            <Link to="/category/tools" className="j-foryou-banner j-foryou-banner-orange">
-              <img src="https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=400&auto=format&fit=crop" alt="Farm Tools" className="j-foryou-banner-bg" />
-              <div className="j-foryou-banner-content">
-                <span className="j-foryou-banner-tag">BULK</span>
-                <h3>Farm Tools</h3>
-                <p>Best Wholesale Prices</p>
-              </div>
-            </Link>
-            <Link to="/category/baskets" className="j-foryou-banner j-foryou-banner-teal">
-              <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=400&auto=format&fit=crop" alt="Baskets & Storage" className="j-foryou-banner-bg" />
-              <div className="j-foryou-banner-content">
-                <span className="j-foryou-banner-tag">HOT</span>
-                <h3>Baskets & Storage</h3>
-                <p>Harvest Essentials</p>
-              </div>
-            </Link>
-          </div>
           <div className="j-foryou-main">
             <div className="j-foryou-header">
               <h2>Just For You</h2>
@@ -289,27 +345,15 @@ const HomePage = () => {
             </div>
             {guestLoading ? (
               <div className="j-foryou-loading"><div className="spinner" /></div>
-            ) : (
+            ) : displayProducts.length > 0 ? (
               <div className="j-foryou-grid">
                 {displayProducts.map((p) => (
                   <ProductCard key={p.id} product={p} />
                 ))}
               </div>
+            ) : (
+              <div className="j-foryou-empty">No recommendations yet. Browse products to get personalized picks.</div>
             )}
-          </div>
-          <div className="j-foryou-banners j-foryou-banners-right">
-            <div className="j-ad-card">
-              <span className="j-ad-tag">Ad</span>
-              <h4>AgriLink Shop</h4>
-              <p>Best prices for farm inputs</p>
-              <Link to="/products" className="j-ad-link">Shop Now</Link>
-            </div>
-            <div className="j-ad-card j-ad-card-alt">
-              <span className="j-ad-tag">Ad</span>
-              <h4>AgriLink Services</h4>
-              <p>Logistics & Advisory</p>
-              <Link to="/services" className="j-ad-link">Learn More</Link>
-            </div>
           </div>
         </div>
       </section>

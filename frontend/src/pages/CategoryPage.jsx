@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ProductCard from '../components/products/ProductCard';
+import api from '../services/api';
 import './CategoryPage.css';
 
 const CATEGORY_DATA = {
@@ -123,16 +124,25 @@ const CategoryPage = () => {
   const [loading, setLoading] = useState(true);
 
   const categoryData = CATEGORY_DATA[slug];
-  const catProducts = SAMPLE_PRODUCTS[slug] || [];
 
   useEffect(() => {
+    let cancelled = false;
     setLoading(true);
-    const timer = setTimeout(() => {
-      setProducts(catProducts);
-      setLoading(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [slug]); // eslint-disable-line react-hooks/exhaustive-deps
+    api.get(`/products?category=${slug}&limit=50&sort=newest`)
+      .then(res => {
+        if (!cancelled) {
+          const rows = res.data?.data?.rows || res.data?.data || [];
+          setProducts(rows);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setProducts([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, [slug]);
 
   if (!categoryData) {
     return (
