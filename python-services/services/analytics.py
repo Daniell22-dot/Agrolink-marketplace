@@ -77,7 +77,7 @@ def get_dashboard_stats(start_date=None, end_date=None):
                     'units': int(row['units_sold'])
                 })
 
-        rating_df = execute_query("SELECT AVG(rating) as avg_rating FROM products WHERE rating IS NOT NULL")
+        rating_df = execute_query("SELECT AVG(r.rating) as avg_rating FROM reviews r")
         stats['avg_product_rating'] = float(rating_df['avg_rating'].values[0]) if rating_df is not None and rating_df['avg_rating'].values[0] else 0
 
         logger.info(f"Dashboard stats retrieved: {len(stats)} metrics")
@@ -181,7 +181,7 @@ def get_top_products(limit=10, days=30):
     try:
         query = f"""
         SELECT 
-            p.id, p.name, p.price, p.rating,
+            p.id, p.name, p.price,
             COUNT(oi.id) as order_count,
             SUM(oi.quantity) as total_units_sold,
             SUM(oi.quantity * oi.price) as total_revenue,
@@ -191,7 +191,7 @@ def get_top_products(limit=10, days=30):
         LEFT JOIN orders o ON oi.order_id = o.id
         LEFT JOIN reviews r ON p.id = r.product_id
         WHERE o.created_at >= NOW() - INTERVAL '{int(days)} days'
-        GROUP BY p.id, p.name, p.price, p.rating
+        GROUP BY p.id, p.name, p.price
         ORDER BY total_revenue DESC
         LIMIT {int(limit)}
         """
@@ -206,7 +206,7 @@ def get_top_products(limit=10, days=30):
                 'id': int(row['id']),
                 'name': str(row['name']),
                 'price': float(row['price']),
-                'rating': float(row['rating']) if row['rating'] else 0,
+                'rating': 0,
                 'order_count': int(row['order_count']),
                 'units_sold': int(row['total_units_sold']),
                 'revenue': float(row['total_revenue']) if row['total_revenue'] else 0,

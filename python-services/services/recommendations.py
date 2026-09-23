@@ -14,7 +14,7 @@ def get_trending_products(limit=10, days=30):
     try:
         query = f"""
         SELECT 
-            p.id, p.name, p.image_url, p.price, p.rating,
+            p.id, p.name, p.images, p.price,
             COUNT(oi.id) as purchase_count,
             AVG(oi.quantity) as avg_quantity,
             SUM(oi.quantity * oi.price) as total_revenue,
@@ -24,8 +24,8 @@ def get_trending_products(limit=10, days=30):
         LEFT JOIN orders o ON oi.order_id = o.id
         WHERE o.created_at >= NOW() - INTERVAL '{int(days)} days'
         AND o.status NOT IN ('cancelled', 'failed')
-        GROUP BY p.id, p.name, p.image_url, p.price, p.rating
-        ORDER BY purchase_count DESC, total_revenue DESC, p.rating DESC
+        GROUP BY p.id, p.name, p.images, p.price
+        ORDER BY purchase_count DESC, total_revenue DESC
         LIMIT {int(limit)}
         """
         df = execute_query(query)
@@ -33,20 +33,34 @@ def get_trending_products(limit=10, days=30):
             return []
 
         df['trending_score'] = (
-            (df['purchase_count'] / df['purchase_count'].max()) * 0.4 +
+            (df['purchase_count'] / df['purchase_count'].max()) * 0.5 +
             (df['total_revenue'].fillna(0) / df['total_revenue'].max()) * 0.3 +
-            (df['rating'].fillna(0) / 5.0) * 0.3
+            (df['avg_quantity'].fillna(0) / df['avg_quantity'].max()) * 0.2
         )
         df = df.sort_values('trending_score', ascending=False)
 
         products = []
         for _, row in df.iterrows():
+            image_url = None
+            images = row.get('images')
+            if images is not None:
+                if isinstance(images, list) and len(images) > 0:
+                    image_url = images[0]
+                elif isinstance(images, str):
+                    try:
+                        import json
+                        parsed = json.loads(images)
+                        if isinstance(parsed, list) and len(parsed) > 0:
+                            image_url = parsed[0]
+                    except Exception:
+                        image_url = images if images else None
+
             products.append({
                 'id': int(row['id']),
                 'name': str(row['name']),
-                'image_url': str(row['image_url']) if row['image_url'] else None,
+                'image_url': image_url,
                 'price': float(row['price']),
-                'rating': float(row['rating']) if row['rating'] else 0,
+                'rating': 0,
                 'purchase_count': int(row['purchase_count']),
                 'trending_score': float(row['trending_score'])
             })
@@ -65,10 +79,11 @@ def get_recommended_for_user(user_id, limit=10):
         # Fix: added p.category to SELECT (was missing — caused KeyError at runtime)
         # Fix: parameterized user_id via :user_id to prevent SQL injection
         user_history_query = """
-        SELECT DISTINCT p.id, oi.product_id, p.category, r.rating, oi.price
+        SELECT DISTINCT p.id, oi.product_id, c.name as category, r.rating, oi.price
         FROM orders o
         JOIN order_items oi ON o.id = oi.order_id
         JOIN products p ON oi.product_id = p.id
+        LEFT JOIN categories c ON p.category_id = c.id
         LEFT JOIN reviews r ON r.product_id = p.id AND r.user_id = :user_id
         WHERE o.user_id = :user_id
         AND o.status NOT IN ('cancelled', 'failed')
@@ -82,11 +97,12 @@ def get_recommended_for_user(user_id, limit=10):
 
         all_products_query = """
         SELECT 
-            p.id, p.name, p.category, p.price, p.rating, p.image_url,
+            p.id, p.name, c.name as category, p.price, p.images,
             COUNT(oi.id) as popularity
         FROM products p
         LEFT JOIN order_items oi ON p.id = oi.product_id
-        GROUP BY p.id, p.name, p.category, p.price, p.rating, p.image_url
+        LEFT JOIN categories c ON p.category_id = c.id
+        GROUP BY p.id, p.name, c.name, p.price, p.images
         """
         all_products = execute_query(all_products_query)
 
@@ -115,10 +131,10 @@ def get_recommended_for_user(user_id, limit=10):
             recommendations.append({
                 'id': int(product_id),
                 'name': str(product['name']),
-                'category': str(product['category']),
+                'category': str(product['category']) if product.get('category') else 'other',
                 'price': float(product['price']),
-                'rating': float(product['rating']) if product['rating'] else 0,
-                'image_url': str(product['image_url']) if product['image_url'] else None,
+                'rating': 0,
+                'image_url': product['images'] if isinstance(product['images'], str) else (product['images'][0] if isinstance(product['images'], list) and product['images'] else None),
                 'score': float(score)
             })
 
@@ -136,16 +152,17 @@ def get_trending_categories(limit=5):
     try:
         query = f"""
         SELECT 
-            p.category,
+            c.name as category,
             COUNT(oi.id) as order_count,
             SUM(oi.quantity) as total_units,
             AVG(p.rating) as avg_rating
         FROM products p
         LEFT JOIN order_items oi ON p.id = oi.product_id
         LEFT JOIN orders o ON oi.order_id = o.id
+        LEFT JOIN categories c ON p.category_id = c.id
         WHERE o.created_at >= NOW() - INTERVAL '30 days'
         OR oi.id IS NULL
-        GROUP BY p.category
+        GROUP BY c.name
         ORDER BY order_count DESC
         LIMIT {int(limit)}
         """

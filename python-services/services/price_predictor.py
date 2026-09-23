@@ -32,18 +32,19 @@ class PricePredictor:
 
             query = """
             SELECT 
-                p.category,
+                c.name as category,
                 p.price,
                 COUNT(oi.id) as demand,
-                p.quantity_in_stock as supply,
+                p.quantity as supply,
                 EXTRACT(MONTH FROM o.created_at) as season,
                 EXTRACT(EPOCH FROM (NOW() - p.created_at)) / 86400 as days_since_harvest,
-                COALESCE(p.quality_grade, 'standard') as quality_grade
+                COALESCE(c.name, 'other') as quality_grade
             FROM products p
             LEFT JOIN order_items oi ON p.id = oi.product_id
             LEFT JOIN orders o ON oi.order_id = o.id
+            LEFT JOIN categories c ON p.category_id = c.id
             WHERE p.price > 0
-            GROUP BY p.id, p.category, p.price, p.quantity_in_stock, season, days_since_harvest, quality_grade
+            GROUP BY p.id, c.name, p.price, p.quantity, season, days_since_harvest
             LIMIT 1000
             """
             df = execute_query(query)
@@ -189,19 +190,20 @@ class PricePredictor:
             # product_id is typed int by FastAPI — safe for f-string
             query = f"""
             SELECT 
-                p.category,
-                p.quantity_in_stock as supply,
+                c.name as category,
+                p.quantity as supply,
                 (SELECT COUNT(*) FROM order_items oi 
                  JOIN orders o ON oi.order_id = o.id 
                  WHERE oi.product_id = {int(product_id)} 
                  AND o.created_at >= NOW() - INTERVAL '7 days') as demand_7days,
                 EXTRACT(EPOCH FROM (NOW() - p.created_at)) / 86400 as days_since_harvest,
-                COALESCE(p.quality_grade, 'standard') as quality_grade,
+                COALESCE(c.name, 'other') as quality_grade,
                 AVG(oi.price) as current_market_price
             FROM products p
             LEFT JOIN order_items oi ON p.id = oi.product_id
+            LEFT JOIN categories c ON p.category_id = c.id
             WHERE p.id = {int(product_id)}
-            GROUP BY p.id
+            GROUP BY p.id, c.name
             """
             df = execute_query(query)
 
