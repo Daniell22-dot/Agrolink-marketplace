@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createOrder } from '../redux/slices/orderSlice';
+import ChatButton from '../components/chat/ChatButton';
 import './CheckoutPage.css';
 
 const CheckoutPage = () => {
@@ -29,12 +32,11 @@ const CheckoutPage = () => {
         if (!validate()) return;
 
         try {
-            // Create order
-            // dispatch(createOrder(formData));
-            // Redirect to payment
+            const result = await dispatch(createOrder(formData)).unwrap();
+            toast.success('Order placed successfully!');
             navigate('/orders');
         } catch (error) {
-            console.error(error);
+            toast.error(error?.message || 'Failed to place order');
         }
     };
 
@@ -170,6 +172,12 @@ const CheckoutPage = () => {
                             <span>Total</span>
                             <span>KES {((total || 0) + 200).toLocaleString()}</span>
                         </div>
+
+                        {items && items.length > 0 && items[0].farmerId && (
+                            <div className="mt-3 text-center">
+                                <ChatButton farmerId={items[0].farmerId} className="w-full" />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

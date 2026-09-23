@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import api from '../services/api';
 import recommendationService from '../services/recommendationService';
 import RecommendationCarousel from '../components/products/RecommendationCarousel';
+import ChatButton from '../components/chat/ChatButton';
 import './ProductDetailPage.css';
 
 const ProductDetailPage = () => {
@@ -192,9 +193,7 @@ const ProductDetailPage = () => {
                             </button>
                         </div>
 
-                        <Link to="/chat" className="chat-seller-btn">
-                            <i className="fas fa-comments"></i> Chat with Farmer
-                        </Link>
+                        <ChatButton farmerId={product?.farmerId} />
                     </div>
                 </div>
 

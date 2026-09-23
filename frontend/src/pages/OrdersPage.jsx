@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchOrders, setOrderFilters } from '../redux/slices/orderSlice';
+import ChatButton from '../components/chat/ChatButton';
 import './OrdersPage.css';
 
 const STATUS_TABS = [
@@ -102,7 +103,12 @@ const OrdersPage = () => {
                                     <span className={`payment-status pay-${order.payment_status}`}>
                                         <i className="fas fa-circle"></i> Payment: {order.payment_status || 'pending'}
                                     </span>
-                                    <span className="view-link">View Details →</span>
+                                    <div className="flex items-center gap-2">
+                                        {order.items && order.items.length > 0 && order.items[0].product && (
+                                            <ChatButton farmerId={order.items[0].product.farmerId} className="text-xs" />
+                                        )}
+                                        <span className="view-link">View Details →</span>
+                                    </div>
                                 </div>
                             </Link>
                         ))}

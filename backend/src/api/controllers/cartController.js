@@ -45,16 +45,15 @@ exports.addToCart = async (req, res, next) => {
         const existingItemIndex = cart.items.findIndex(item => item.productId === productId);
 
         if (existingItemIndex > -1) {
-            // Update quantity
             cart.items[existingItemIndex].quantity += parseInt(quantity);
         } else {
-            // Add new item
             cart.items.push({
                 productId,
                 name: product.name,
                 price: parseFloat(product.price),
                 image: product.images ? product.images[0] : null,
-                quantity: parseInt(quantity)
+                quantity: parseInt(quantity),
+                farmerId: product.farmerId
             });
         }
 

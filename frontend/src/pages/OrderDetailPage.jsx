@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrderById, cancelOrder } from '../redux/slices/orderSlice';
 import toast from 'react-hot-toast';
+import ChatButton from '../components/chat/ChatButton';
 import './OrderDetailPage.css';
 
 const ORDER_STEPS = ['pending', 'approved', 'shipped', 'delivered'];
@@ -129,8 +130,15 @@ const OrderDetailPage = () => {
                                         <div className="item-prices">
                                             <span className="item-unit">KES {parseFloat(item.price || 0).toLocaleString()} each</span>
                                             <span className="item-subtotal">KES {parseFloat(item.subtotal || 0).toLocaleString()}</span>
-                                        </div>
-                                    </div>
+                        </div>
+
+                        {order.items && order.items.length > 0 && order.items[0].product && (
+                            <div className="detail-card">
+                                <h3><i className="fas fa-comments"></i> Contact Seller</h3>
+                                <ChatButton farmerId={order.items[0].product.farmerId} className="w-full" />
+                            </div>
+                        )}
+                    </div>
                                 ))
                             ) : (
                                 <p className="no-items">Order items details not available</p>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../redux/slices/cartSlice';
 import { resolveProductImage } from '../../utils/productImages';
 import toast from 'react-hot-toast';
+import ChatButton from '../chat/ChatButton';
 import './ProductCard.css';
 
 const ProductCard = ({ product }) => {
@@ -111,12 +112,22 @@ const ProductCard = ({ product }) => {
 
         <button
           className="jk-cart-btn"
-          onClick={handleAddToCart}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleAddToCart(e);
+          }}
           disabled={isDisabled}
         >
           <i className="fas fa-shopping-cart" />
           Add to Cart
         </button>
+
+        {product.farmerId && (
+          <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} className="mt-2">
+            <ChatButton farmerId={product.farmerId} className="w-full text-xs" />
+          </div>
+        )}
       </div>
     </Link>
   );
