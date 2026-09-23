@@ -7,14 +7,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Database configuration
-DB_USER = os.getenv('DB_USER', 'root')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'password')
-DB_HOST = os.getenv('DB_HOST', 'localhost')
-DB_PORT = os.getenv('DB_PORT', '3306')
-DB_NAME = os.getenv('DB_NAME', 'agrolink')
-
-# Create database URL
-DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+# Prefer a single DATABASE_URL when provided (PostgreSQL/Neon-friendly).
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL:
+    # Ensure SQLAlchemy uses a supported PostgreSQL dialect.
+    if DATABASE_URL.startswith('postgres://'):
+        DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+    if DATABASE_URL.startswith('postgresql://') and '+psycopg' not in DATABASE_URL and '+psycopg2' not in DATABASE_URL:
+        DATABASE_URL = DATABASE_URL.replace('postgresql://', 'postgresql+psycopg2://', 1)
+else:
+    DB_USER = os.getenv('DB_USER', 'root')
+    DB_PASSWORD = os.getenv('DB_PASSWORD', 'password')
+    DB_HOST = os.getenv('DB_HOST', 'localhost')
+    DB_PORT = os.getenv('DB_PORT', '3306')
+    DB_NAME = os.getenv('DB_NAME', 'agrolink')
+    DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 # Create engine
 engine = create_engine(DATABASE_URL, pool_pre_ping=True, echo=False)

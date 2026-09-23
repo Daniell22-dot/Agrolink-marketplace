@@ -49,7 +49,7 @@ def get_dashboard_stats(start_date=None, end_date=None):
         status_query = """
         SELECT status, COUNT(*) as count
         FROM orders
-        WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        WHERE created_at >= NOW() - INTERVAL '30 days'
         GROUP BY status
         """
         status_df = execute_query(status_query)
@@ -62,7 +62,7 @@ def get_dashboard_stats(start_date=None, end_date=None):
         FROM products p
         LEFT JOIN order_items oi ON p.id = oi.product_id
         LEFT JOIN orders o ON oi.order_id = o.id
-        WHERE o.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        WHERE o.created_at >= NOW() - INTERVAL '30 days'
         GROUP BY p.category
         ORDER BY order_count DESC
         LIMIT 5
@@ -190,7 +190,7 @@ def get_top_products(limit=10, days=30):
         LEFT JOIN order_items oi ON p.id = oi.product_id
         LEFT JOIN orders o ON oi.order_id = o.id
         LEFT JOIN reviews r ON p.id = r.product_id
-        WHERE o.created_at >= DATE_SUB(NOW(), INTERVAL {int(days)} DAY)
+        WHERE o.created_at >= NOW() - INTERVAL '{int(days)} days'
         GROUP BY p.id, p.name, p.price, p.rating
         ORDER BY total_revenue DESC
         LIMIT {int(limit)}

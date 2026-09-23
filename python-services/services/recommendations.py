@@ -22,7 +22,7 @@ def get_trending_products(limit=10, days=30):
         FROM products p
         LEFT JOIN order_items oi ON p.id = oi.product_id
         LEFT JOIN orders o ON oi.order_id = o.id
-        WHERE o.created_at >= DATE_SUB(NOW(), INTERVAL {int(days)} DAY)
+        WHERE o.created_at >= NOW() - INTERVAL '{int(days)} days'
         AND o.status NOT IN ('cancelled', 'failed')
         GROUP BY p.id, p.name, p.image_url, p.price, p.rating
         ORDER BY purchase_count DESC, total_revenue DESC, p.rating DESC
@@ -143,7 +143,7 @@ def get_trending_categories(limit=5):
         FROM products p
         LEFT JOIN order_items oi ON p.id = oi.product_id
         LEFT JOIN orders o ON oi.order_id = o.id
-        WHERE o.created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+        WHERE o.created_at >= NOW() - INTERVAL '30 days'
         OR oi.id IS NULL
         GROUP BY p.category
         ORDER BY order_count DESC

@@ -36,8 +36,8 @@ class PricePredictor:
                 p.price,
                 COUNT(oi.id) as demand,
                 p.quantity_in_stock as supply,
-                MONTH(o.created_at) as season,
-                DATEDIFF(NOW(), p.created_at) as days_since_harvest,
+                EXTRACT(MONTH FROM o.created_at) as season,
+                EXTRACT(EPOCH FROM (NOW() - p.created_at)) / 86400 as days_since_harvest,
                 COALESCE(p.quality_grade, 'standard') as quality_grade
             FROM products p
             LEFT JOIN order_items oi ON p.id = oi.product_id
@@ -159,7 +159,7 @@ class PricePredictor:
             JOIN order_items oi ON p.id = oi.product_id
             JOIN orders o ON oi.order_id = o.id
             WHERE p.category = :category
-            AND o.created_at >= DATE_SUB(NOW(), INTERVAL {int(days)} DAY)
+            AND o.created_at >= NOW() - INTERVAL '{int(days)} days'
             GROUP BY DATE(o.created_at)
             ORDER BY date DESC
             """
@@ -194,8 +194,8 @@ class PricePredictor:
                 (SELECT COUNT(*) FROM order_items oi 
                  JOIN orders o ON oi.order_id = o.id 
                  WHERE oi.product_id = {int(product_id)} 
-                 AND o.created_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)) as demand_7days,
-                DATEDIFF(NOW(), p.created_at) as days_since_harvest,
+                 AND o.created_at >= NOW() - INTERVAL '7 days') as demand_7days,
+                EXTRACT(EPOCH FROM (NOW() - p.created_at)) / 86400 as days_since_harvest,
                 COALESCE(p.quality_grade, 'standard') as quality_grade,
                 AVG(oi.price) as current_market_price
             FROM products p
