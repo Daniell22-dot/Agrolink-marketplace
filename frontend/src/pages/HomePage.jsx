@@ -163,7 +163,7 @@ const HomePage = () => {
         title="AgroLink Kenya - Fresh Farm Products Direct from Farmers"
         description="Buy fresh farm products directly from Kenyan farmers. Vegetables, fruits, grains, dairy, livestock, farm inputs, seeds, and tools delivered to your door."
         canonical="https://agrolink.co.ke/"
-        structuredData={organizationStructuredData}
+        structuredData={[organizationStructuredData, websiteStructuredData]}
         breadcrumbs={[
           { label: 'Home', url: 'https://agrolink.co.ke/' },
         ]}

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/slices/productSlice';
 import ProductCard from '../components/products/ProductCard';
 import SearchBar from '../components/common/SearchBar';
+import SEO from '../components/seo/SEO';
 import './ServicesPage.css';
 
 const ServicesPage = () => {
@@ -115,6 +116,15 @@ const ServicesPage = () => {
 
     return (
         <div className="services-page">
+            <SEO
+                title="Agricultural Services - AgroLink Kenya"
+                description="Discover agricultural services on AgroLink Kenya. Logistics, advisory, farm inputs, and tools to help you grow your farm business."
+                canonical="https://agrolink.co.ke/services"
+                breadcrumbs={[
+                    { label: 'Home', url: 'https://agrolink.co.ke/' },
+                    { label: 'Services', url: 'https://agrolink.co.ke/services' },
+                ]}
+            />
             {/* Premium Services Hero */}
             <div className="services-hero">
                 <div className="hero-overlay"></div>

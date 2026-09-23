@@ -28,8 +28,11 @@ const ProductDetailPage = () => {
     const expectedSlug = product ? slugify(product.name) : null;
 
     useEffect(() => {
-        if (product && slug && expectedSlug && slug !== expectedSlug) {
-            navigate(`/product/${id}/${expectedSlug}`, { replace: true });
+        if (product && expectedSlug) {
+            const targetSlug = slug === expectedSlug ? slug : expectedSlug;
+            if (slug !== targetSlug) {
+                navigate(`/product/${id}/${targetSlug}`, { replace: true });
+            }
         }
     }, [product, slug, expectedSlug, id, navigate]);
 
