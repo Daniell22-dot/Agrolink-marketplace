@@ -91,3 +91,39 @@ exports.getPaymentHistory = async (req, res, next) => {
         next(error);
     }
 };
+
+// @desc    Paystack webhook handler
+// @route   POST /api/webhooks/paystack
+// @access  Public (Paystack)
+exports.handlePaystackWebhook = async (req, res, next) => {
+    try {
+        const signature = req.headers['x-paystack-signature'];
+        const secret = process.env.PAYSTACK_SECRET_KEY;
+
+        if (!signature || !secret) {
+            return res.status(400).json({ message: 'Missing signature or secret' });
+        }
+
+        // Basic event logging
+        const event = req.body;
+        console.log('Paystack webhook event:', event.event || 'unknown');
+
+        // TODO: verify Paystack HMAC signature with crypto
+        // const hash = crypto.createHmac('sha512', secret).update(JSON.stringify(req.body)).digest('base64');
+        // if (hash !== signature) return res.status(401).json({ message: 'Invalid signature' });
+
+        // Handle subscription events
+        if (event.event === 'subscription.create' || event.event === 'subscription.enable') {
+            // TODO: mark user/farmer as subscribed / extend plan
+        }
+
+        if (event.event === 'subscription.disable' || event.event === 'subscription.expire') {
+            // TODO: downgrade or limit user/farmer features
+        }
+
+        res.status(200).json({ received: true });
+    } catch (error) {
+        console.error('Paystack webhook error:', error);
+        res.status(200).json({ received: true });
+    }
+};
