@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import FlashDeals from '../components/common/FlashDeals';
 import ProductCard from '../components/products/ProductCard';
 import ReviewMarquee from '../components/reviews/ReviewMarquee';
 import FarmAdvisory from '../components/common/FarmAdvisory';
@@ -13,7 +12,8 @@ const getTimeUntilMidnight = () => {
   const now = new Date();
   const midnight = new Date(now);
   midnight.setHours(24, 0, 0, 0);
-  const diff = midnight - now;
+  let diff = midnight - now;
+  if (diff < 0) diff = 0;
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((diff % (1000 * 60)) / 1000);
@@ -42,17 +42,6 @@ const GRID_CATEGORIES = [
   { name: 'Seeds', slug: 'seeds', image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&auto=format&fit=crop' },
   { name: 'Farm Tools', slug: 'tools', image: 'https://images.unsplash.com/photo-1581093450021-4a7360e9a6b5?w=300&auto=format&fit=crop' },
   { name: 'Fertilizers', slug: 'fertilizers', image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop' },
-];
-
-const FLASH_DEALS = [
-  { id: 'd1', title: 'Certified Hybrid Maize Seed (2kg)', price: 450, originalPrice: 650, discount: 31, image: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&auto=format&fit=crop', sold: 72 },
-  { id: 'd2', title: 'NPK 50kg Fertilizer Bag', price: 3200, originalPrice: 4500, discount: 29, image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=300&auto=format&fit=crop', sold: 85 },
-  { id: 'd3', title: 'Drip Irrigation Kit (50m)', price: 2800, originalPrice: 3800, discount: 26, image: 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=300&auto=format&fit=crop', sold: 45 },
-  { id: 'd4', title: 'Organic Compost Fertilizer (25kg)', price: 850, originalPrice: 1200, discount: 29, image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&auto=format&fit=crop', sold: 60 },
-  { id: 'd5', title: 'Garden Hand Tools Set (8pc)', price: 1500, originalPrice: 2200, discount: 32, image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=300&auto=format&fit=crop', sold: 38 },
-  { id: 'd6', title: 'Tomato Seeds (100g Pack)', price: 280, originalPrice: 400, discount: 30, image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300&auto=format&fit=crop', sold: 91 },
-  { id: 'd7', title: 'Poultry Feed (50kg)', price: 3500, originalPrice: 4200, discount: 17, image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=300&auto=format&fit=crop', sold: 55 },
-  { id: 'd8', title: 'Sprayer Pump (20L)', price: 1800, originalPrice: 2500, discount: 28, image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=300&auto=format&fit=crop', sold: 67 },
 ];
 
 const HomePage = () => {
@@ -236,14 +225,14 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── 3. FLASH DEALS ───────────────────────────────── */}
+      {/* ── 3. FLASH SALES ─────────────────────────────────── */}
       <section className="j-flash-section">
         <div className="j-flash-header">
           <h2 className="j-flash-title">
             <i className="fas fa-bolt" /> Flash Sales
           </h2>
           <div className="j-flash-timer">
-            <span className="j-flash-timer-label">Ends in:</span>
+            <span className="j-flash-timer-label">Ends today at 00:00</span>
             <div className="j-flash-timer-box">{pad(countdown.hours)}</div>
             <span className="j-flash-timer-sep">:</span>
             <div className="j-flash-timer-box">{pad(countdown.minutes)}</div>
@@ -251,7 +240,17 @@ const HomePage = () => {
             <div className="j-flash-timer-box">{pad(countdown.seconds)}</div>
           </div>
         </div>
-        <FlashDeals deals={FLASH_DEALS} />
+        {guestLoading ? (
+          <div className="j-flash-loading"><div className="spinner" /></div>
+        ) : guestProducts.length > 0 ? (
+          <div className="j-flash-grid">
+            {guestProducts.slice(0, 8).map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="j-flash-empty">No flash sales right now. Check back soon!</div>
+        )}
       </section>
 
       {/* ── 4. CATEGORIES GRID ───────────────────────────── */}

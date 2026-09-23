@@ -231,6 +231,45 @@
   font-weight: 700;
 }
 
+.j-flash-loading {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.j-flash-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.j-flash-empty {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  text-align: center;
+  color: #888;
+  padding: 24px 0;
+}
+
+@media (max-width: 1024px) {
+  .j-flash-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .j-flash-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* ── 4. CATEGORIES GRID ───────────────────────────────────── */
 .j-categories-section {
   background: #fff;
