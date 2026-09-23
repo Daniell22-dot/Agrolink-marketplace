@@ -5,16 +5,16 @@ export const useCart = () => {
     const dispatch = useDispatch();
     const { items, totalPrice, totalItems, isLoading } = useSelector((state) => state.cart);
 
-    const addItem = (productId, quantity = 1) => {
-        dispatch(addToCart({ productId, quantity }));
+    const addItem = (productId, quantity = 1, variantId) => {
+        dispatch(addToCart({ productId, quantity, variantId }));
     };
 
-    const removeItem = (productId) => {
-        dispatch(removeFromCart(productId));
+    const removeItem = (productId, variantId) => {
+        dispatch(removeFromCart({ productId, variantId }));
     };
 
-    const updateItemQuantity = (productId, quantity) => {
-        dispatch(updateCartQuantity({ productId, quantity }));
+    const updateItemQuantity = (productId, quantity, variantId) => {
+        dispatch(updateCartQuantity({ productId, quantity, variantId }));
     };
 
     const clearAllItems = () => {

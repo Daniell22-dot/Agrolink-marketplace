@@ -75,6 +75,7 @@ app.use('/api/admin/security', require('./api/routes/securityRoutes'));
 app.use('/api/news', require('./api/routes/newsRoutes'));
 app.use('/api/weather', require('./api/routes/weatherRoutes'));
 app.use('/api/support', require('./api/routes/supportRoutes'));
+app.use('/api/deliveries', require('./api/routes/deliveryRoutes'));
 
 // Error Middleware (must be last)
 app.use(require('./api/middleware/errorMiddleware'));

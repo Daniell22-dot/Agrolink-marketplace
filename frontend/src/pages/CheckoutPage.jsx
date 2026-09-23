@@ -151,6 +151,11 @@ const CheckoutPage = () => {
                                 <div key={item.productId} className="summary-item">
                                     <div className="item-info">
                                         <span className="item-name">{item.name}</span>
+                                        {item.variantName && item.variantValue && (
+                                            <span className="item-variant-small">
+                                                {item.variantName}: {item.variantValue}
+                                            </span>
+                                        )}
                                         <span className="item-qty">x{item.quantity}</span>
                                     </div>
                                     <span className="item-price">KES {(item.price * item.quantity).toLocaleString()}</span>

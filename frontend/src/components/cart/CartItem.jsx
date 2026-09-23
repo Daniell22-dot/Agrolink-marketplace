@@ -34,6 +34,12 @@ const CartItem = ({ item }) => {
                         </button>
                     </div>
                     
+                    {item.variantName && item.variantValue && (
+                        <p className="item-variant">
+                            {item.variantName}: {item.variantValue}
+                        </p>
+                    )}
+                    
                     <p className="item-unit">{item.unit || 'unit'}</p>
                     
                     <div className="cart-item-footer">

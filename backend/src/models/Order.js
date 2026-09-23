@@ -33,6 +33,16 @@ const Order = sequelize.define('Order', {
     },
     contactPhone: {
         type: DataTypes.STRING
+    },
+    deliveryStatus: {
+        type: DataTypes.ENUM('pending', 'assigned', 'picked_up', 'in_transit', 'delivered', 'failed'),
+        allowNull: true,
+        defaultValue: 'pending'
+    },
+    deliveryFee: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: true,
+        defaultValue: 0
     }
 }, {
     underscored: true,
