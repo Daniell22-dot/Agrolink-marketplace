@@ -959,8 +959,8 @@ const PRODUCT_IMAGES = [
       "poultry"
     ],
     "images": [
-      "https://images.pexels.com/photos/24182617/pexels-photo-24182617.jpeg?auto=compress&cs=tinysrgb&w=500",
-      "https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=500&auto=format&fit=crop"
+      "/images/Chicks.jpg",
+      "/images/Chicks1.jpg"
     ]
   },
   {
@@ -988,7 +988,7 @@ const PRODUCT_IMAGES = [
       "turkey meat"
     ],
     "images": [
-      "https://images.pexels.com/photos/106343/pexels-photo-106343.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Chicks1.jpg"
     ]
   },
   {
@@ -1020,8 +1020,8 @@ const PRODUCT_IMAGES = [
       "fish fillet"
     ],
     "images": [
-      "https://images.pexels.com/photos/229789/pexels-photo-229789.jpeg?auto=compress&cs=tinysrgb&w=500",
-      "https://images.pexels.com/photos/6149077/pexels-photo-6149077.jpeg?auto=compress&cs=tinysrgb&w=500"
+      "/images/Tilapia.jpg",
+      "/images/Fish.jpg"
     ]
   },
   {
@@ -1103,7 +1103,7 @@ const PRODUCT_IMAGES = [
       "fermented milk"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop"
+      "/images/Milk.jpg"
     ]
   },
   {
@@ -1129,7 +1129,7 @@ const PRODUCT_IMAGES = [
       "manjano"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&auto=format&fit=crop"
+      "/images/Carrots.jpg"
     ]
   },
   {
@@ -1173,7 +1173,7 @@ const PRODUCT_IMAGES = [
       "animal feed"
     ],
     "images": [
-      "https://images.unsplash.com/photo-1628009368231-7bb7cfcb0def?w=500&auto=format&fit=crop"
+      "/images/Cow.jpg"
     ]
   },
   {
