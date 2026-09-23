@@ -14,6 +14,9 @@ from services.image_processor import optimize_product_image, validate_image, ext
 
 load_dotenv()
 
+HOST = os.getenv('HOST', '0.0.0.0')
+PORT = int(os.getenv('PORT', 5000))
+
 app = FastAPI(title="AgroLink Python Services", version="1.0.0")
 
 # Enable CORS
