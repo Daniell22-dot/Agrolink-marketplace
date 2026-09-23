@@ -1,5 +1,6 @@
 const redis = require('../../config/redis');
 const Product = require('../../models/Product');
+const ProductVariant = require('../../models/ProductVariant');
 
 // Helper to get cart key
 const getCartKey = (userId) => `cart:${userId}`;
@@ -26,13 +27,29 @@ exports.getCart = async (req, res, next) => {
 // @access  Private
 exports.addToCart = async (req, res, next) => {
     try {
-        const { productId, quantity } = req.body;
+        const { productId, quantity, variantId } = req.body;
         const key = getCartKey(req.user.id);
 
-        // Validate product
         const product = await Product.findByPk(productId);
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
+        }
+
+        let variant = null;
+        let finalPrice = parseFloat(product.price);
+        let variantName = null;
+        let variantValue = null;
+        let priceDelta = 0;
+
+        if (variantId) {
+            variant = await ProductVariant.findByPk(variantId);
+            if (!variant || parseInt(variant.productId) !== parseInt(productId)) {
+                return res.status(404).json({ message: 'Variant not found for this product' });
+            }
+            priceDelta = parseFloat(variant.priceDelta) || 0;
+            finalPrice = finalPrice + priceDelta;
+            variantName = variant.name;
+            variantValue = variant.value;
         }
 
         if (product.quantity < quantity) {
@@ -42,25 +59,32 @@ exports.addToCart = async (req, res, next) => {
         let cart = await redis.get(key);
         cart = cart ? JSON.parse(cart) : { items: [] };
 
-        const existingItemIndex = cart.items.findIndex(item => item.productId === productId);
+        const cartKey = variantId
+            ? `${productId}-${variantId}`
+            : `${productId}-no-variant`;
+        const existingItemIndex = cart.items.findIndex(
+            item => `${item.productId}-${item.variantId || 'no-variant'}` === cartKey
+        );
 
         if (existingItemIndex > -1) {
             cart.items[existingItemIndex].quantity += parseInt(quantity);
         } else {
             cart.items.push({
                 productId,
+                variantId: variantId || undefined,
                 name: product.name,
-                price: parseFloat(product.price),
+                price: finalPrice,
                 image: product.images ? product.images[0] : null,
                 quantity: parseInt(quantity),
-                farmerId: product.farmerId
+                farmerId: product.farmerId,
+                variantName,
+                variantValue,
+                priceDelta
             });
         }
 
-        // Calculate total
         cart.total = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-        // Save to Redis (expire in 7 days)
         await redis.set(key, JSON.stringify(cart), 'EX', 60 * 60 * 24 * 7);
 
         res.json({
@@ -78,7 +102,7 @@ exports.addToCart = async (req, res, next) => {
 exports.updateCartItemQuantity = async (req, res, next) => {
     try {
         const { productId } = req.params;
-        const { quantity } = req.body;
+        const { quantity, variantId } = req.body;
         const key = getCartKey(req.user.id);
 
         let cart = await redis.get(key);
@@ -87,7 +111,12 @@ exports.updateCartItemQuantity = async (req, res, next) => {
         }
 
         cart = JSON.parse(cart);
-        const itemIndex = cart.items.findIndex(item => item.productId === parseInt(productId));
+        const cartKey = variantId
+            ? `${productId}-${variantId}`
+            : `${productId}-no-variant`;
+        const itemIndex = cart.items.findIndex(
+            item => `${item.productId}-${item.variantId || 'no-variant'}` === cartKey
+        );
 
         if (itemIndex > -1) {
             cart.items[itemIndex].quantity = parseInt(quantity);
@@ -108,6 +137,7 @@ exports.updateCartItemQuantity = async (req, res, next) => {
 exports.removeFromCart = async (req, res, next) => {
     try {
         const { productId } = req.params;
+        const { variantId } = req.body;
         const key = getCartKey(req.user.id);
 
         let cart = await redis.get(key);
@@ -116,7 +146,12 @@ exports.removeFromCart = async (req, res, next) => {
         }
 
         cart = JSON.parse(cart);
-        cart.items = cart.items.filter(item => item.productId !== parseInt(productId));
+        const cartKey = variantId
+            ? `${productId}-${variantId}`
+            : `${productId}-no-variant`;
+        cart.items = cart.items.filter(
+            item => `${item.productId}-${item.variantId || 'no-variant'}` !== cartKey
+        );
 
         // Recalculate total
         cart.total = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);

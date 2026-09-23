@@ -28,6 +28,10 @@ const OrderItem = sequelize.define('OrderItem', {
     subtotal: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false
+    },
+    variant_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
     }
 }, {
     tableName: 'order_items',
