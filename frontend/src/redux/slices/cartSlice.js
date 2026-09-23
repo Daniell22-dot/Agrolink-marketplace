@@ -44,9 +44,9 @@ export const removeFromCart = createAsyncThunk(
 
 export const updateCartQuantity = createAsyncThunk(
   'cart/updateQuantity',
-  async ({ productId, quantity }, { rejectWithValue }) => {
+  async ({ productId, quantity, variantId }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/cart/${productId}`, { quantity });
+      const response = await api.put(`/cart/${productId}`, { quantity, variantId });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data);
@@ -119,7 +119,10 @@ const cartSlice = createSlice({
       })
       // Remove from Cart
       .addCase(removeFromCart.fulfilled, (state, action) => {
-        state.items = state.items.filter(item => item.productId !== action.payload);
+        const { productId, variantId } = action.meta.arg || {};
+        state.items = state.items.filter(
+            item => !(item.productId === productId && (item.variantId || undefined) === (variantId || undefined))
+        );
         state.totalPrice = state.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
         state.totalItems = state.items.reduce((acc, item) => acc + item.quantity, 0);
       })

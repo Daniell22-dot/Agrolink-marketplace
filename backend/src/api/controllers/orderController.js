@@ -107,7 +107,8 @@ exports.getOrderById = async (req, res, next) => {
     try {
         const order = await Order.findByPk(req.params.id, {
             include: [
-                { model: OrderItem, include: [Product] }
+                { model: OrderItem, include: [Product] },
+                { model: Delivery }
             ]
         });
 
