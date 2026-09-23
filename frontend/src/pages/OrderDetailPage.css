@@ -304,3 +304,58 @@
         display: none;
     }
 }
+
+/* Delivery statuses */
+.delivery-status-pending {
+    color: #92400e;
+    background: #fef3c7;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.delivery-status-assigned {
+    color: #1e40af;
+    background: #dbeafe;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.delivery-status-picked_up {
+    color: #3730a3;
+    background: #e0e7ff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.delivery-status-in_transit {
+    color: #6b21a8;
+    background: #f3e8ff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.delivery-status-delivered {
+    color: #065f46;
+    background: #d1fae5;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.delivery-status-failed {
+    color: #991b1b;
+    background: #fee2e2;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
