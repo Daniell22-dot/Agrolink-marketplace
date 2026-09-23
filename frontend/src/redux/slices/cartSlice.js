@@ -30,9 +30,9 @@ export const addToCart = createAsyncThunk(
 
 export const removeFromCart = createAsyncThunk(
   'cart/removeFromCart',
-  async (productId, { rejectWithValue }) => {
+  async ({ productId, variantId }, { rejectWithValue }) => {
     try {
-      await api.delete(`/cart/${productId}`);
+      await api.delete(`/cart/${productId}`, { data: { variantId } });
       toast.success('Removed from cart');
       return productId;
     } catch (error) {

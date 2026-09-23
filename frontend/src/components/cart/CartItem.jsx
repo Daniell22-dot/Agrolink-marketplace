@@ -10,7 +10,7 @@ const CartItem = ({ item }) => {
 
     const handleQuantityChange = (newQuantity) => {
         if (newQuantity < 1) return;
-        updateItemQuantity(item.productId, newQuantity);
+        updateItemQuantity(item.productId, newQuantity, item.variantId);
     };
 
     return (
@@ -29,7 +29,7 @@ const CartItem = ({ item }) => {
                 <div className="cart-item-info">
                     <div className="cart-item-header">
                         <h3>{item.name}</h3>
-                        <button className="remove-btn" onClick={() => removeItem(item.productId)}>
+                        <button className="remove-btn" onClick={() => removeItem(item.productId, item.variantId)}>
                             <i className="fas fa-trash-alt"></i>
                         </button>
                     </div>

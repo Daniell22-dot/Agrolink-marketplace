@@ -1,6 +1,7 @@
 const Order = require('../../models/Order');
 const OrderItem = require('../../models/OrderItem');
 const Product = require('../../models/Product');
+const Delivery = require('../../models/Delivery');
 const redis = require('../../config/redis');
 
 // Helper to get cart key
@@ -48,6 +49,22 @@ exports.createOrder = async (req, res, next) => {
 
         await OrderItem.bulkCreate(orderItems);
 
+        // Create delivery record
+        const deliveryFee = cart.deliveryFee || 0;
+        await Delivery.create({
+            orderId: order.id,
+            deliveryAddress: shippingAddress,
+            deliveryPhone: contactPhone,
+            deliveryFee: deliveryFee,
+            status: 'pending'
+        });
+
+        // Update order with delivery fee
+        order.totalAmount = parseFloat(cart.total) + deliveryFee;
+        order.deliveryStatus = 'pending';
+        order.deliveryFee = deliveryFee;
+        await order.save();
+
         // Clear Cart
         await redis.del(key);
 
@@ -67,7 +84,10 @@ exports.getMyOrders = async (req, res, next) => {
     try {
         const orders = await Order.findAll({
             where: { userId: req.user.id },
-            include: [{ model: OrderItem, include: [Product] }],
+            include: [
+                { model: OrderItem, include: [Product] },
+                { model: Delivery }
+            ],
             order: [['createdAt', 'DESC']]
         });
 
